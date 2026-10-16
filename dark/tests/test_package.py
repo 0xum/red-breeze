@@ -159,7 +159,7 @@ class PackageTests(unittest.TestCase):
         for path in overlay.rglob("*.svg"):
             self.assertIn(str(path.parent.relative_to(overlay)), directories)
 
-    @unittest.skipUnless(shutil.which("kwriteconfig6"), "kwriteconfig6 não instalado")
+    @unittest.skipUnless(shutil.which("kwriteconfig6"), "kwriteconfig6 is not installed")
     def test_kconfig_keeps_login_and_nested_wallpaper_settings(self):
         with tempfile.TemporaryDirectory() as temp:
             config = Path(temp)
@@ -213,7 +213,7 @@ class PackageTests(unittest.TestCase):
             restore.restore(backup.path)
             self.assertEqual(original.read_text(), "[General]\nBrowserApplication=keep.desktop\n")
 
-    @unittest.skipUnless(shutil.which("node"), "node é opcional para validar scripts JS")
+    @unittest.skipUnless(shutil.which("node"), "Node is optional for JavaScript validation")
     def test_layout_with_one_and_two_monitors(self):
         script = (ROOT / install.LAYOUT).read_text().replace("__WALLPAPER_URI__", json.dumps("file:///test/share/wallpapers/MoeDark"))
         harness = r'''

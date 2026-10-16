@@ -22693,16 +22693,16 @@
     "assets/wallpapers/Moe/metadata.json": "5cec2f24cdd8bba604c7ef6a035f0e0a14a11067f1711ca949166678a4570083",
     "build.py": "dddf62a21bddc323d114d3547b5136fedae43f76acd0bc7fb9371ac75c875fcb",
     "config/settings.json": "a19e8141a76b97f4438202961b5bf5cd0c14f80f00f478ce2a017835914fc15e",
-    "install-login.py": "9dd1a229128fd5496244a4fefecbf6455b7f0407c467a0a25e28b3158afc7754",
-    "install.py": "9a3f4c0258d693547cf5ebad88528bae6edbfa88b0956111181efb4b05b457d1",
-    "restore.py": "d743aff3f156778a8551fe7a5e1fed6ff3426d119fce545c3f742be607560711",
+    "install-login.py": "a5e876bb7c92559a235acc3b973b67cbeb8da5cde820742caf811a4ba0f65411",
+    "install.py": "b79f115fc356914c01cbba396e9c3b03f7b2a08c9ab4500a0d1ad01b27f690c4",
+    "restore.py": "f609615ee143915b4cb17c483708af964ed19cc541f59bf32ab0409b32c68fb1",
     "scripts/launcher.js": "91816ebb958624998c9adcfd9755aa2896af43cd685f05221b03e318d17e9a04",
     "scripts/layout.js": "4f70b3bc04fcaffd629705c957c6cc9df78ea3afdf8cd55f1b0933eb8f5d76ff",
-    "scripts/login.py": "a5aa4af2f83e84a7f4a9a274c1488a6cfeeb450e037ebd1ac152f4761b20111a",
+    "scripts/login.py": "48f05e0509070d286cda74732e7f182f247cda8fdb16a55d6fd4041b7ba4f573",
     "scripts/red_icons.py": "01cd045e5f8e29f93fd3ce0ebae2c3936edd46388dabb7163aed720456f00390",
     "scripts/wallpaper.js": "9f714defe49f2cf66eca0974d0fe1896f3a58ee695d5b44f7ff5ab0775fce9e7",
-    "tests/test_login.py": "0e355942a0ec15a977bc6f76ea8aeb24a702ac27c14d84a66b8813f39c38cd1a",
-    "tests/test_package.py": "6f1671ded0b7062df2066db8e36f68f8b193f93d8c11962f6c7641a336dc33b2",
-    "tests/test_terminals.py": "b28ac88e4fe4842c44280e12aab4053d9d1e25fe8827c868a78a4b54cb0f14b4"
+    "tests/test_login.py": "15ba1d45f5a4e861d1dcb5ee7c9d9a494e423a537959de4a15a1956e1934d0db",
+    "tests/test_package.py": "95ae39a3780d2f3d24bb9882caebab22f2838e5411d1453de106356c48b43375",
+    "tests/test_terminals.py": "8c716aaa64ab030b8239adf55d1e01900231533a1ee952056dfe50c152ef2e40"
   }
 }

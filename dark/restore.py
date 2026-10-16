@@ -14,12 +14,12 @@ def restore(backup, dry_run=False):
         target = Path(entry["target"])
         source = backup / entry["backup"]
         if not target.is_absolute() or target == Path("/"):
-            raise ValueError("Destino de backup inválido")
+            raise ValueError("Invalid backup target")
         if entry["existed"] and not (source.exists() or source.is_symlink()):
-            raise ValueError(f"Backup incompleto: {source}")
+            raise ValueError(f"Incomplete backup: {source}")
     for entry in reversed(entries):
         target, source = Path(entry["target"]), backup / entry["backup"]
-        print(("Restaurar: " if entry["existed"] else "Remover criado na instalação: ") + str(target))
+        print(("Restore: " if entry["existed"] else "Remove resource created during installation: ") + str(target))
         if dry_run:
             continue
         if target.is_symlink() or target.is_file():
@@ -44,5 +44,5 @@ if __name__ == "__main__":
     try:
         restore(args.backup.resolve(), args.dry_run)
     except (OSError, ValueError, KeyError) as error:
-        print(f"Erro: {error}", file=sys.stderr)
+        print(f"Error: {error}", file=sys.stderr)
         sys.exit(1)

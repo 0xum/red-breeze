@@ -54,7 +54,7 @@ class TerminalTests(unittest.TestCase):
             self.assertEqual(startup.read_text(),original)
             self.assertFalse((config/'fish/papirus-breeze.fish').exists())
 
-    @unittest.skipUnless(shutil.which('fish'), 'fish não instalado')
+    @unittest.skipUnless(shutil.which('fish'), 'Fish is not installed')
     def test_fish_greeting_is_three_lines_and_no_fastfetch(self):
         helper=ROOT/'assets/fish/papirus-breeze.fish'
         subprocess.run(['fish','--no-config','-n',str(helper)],check=True)

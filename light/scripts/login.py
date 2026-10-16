@@ -27,7 +27,7 @@ def config_file(path):
     config = configparser.ConfigParser(interpolation=None, strict=False)
     config.optionxform = str
     if path.is_symlink():
-        raise RuntimeError("Arquivo de configuração simbólico recusado: " + str(path))
+        raise RuntimeError("Symbolic configuration file refused: " + str(path))
     if path.exists():
         config.read_string(path.read_text())
     return config
@@ -62,7 +62,7 @@ def detect_manager():
         return 'plasma-login'
     if name == 'sddm.service':
         return 'sddm'
-    raise RuntimeError('Gerenciador não identificado; informe --manager plasma-login ou sddm.')
+    raise RuntimeError('Login manager not detected; specify --manager plasma-login or sddm.')
 
 
 def selected_variant(source, uid=None):
@@ -150,11 +150,11 @@ def provision(package, variant, manager, backup, account):
 
 def apply_variant(variant, manager, backup=None, force=False):
     if variant not in VARIANTS:
-        raise ValueError('Variante inválida')
+        raise ValueError('Invalid variant')
     profile_dir = STORE / 'profiles' / variant
     profile = json.loads((profile_dir / 'profile.json').read_text())
     if profile['manager'] != manager:
-        raise RuntimeError('Reinstale os perfis para o gerenciador de login ativo.')
+        raise RuntimeError('Reinstall profiles for the active login manager.')
     signature = hashlib.sha256(b''.join((profile_dir / name).read_bytes() for name in ('profile.json', 'kdeglobals', 'plasmarc', 'kcminputrc'))).hexdigest()
     if not force and STATE.exists():
         current = json.loads(STATE.read_text())
@@ -197,10 +197,10 @@ def sync():
     user = pwd.getpwnam(settings['user'])
     variant = selected_variant(Path(settings['source']), user.pw_uid)
     if variant is None:
-        print('Tema fora de Papirus Breeze; aparência do login preservada.')
+        print('Not a Papirus Breeze theme; login appearance preserved.')
         return
     if not (STORE / 'profiles' / variant / 'profile.json').is_file():
-        raise RuntimeError('Variante não instalada no login: ' + variant)
+        raise RuntimeError('Variant not installed for login: ' + variant)
     apply_variant(variant, settings['manager'])
 
 
@@ -215,12 +215,12 @@ def follow_user(username, manager, backup, runtime_source):
     from install import copy_asset
     user = pwd.getpwnam(username)
     if user.pw_uid == 0:
-        raise ValueError('Escolha o usuário da sessão gráfica, não root.')
+        raise ValueError('Choose the graphical session user, not root.')
     source = Path(user.pw_dir) / '.config/kdeglobals'
     if not source.is_file():
-        raise RuntimeError('kdeglobals da sessão não encontrado: ' + str(source))
+        raise RuntimeError('Session kdeglobals not found: ' + str(source))
     if any(char in str(source) for char in ('\n', '\r', '%', '\\')):
-        raise ValueError('Caminho incompatível com a unidade systemd')
+        raise ValueError('Path is incompatible with the systemd unit')
     backup.save(SETTINGS)
     SETTINGS.write_text(json.dumps({'source': str(source), 'manager': manager, 'user': username}, indent=2) + '\n')
     SETTINGS.chmod(0o644)
@@ -239,39 +239,39 @@ def follow_user(username, manager, backup, runtime_source):
     variant = selected_variant(source, user.pw_uid)
     if variant is not None and (STORE / 'profiles' / variant / 'profile.json').exists():
         apply_variant(variant, manager, backup, force=True)
-    print('Acompanhamento automático habilitado para ' + username + '.', flush=True)
+    print('Automatic theme following enabled for ' + username + '.', flush=True)
 
 
 def main(package=None, argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--manager', choices=('auto', 'plasma-login', 'sddm'), default='auto')
-    parser.add_argument('--follow-user', help='acompanha as trocas Light/Dark deste usuário via systemd.path')
+    parser.add_argument('--follow-user', help="follow this user's Light/Dark changes through systemd.path")
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--sync', action='store_true', help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
     if args.sync:
         if os.geteuid() != 0:
-            raise RuntimeError('A sincronização é executada pelo serviço administrativo instalado.')
+            raise RuntimeError('Synchronization runs through the installed administrative service.')
         sync()
         return 0
     if package is None:
-        parser.error('Use install-login.py do pacote para instalar.')
+        parser.error('Use the package install-login.py script for installation.')
     from install import Backup, verify_assets
     verify_assets()
     manager = detect_manager() if args.manager == 'auto' else args.manager
     account = pwd.getpwnam('plasmalogin' if manager == 'plasma-login' else 'sddm')
     variant = 'dark' if json.loads((package / 'manifest.json').read_text())['name'].endswith('Dark') else 'light'
     if manager == 'sddm' and not Path('/usr/share/sddm/themes/breeze/Main.qml').is_file():
-        raise RuntimeError('Instale Breeze para SDDM antes de continuar.')
-    print(f'Instalar aparência {variant} para {manager}: paleta, ícones, cursor e wallpaper.')
+        raise RuntimeError('Install the SDDM Breeze theme before continuing.')
+    print(f'Install login appearance {variant} for {manager}: palette, icons, cursor, and wallpaper.')
     if args.follow_user:
-        print('Acompanhar a paleta de ' + args.follow_user + '; instalar serviço e observador systemd.')
-    print('O gerenciador de login não será reiniciado; autenticação e sessão serão preservadas.')
+        print('Follow the palette of ' + args.follow_user + '; install the systemd service and watcher.')
+    print('The login manager will not restart; authentication and session settings are preserved.')
     if args.dry_run:
-        print('Simulação concluída. Nenhum arquivo alterado.')
+        print('Dry run complete. No files changed.')
         return 0
     if os.geteuid() != 0:
-        raise RuntimeError('Execute com sudo ou pkexec para configurar a conta do login.')
+        raise RuntimeError('Run with sudo or pkexec to configure the login account.')
     backup = Backup(Path('/var/lib'))
     try:
         backup.save(STATE)
@@ -290,5 +290,5 @@ if __name__ == '__main__':
     try:
         sys.exit(main())
     except (OSError, ValueError, KeyError, RuntimeError, configparser.Error, subprocess.CalledProcessError) as error:
-        print('Erro: ' + str(error), file=sys.stderr)
+        print('Error: ' + str(error), file=sys.stderr)
         sys.exit(1)

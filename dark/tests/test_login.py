@@ -104,7 +104,7 @@ class LoginTests(unittest.TestCase):
             self.assertEqual(config['Autologin']['User'], 'keep')
             self.assertEqual(config['Autologin']['Session'], 'plasma')
 
-    @unittest.skipUnless(__import__('shutil').which('systemd-analyze'), 'systemd-analyze não instalado')
+    @unittest.skipUnless(__import__('shutil').which('systemd-analyze'), 'systemd-analyze is not installed')
     def test_follow_units_pass_systemd_validation(self):
         import subprocess
         with tempfile.TemporaryDirectory() as directory:

@@ -20,5 +20,5 @@ if __name__ == "__main__":
     try:
         sys.exit(main())
     except (OSError, RuntimeError, KeyError, ValueError, subprocess.CalledProcessError) as error:
-        print(f"Erro: {error}", file=sys.stderr)
+        print(f"Error: {error}", file=sys.stderr)
         sys.exit(1)

@@ -22,7 +22,7 @@ def verify_assets():
     for relative, expected in manifest["sha256"].items():
         path = ROOT / relative
         if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != expected:
-            raise RuntimeError(f"Arquivo ausente ou modificado: {relative}")
+            raise RuntimeError(f"Missing or modified file: {relative}")
     return manifest
 
 
@@ -38,26 +38,26 @@ def dependency_errors(data, applying=False):
     for name in ("Papirus-Dark", "Breeze_Light"):
         if not any((p / "icons" / name / "index.theme").exists() or
                    (p.name == ".icons" and (p / name / "index.theme").exists()) for p in roots):
-            errors.append(f"Tema de ícones/cursor ausente: {name}")
+            errors.append(f"Missing icon/cursor theme: {name}")
     if applying:
         for cmd in ("kwriteconfig6", "plasma-apply-lookandfeel", "plasma-apply-colorscheme",
                     "plasma-apply-desktoptheme", "plasma-apply-cursortheme", "qdbus6"):
             if not shutil.which(cmd):
-                errors.append(f"Comando ausente: {cmd}")
+                errors.append(f"Missing command: {cmd}")
         if not os.environ.get("DBUS_SESSION_BUS_ADDRESS"):
-            errors.append("Execute --apply dentro da sessão Plasma 6 do usuário de destino.")
+            errors.append("Run --apply inside the destination user's Plasma 6 session.")
         elif shutil.which("qdbus6"):
             result = subprocess.run(["qdbus6", "org.kde.plasmashell", "/PlasmaShell",
                                      "org.freedesktop.DBus.Peer.Ping"], capture_output=True, text=True)
             if result.returncode:
-                errors.append("O Plasma Shell não está acessível na sessão D-Bus atual.")
+                errors.append("Plasma Shell is not accessible in the current D-Bus session.")
     return errors
 
 
 class Backup:
-    def __init__(self, state):
+    def __init__(self, state, package="papirus-breeze-dark"):
         stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S-%f")
-        self.path = state / "papirus-breeze-dark/backups" / stamp
+        self.path = state / package / "backups" / stamp
         self.entries = []
         self.seen = set()
 
@@ -134,7 +134,7 @@ def configure_fish(config, backup):
     if begin in existing:
         before, managed = existing.split(begin, 1)
         if end not in managed:
-            raise RuntimeError("Bloco Papirus Breeze incompleto em fish/config.fish")
+            raise RuntimeError("Incomplete Papirus Breeze block in fish/config.fish")
         existing = before + managed.split(end, 1)[1]
     block = (begin + '\n'
              'if status is-interactive\n'
@@ -178,45 +178,50 @@ def apply_profile(data, config, backup, layout=False):
     subprocess.run(["qdbus6", "org.kde.KWin", "/KWin", "org.kde.KWin.reconfigure"], check=True)
 
 
+def asset_paths():
+    assets = [Path("plasma/desktoptheme/PapirusBreezeRed"), Path("wallpapers/MoeDark"), Path("aurorae/themes/Amy-Papirus-Dark"),
+              Path("icons/PapirusBreezeDark"), Path("color-schemes/PapirusBreezeDark.colors"),
+              Path("plasma/look-and-feel") / THEME_ID]
+    assets += [Path("konsole") / path.name for path in sorted((ROOT / "assets/konsole").iterdir()) if path.is_file()]
+    return assets
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--apply", action="store_true", help="aplica o perfil na sessão Plasma 6 atual")
-    parser.add_argument("--layout", action="store_true", help="com --apply, substitui painéis por um painel por monitor")
-    parser.add_argument("--check", action="store_true", help="verifica integridade e dependências sem instalar")
-    parser.add_argument("--dry-run", action="store_true", help="mostra ações sem gravar nem aplicar")
+    parser.add_argument("--apply", action="store_true", help="apply the profile in the current Plasma 6 session")
+    parser.add_argument("--layout", action="store_true", help="with --apply, replace panels with one panel per monitor")
+    parser.add_argument("--check", action="store_true", help="check integrity and prerequisites without installing")
+    parser.add_argument("--dry-run", action="store_true", help="show actions without writing or applying changes")
     parser.add_argument("--data-dir", type=Path, default=Path(os.environ.get("XDG_DATA_HOME", str(Path.home() / ".local/share"))))
     parser.add_argument("--config-dir", type=Path, default=Path(os.environ.get("XDG_CONFIG_HOME", str(Path.home() / ".config"))))
     parser.add_argument("--state-dir", type=Path, default=Path(os.environ.get("XDG_STATE_HOME", str(Path.home() / ".local/state"))))
     args = parser.parse_args(argv)
     if args.layout and not args.apply:
-        parser.error("--layout exige --apply")
+        parser.error("--layout requires --apply")
     raw_args = argv if argv is not None else sys.argv[1:]
     if args.apply and any(arg.split("=", 1)[0] in ("--data-dir", "--config-dir", "--state-dir") for arg in raw_args):
-        parser.error("diretórios alternativos são permitidos apenas para instalação de arquivos")
+        parser.error("alternate directories are allowed only for asset installation")
     data, config, state = (p.expanduser().resolve() for p in (args.data_dir, args.config_dir, args.state_dir))
     verify_assets()
     errors = dependency_errors(data, args.apply or args.check)
-    print("Integridade dos arquivos: OK")
+    print("File integrity: OK")
     for error in errors:
-        print("Dependência:", error)
+        print("Prerequisite:", error)
     if args.check:
         return 1 if errors else 0
     if errors and args.apply and not args.dry_run:
         return 1
-    assets = [Path("plasma/desktoptheme/PapirusBreezeRed"), Path("wallpapers/MoeDark"), Path("aurorae/themes/Amy-Papirus-Dark"),
-              Path("icons/PapirusBreezeDark"), Path("color-schemes/PapirusBreezeDark.colors"),
-              Path("plasma/look-and-feel") / THEME_ID]
-    assets += [Path("konsole") / path.name for path in sorted((ROOT / "assets/konsole").iterdir()) if path.is_file()]
+    assets = asset_paths()
     for relative in assets:
-        print(f"Instalar: {data / relative}")
+        print(f"Install: {data / relative}")
     if args.apply:
-        print("Aplicar: cores, decoração, fonte, cursor, GTK, wallpaper, bloqueio, Konsole e Fish.")
-        print("Painéis:", "substituir por um painel de 32 px por monitor" if args.layout else "preservar")
+        print("Apply: colors, decoration, font, cursor, GTK, wallpaper, lock screen, Konsole, and Fish.")
+        print("Panels:", "replace with one 32 px panel per monitor" if args.layout else "preserve")
     if args.dry_run:
-        print("Simulação concluída. Nenhum arquivo alterado.")
+        print("Dry run complete. No files changed.")
         return 0
     if os.geteuid() == 0:
-        raise RuntimeError("Execute install.py como usuário normal; use install-login.py para o login.")
+        raise RuntimeError("Run install.py as your normal user; use install-login.py for login appearance.")
     backup = Backup(state)
     try:
         for relative in assets:
@@ -229,8 +234,8 @@ def main(argv=None):
     finally:
         if backup.path.exists():
             print("Backup:", backup.path)
-    print("Tema instalado." if not args.apply else "Tema aplicado. Encerre e inicie a sessão para atualizar todos os aplicativos.")
-    print("O login é configurado separadamente com install-login.py.")
+    print("Theme installed." if not args.apply else "Theme applied. Log out and back in to refresh all applications.")
+    print("Login appearance is configured separately with install-login.py.")
     return 0
 
 
@@ -238,5 +243,5 @@ if __name__ == "__main__":
     try:
         sys.exit(main())
     except (OSError, RuntimeError, subprocess.CalledProcessError, ValueError) as error:
-        print(f"Erro: {error}", file=sys.stderr)
+        print(f"Error: {error}", file=sys.stderr)
         sys.exit(1)
