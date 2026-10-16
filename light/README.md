@@ -1,5 +1,10 @@
 # Papirus Breeze Light
 
+Este pacote faz parte do repositório unificado **Papirus Breeze**, na pasta
+`light/`. Os exemplos abaixo partem desta pasta; da raiz do repositório,
+prefixe os caminhos dos scripts com `light/`. A documentação compartilhada
+fica em `docs/` na raiz. O arquivo de distribuição continua instalável sozinho.
+
 Pacote portátil do desktop pessoal Papirus Breeze Light, exportado de um Plasma 6
 em 16 de outubro de 2026. Inclui o visual atual, o wallpaper e a configuração de
 bloqueio e de login.
@@ -158,8 +163,8 @@ Os testes usam diretórios temporários e não aplicam o tema à sessão atual.
 
 ## GitHub e licenças
 
-Esta pasta pode ser usada como raiz do repositório. Nenhum remoto ou publicação
-é criado pelo instalador. Os componentes mantêm suas licenças: confira
+No conjunto unificado, o repositório Git fica na pasta pai; esta pasta contém
+somente o pacote Light. Nenhum remoto ou publicação é criado pelo instalador. Os componentes mantêm suas licenças: confira
 [THIRD_PARTY.md](THIRD_PARTY.md) antes de redistribuir.
 
 ## Troca entre Light e Dark
@@ -180,8 +185,8 @@ fundo branco ou escuro opaco e paletas ANSI com destaque vermelho.
 O cursor de texto usa um bloco vermelho `#E93D58`, com piscar e animação habilitados.
 `--apply` habilita a sincronização nativa do Konsole com o tema do sistema:
 a troca entre Light/Dark atualiza o perfil automaticamente, inclusive nas sessões
-abertas após essa configuração. No Konsole 26.08 ou posterior, o recurso fica em
-Configurações → Configurar Konsole → Geral. Em versões sem esse recurso, selecione
+abertas após essa configuração. O recurso foi validado no Konsole 26.08.2 instalado na origem, com a
+sincronização configurada no grupo LightDarkTheme do konsolerc. Em versões sem esse recurso, selecione
 um dos perfis manualmente. Instale Fish e JetBrainsMono Nerd Font no destino;
 os perfis iniciam o Fish sem trocar o shell de login do usuário.
 

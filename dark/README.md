@@ -1,5 +1,10 @@
 # Papirus Breeze Dark
 
+Este pacote faz parte do repositório unificado **Papirus Breeze**, na pasta
+`dark/`. Os exemplos abaixo partem desta pasta; da raiz do repositório,
+prefixe os caminhos dos scripts com `dark/`. A documentação compartilhada
+fica em `docs/` na raiz. O arquivo de distribuição continua instalável sozinho.
+
 Variação escura do Papirus Breeze Light, com destaque **vermelho `#E93D58`**.
 Pacote independente para KDE Plasma 6, preparado em 16 de outubro de 2026.
 
@@ -50,7 +55,8 @@ python3 install.py --apply
 ```
 
 O último comando instala os assets e aplica cores, decoração, fonte, cursor,
-integração GTK, wallpaper e bloqueio. Os painéis atuais são mantidos. Reinicie a
+integração GTK, wallpaper, bloqueio, Konsole e Fish. Atualiza também o ícone
+dos lançadores existentes; a estrutura dos painéis atuais é mantida. Reinicie a
 sessão para que todos os aplicativos atualizem o visual.
 
 Para também reproduzir os painéis:
@@ -135,8 +141,8 @@ O arquivo para transferência é `dist/papirus-breeze-dark-1.0.11.tar.gz`. Os te
 usam diretórios temporários; não ativam o tema na sessão atual. O manifesto
 registra hashes SHA-256 dos arquivos distribuídos.
 
-Esta pasta está pronta para ser a raiz de um repositório Git. `dist/` e caches
-são ignorados pelo Git. Confira [THIRD_PARTY.md](THIRD_PARTY.md) para créditos,
+No conjunto unificado, o repositório Git fica na pasta pai; esta pasta contém
+somente o pacote Dark. `dist/` e caches são ignorados pelo Git. Confira [THIRD_PARTY.md](THIRD_PARTY.md) para créditos,
 licenças e descrição das adaptações antes de redistribuir.
 
 ## Troca entre Light e Dark
@@ -157,8 +163,8 @@ fundo branco ou escuro opaco e paletas ANSI com destaque vermelho.
 O cursor de texto usa um bloco vermelho `#E93D58`, com piscar e animação habilitados.
 `--apply` habilita a sincronização nativa do Konsole com o tema do sistema:
 a troca entre Light/Dark atualiza o perfil automaticamente, inclusive nas sessões
-abertas após essa configuração. No Konsole 26.08 ou posterior, o recurso fica em
-Configurações → Configurar Konsole → Geral. Em versões sem esse recurso, selecione
+abertas após essa configuração. O recurso foi validado no Konsole 26.08.2 instalado na origem, com a
+sincronização configurada no grupo LightDarkTheme do konsolerc. Em versões sem esse recurso, selecione
 um dos perfis manualmente. Instale Fish e JetBrainsMono Nerd Font no destino;
 os perfis iniciam o Fish sem trocar o shell de login do usuário.
 
