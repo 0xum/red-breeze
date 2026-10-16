@@ -73,8 +73,12 @@ Cada pacote de wallpaper contém a imagem clara original em `contents/images/`
 referenciam a pasta do pacote, permitindo a seleção clara/escura pelo Plasma.
 Selecionar uma imagem avulsa manualmente fixa essa imagem.
 
-O login é independente: seu instalador usa um arquivo da variante escolhida.
-A tela de autenticação não troca de wallpaper quando o usuário muda o tema da sessão.
+O login precisa de instalação administrativa inicial, pois roda em outra conta.
+Com `--follow-user`, paleta, ícones, cursor e wallpaper acompanham as variantes
+Papirus Light/Dark; sem o observador, a seleção fica estática. O sincronizador usa
+perfis fixos instalados por root e a interface nativa do gerenciador. As paletas
+do greeter ajustam `Colors:Complementary` para as cores de Window, pois ambos os
+greeters Breeze usam esse grupo. As paletas do desktop permanecem intactas.
 
 ## Konsole
 

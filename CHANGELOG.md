@@ -11,6 +11,15 @@ releases ou tags já publicados no GitHub.
 - Ferramenta única para conferir integridade, executar testes, atualizar hashes e empacotar.
 - Mantida a versão visual 1.0.11: a reorganização não altera o desktop instalado.
 
+## 1.0.13
+
+- Login passa a receber paleta, destaque vermelho, ícones, cursor e wallpaper.
+- Corrigido o acesso a recursos que estavam somente na pasta pessoal privada.
+- Paletas do greeter adaptam cores complementares para refletir Light/Dark.
+- Adicionado acompanhamento opcional de um usuário via observador systemd, com
+  perfis fixos administrativos e sem reiniciar o gerenciador de login.
+- Suporte a Plasma Login Manager e SDDM, preservando autenticação e autologin.
+
 ## 1.0.12
 
 - Corrigida a lixeira que aparecia como avatar no Dolphin: os nomes `user-trash`

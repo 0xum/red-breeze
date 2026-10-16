@@ -26,14 +26,21 @@ python3 light/restore.py /caminho/do/backup --dry-run
 python3 light/restore.py /caminho/do/backup
 ```
 
-Para snapshots do login, execute a restauração com `sudo`. Ambos os restauradores
+Para snapshots do login, desabilite o acompanhamento antes de restaurar:
+
+```bash
+sudo systemctl disable --now papirus-breeze-login.path papirus-breeze-login.service
+```
+
+Execute a restauração com `sudo` e depois `sudo systemctl daemon-reload` se os
+snapshots incluírem unidades systemd. Ambos os restauradores
 leem o mesmo formato de backup. A restauração recupera **arquivos inteiros**,
 inclusive alterações pessoais feitas depois do snapshot. Se houve várias
 instalações, restaure em ordem inversa, começando pela mais recente.
 
 Para simplesmente escolher a outra aparência, prefira seu instalador com
-`--apply`. Isso não é uma restauração do estado anterior. O wallpaper do login
-continua separado e requer o instalador de login correspondente.
+`--apply`. Isso não é uma restauração do estado anterior. Com o acompanhamento administrativo habilitado, o login segue a paleta
+Papirus selecionada. Sem ele, use o instalador de login correspondente.
 
 ## O painel voltou ao padrão
 
@@ -92,8 +99,15 @@ interativas. Abra uma nova sessão Fish. Outra redefinição posterior de
 ## Wallpaper não troca ou o login usa outra imagem
 
 Desktop e bloqueio devem referenciar a pasta do pacote adaptativo. Uma imagem
-avulsa selecionada manualmente fica fixa. O login usa um arquivo próprio da
-variante escolhida e não acompanha a paleta da sessão; execute seu instalador separado.
+avulsa selecionada manualmente fica fixa. O login só acompanha a paleta após a instalação administrativa com `--follow-user`.
+Confira `systemctl status papirus-breeze-login.path` e
+`journalctl -u papirus-breeze-login.service`. O usuário observado está em
+`/etc/papirus-breeze-login.json`; a última variante aplicada aparece em
+`/var/lib/papirus-breeze-login/current.json`. Um tema externo a Papirus Breeze é
+ignorado. As duas variantes precisam estar instaladas no login para alternar.
+
+Em uma instalação estática, execute o instalador da variante desejada. Se trocar
+o gerenciador de login, reinstale os perfis para a nova conta e backend.
 
 ## Hash divergente ou dependência ausente
 

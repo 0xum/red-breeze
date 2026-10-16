@@ -74,32 +74,78 @@ a opção **Desktop and window layout** carrega o mesmo layout nativo.
 O pacote configura os monitores presentes no momento da aplicação. Não instala
 um serviço para criar painéis quando um novo monitor é conectado posteriormente.
 
-## Login
+## Login: acompanhar o tema global
 
-O wallpaper do login tem configuração própria e não acompanha automaticamente
-a troca de tema da sessão. Execute o instalador correspondente à imagem desejada:
+O sistema de origem usa **Plasma Login Manager 6.8.0**. O instalador detecta o
+serviço ativo e também suporta SDDM/Breeze em outros sistemas. A instalação de
+usuário não pode gravar a aparência de outra conta; execute uma instalação
+administrativa inicial para disponibilizar os assets e perfis no login.
+
+A partir da raiz, simule e depois instale ambas as variantes com acompanhamento:
+
+```bash
+python3 tools/install-login.py --follow-user "$USER" --dry-run
+sudo python3 tools/install-login.py --follow-user "$USER"
+```
+
+O nome deve ser o usuário normal da sessão, não `root`. O Polkit também pode
+executar o mesmo comando quando a aplicação chama o instalador via `pkexec`.
+
+O acompanhamento observa `~/.config/kdeglobals` do usuário indicado. Quando sua
+paleta é `PapirusBreezeLight` ou `PapirusBreezeDark`, seleciona o perfil instalado
+correspondente para a próxima tela de login. Outros temas são ignorados. Não há
+consulta periódica nem execução de scripts dentro da pasta pessoal pelo serviço.
+
+São instalados:
+
+- Recursos de ícones e estilo na área de dados da conta `plasmalogin` ou `sddm`.
+- Wallpapers e perfis fixos em `/usr/local/share/papirus-breeze-login/`.
+- Paletas próprias `PapirusBreezeLoginLight/Dark` na conta do greeter, com cores
+  complementares ajustadas para que o login claro seja realmente claro.
+- `/usr/local/libexec/papirus-breeze-login.py`, cópia administrativa do sincronizador.
+- `/etc/papirus-breeze-login.json`, indicando apenas o usuário, a origem e o gerenciador.
+- `papirus-breeze-login.path` e `papirus-breeze-login.service`, habilitados no systemd.
+
+O sincronizador usa apenas o nome da paleta para escolher os perfis fixos instalados
+por root. Não copia todo o `kdeglobals` pessoal, não muda autenticação/autologin e
+não reinicia o gerenciador de login. O estado aplicado fica em
+`/var/lib/papirus-breeze-login/current.json`; a mesma paleta não é reaplicada a cada
+escrita sem relação com o tema. A tela usa a identidade Breeze nativa, com recursos
+Papirus vermelhos e o wallpaper da variante. Dependências de ícones não incluídas
+no complemento continuam usando os fallbacks Breeze/hicolor do sistema.
+
+### Aplicação estática de uma variante
+
+Para aplicar uma aparência uma vez, sem instalar acompanhamento automático:
 
 ```bash
 python3 light/install-login.py --dry-run
 sudo python3 light/install-login.py
-# Para Moe Dark, use dark/install-login.py.
+# Ou dark/install-login.py.
 ```
 
-O script detecta o gerenciador pelo serviço habilitado. Para selecionar explicitamente:
+Para explicitar o gerenciador:
 
 ```bash
-python3 dark/install-login.py --manager plasma-login --dry-run
 sudo python3 dark/install-login.py --manager plasma-login
-
-python3 dark/install-login.py --manager sddm --dry-run
 sudo python3 dark/install-login.py --manager sddm
 ```
 
-No Plasma Login Manager, copia o wallpaper para a conta `plasmalogin` e altera
-somente sua referência em `/etc/plasmalogin.conf`. No SDDM, cria uma cópia do
-Breeze, configura a imagem/cursor e seleciona essa cópia em `/etc/sddm.conf.d/`.
-Não troca o gerenciador habilitado nem reinicia serviços. Não distribui uma nova
-interface de autenticação: ela segue o Breeze e o gerenciador instalados.
+Um pacote independente pode usar `--follow-user nome`; instale ambos os pacotes
+com essa opção para que as duas variantes estejam disponíveis ao observador.
+No SDDM, o instalador cria temas Breeze dedicados e define sua seleção em
+`/etc/sddm.conf`, que tem prioridade sobre arquivos antigos de `conf.d`.
+No Plasma Login Manager, altera os campos de aparência em `/etc/plasmalogin.conf`.
+
+Se já habilitou o acompanhamento, ele continua seguindo a paleta observada. Para
+voltar à configuração estática, desabilite as unidades antes de aplicar uma variante:
+
+```bash
+sudo systemctl disable --now papirus-breeze-login.path papirus-breeze-login.service
+```
+
+O resultado será usado na próxima tela de login. Não saia da sessão apenas para
+executar o instalador; ele não encerra a sessão atual.
 
 ## Diretórios alternativos
 

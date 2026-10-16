@@ -1,7 +1,7 @@
 # Papirus Breeze
 
 Temas pessoais **Light e Dark para KDE Plasma 6**, reunidos em um único
-repositório. Versão dos pacotes: **1.0.12**.
+repositório. Versão dos pacotes: **1.0.13**.
 
 O conjunto usa Breeze, ícones Papirus com variantes vermelhas e destaque
 **vermelho `#E93D58`**. Inclui desktop, painéis, wallpaper adaptativo, bloqueio,
@@ -50,8 +50,15 @@ python3 light/install.py --apply --layout
 ```
 
 **`--layout` remove os painéis atuais.** Sem essa opção, a estrutura dos painéis
-é preservada. O wallpaper de login tem instalação separada e exige privilégios
-administrativos; os comandos estão no guia de instalação.
+é preservada. A aparência do login tem instalação administrativa separada. Para acompanhar
+as trocas Light/Dark de um usuário, instale os dois perfis e o observador:
+
+```bash
+python3 tools/install-login.py --follow-user "$USER" --dry-run
+sudo python3 tools/install-login.py --follow-user "$USER"
+```
+
+Veja as diferenças entre Plasma Login Manager e SDDM no guia de instalação.
 
 ## Documentação
 
