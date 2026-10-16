@@ -1,0 +1,22 @@
+{
+  "KPlugin": {
+    "Authors": [
+      {
+        "Email": "l4k1987@gmail.com",
+        "Name": "l4k1"
+      },
+      {
+        "Name": "Delta",
+        "Task": "Dark color adaptation"
+      }
+    ],
+    "Category": "",
+    "Dependencies": [],
+    "EnabledByDefault": true,
+    "Id": "Amy-Papirus-Dark",
+    "License": "GPLv3",
+    "Name": "Amy-Papirus-Dark",
+    "Version": "1.0.0",
+    "Description": "Dark derivative of Amy-Light-Aurorae-6 by l4k1, adapted for Papirus Breeze Dark."
+  }
+}

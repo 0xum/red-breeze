@@ -1,0 +1,16 @@
+{
+  "KPackageStructure": "Plasma/LookAndFeel",
+  "KPlugin": {
+    "Id": "com.delta.papirus-breeze-dark",
+    "Name": "Papirus Breeze Dark",
+    "Description": "Breeze Dark, red accent, Papirus Dark Red folders and system symbols, Amy Dark and Moe Dark.",
+    "Authors": [
+      {
+        "Name": "Delta"
+      }
+    ],
+    "Version": "1.0.11",
+    "License": "GPL-3.0-only"
+  },
+  "X-Plasma-APIVersion": "2"
+}
