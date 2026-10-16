@@ -1,199 +1,150 @@
 # Papirus Breeze Dark
 
-Este pacote faz parte do repositório unificado **Papirus Breeze**, na pasta
-`dark/`. Os exemplos abaixo partem desta pasta; da raiz do repositório,
-prefixe os caminhos dos scripts com `dark/`. A documentação compartilhada
-fica em `docs/` na raiz. O arquivo de distribuição continua instalável sozinho.
+A standalone KDE Plasma 6 theme package from the
+[Papirus Breeze repository](https://github.com/0xum/red-breeze). Version: **1.0.13**.
+English is the default language. The complete repository also provides an optional
+[Brazilian Portuguese guide](https://github.com/0xum/red-breeze/blob/main/README.pt-BR.md).
 
-Variação escura do Papirus Breeze Light, com destaque **vermelho `#E93D58`**.
-Pacote independente para KDE Plasma 6, preparado em 16 de outubro de 2026.
+Commands below run **inside this package directory**. In the complete repository,
+prefix script paths with `dark/`. The root `install.py` is a different,
+unified installer with a menu, Quick Settings registration, and removal.
 
-![Moe Dark](assets/wallpapers/MoeDark/contents/images_dark/1844x853.png)
+![Moe Dark wallpaper](assets/wallpapers/MoeDark/contents/images_dark/1844x853.png)
 
-## Aparência
+## Included appearance
 
-| Componente | Versão Dark |
+| Component | Setting |
 | --- | --- |
-| Tema global | Papirus Breeze Dark (`com.delta.papirus-breeze-dark`) |
-| Cores | Breeze Dark, superfícies cinza-carvão, destaque vermelho `#E93D58` |
-| Texto / seleção | Texto claro; seleção vermelha clara com texto escuro para legibilidade |
-| Estilo Qt / Plasma | Breeze / `PapirusBreezeRed`, acompanhando o esquema escuro |
-| GTK | Breeze-Dark, preferência por tema escuro |
-| Ícones | Papirus-Dark com pastas Papirus Red |
-| Decoração | Amy Papirus Dark, adaptação da Amy Light com as mesmas proporções |
-| Cursor | Breeze Light (`Breeze_Light`), 18 px |
-| Fonte | Noto Sans 10 pt |
-| Wallpaper, bloqueio e login | Moe Dark, 1844 × 853, carvão e vermelho |
-| Painéis opcionais | Inferiores, flutuantes, 32 px, um por monitor conectado |
-| Animações | Fator KDE `0.25` |
+| Global theme | `com.delta.papirus-breeze-dark` |
+| Colors / icons | `PapirusBreezeDark`, red `#E93D58` accent |
+| Qt / Plasma | Breeze / `PapirusBreezeRed` |
+| GTK | Breeze-Dark |
+| Window decoration | Amy Papirus Dark, small buttons |
+| Mouse pointer | Breeze Light (`Breeze_Light`), white, 18 px |
+| General / GTK font | Noto Sans, 10 pt |
+| KDE animation factor | `0.25` |
+| Wallpaper package | `MoeDark`, adaptive Light/Dark images |
+| Optional panels | Floating, bottom, 32 px, one per connected monitor, no pinned applications |
+| Window switcher / splash | Native Breeze |
 
-O complemento de ícones `PapirusBreezeDark` inclui os 835 aliases de pastas, ícones vermelhos do sistema e herda os
-outros ícones do Papirus-Dark instalado. Os IDs de tema, ícones, wallpaper e
-decoração são próprios da versão Dark, permitindo instalar as duas versões lado
-a lado. A variante usa o vermelho do conjunto original.
+The icon overlay contains 835 folder aliases and red system/Dolphin icons. Other
+icons inherit `Papirus-Dark`. The launcher is a rounded red hexagon with a
+transparent circular cutout. Both Konsole profiles include JetBrainsMono Nerd Font
+11 pt, a red animated block cursor, and a Fish startup command.
 
-## Dependências
+## Requirements
 
-- Linux com KDE Plasma 6 e Python 3.9 ou superior.
-- Breeze, Breeze-Dark para GTK, suporte Aurorae e cursor `Breeze_Light`.
-- Papirus-Dark, Noto Sans e tema de sons Ocean, fornecidos pela distribuição.
-- Para aplicar: `kwriteconfig6`, `qdbus6`, `plasma-apply-lookandfeel`,
-  `plasma-apply-colorscheme`, `plasma-apply-desktoptheme` e
-  `plasma-apply-cursortheme`.
-- Para login: Plasma Login Manager, ou SDDM com o tema Breeze instalado.
+Linux, KDE Plasma 6, and Python 3.9+. Install Breeze, Aurorae, Breeze-Dark GTK,
+`Papirus-Dark`, Noto Sans, Ocean sounds, and both Breeze cursor themes through
+your distribution. Fish and JetBrainsMono Nerd Font are required for the terminal.
+Live application needs `kwriteconfig6`, `qdbus6`, `plasma-apply-lookandfeel`,
+`plasma-apply-colorscheme`, `plasma-apply-desktoptheme`, and `plasma-apply-cursortheme`.
+Checks cover base icon/cursor themes and application tools, not every optional feature.
 
-O instalador não baixa arquivos nem instala dependências automaticamente.
+## Install and apply
 
-## Instalar
-
-No terminal da sessão Plasma do usuário de destino:
+Run as your normal user in an accessible Plasma session:
 
 ```bash
 python3 install.py --check
 python3 install.py --apply --dry-run
+python3 install.py
 python3 install.py --apply
 ```
 
-O último comando instala os assets e aplica cores, decoração, fonte, cursor,
-integração GTK, wallpaper, bloqueio, Konsole e Fish. Atualiza também o ícone
-dos lançadores existentes; a estrutura dos painéis atuais é mantida. Reinicie a
-sessão para que todos os aplicativos atualizem o visual.
+Without `--apply`, only assets are installed. The theme appears under **System
+Settings → Colors & Themes → Global Theme**. Application also configures GTK,
+wallpaper, lock screen, Konsole, Fish, and existing launcher icons while preserving
+panel structure, height, and favorites. Reopen Konsole after the first application.
+The scripts respect `XDG_DATA_HOME`, `XDG_CONFIG_HOME`, and `XDG_STATE_HOME`.
 
-Para também reproduzir os painéis:
+To replace the current panels with the supplied layout:
 
 ```bash
 python3 install.py --apply --layout
 ```
 
-**`--layout` substitui os painéis atuais.** Cria um painel inferior flutuante de
-32 px por monitor conectado, com lançador, paginador, tarefas por ícones,
-separador, bandeja, relógio e mostrar desktop. Nenhum painel contém aplicativos fixados. O lançador usa o SVG próprio `papirus-breeze-launcher`, incluído no pacote.
+**`--layout` removes current panels.** The GUI's **Desktop and window layout**
+option has the same panel-replacement intent. Without it, current panels remain.
+Monitor IDs are resolved on the target system; no background service creates
+panels for monitors connected later.
 
-Para disponibilizar o tema sem aplicar:
+The wallpaper package includes original Moe Light and adapted Moe Dark images.
+Referencing the package directory lets Plasma follow Light/Dark; selecting a
+single image manually fixes it. Accounts, monitor IDs, resolutions, personal
+favorites, general shortcuts, authentication, Night Color, scaling, and tiling
+are not imported. Fish settings do not change your login shell or replace your
+whole distribution configuration.
+
+## Quick Settings and removal
+
+This standalone installer does not register the complete Light/Dark pair or expose
+the root installer's `remove` action. For that workflow, use the complete archive
+or repository, then run from its root:
 
 ```bash
-python3 install.py
+python3 install.py install
+python3 install.py remove
 ```
 
-Ele aparecerá em Configurações do Sistema → Cores e temas → Tema global.
-Use `--apply` para incluir wallpaper, bloqueio e GTK. Na interface, marque **Desktop and window layout** para aplicar os painéis de 32 px, um por monitor e sem aplicativos fixados. Deixe essa opção desmarcada para preservar os painéis existentes.
+Those commands are for the **root unified installer**, not this package's script.
+To undo a standalone installation, use its backup restoration procedure below.
 
-Os scripts respeitam `XDG_DATA_HOME`, `XDG_CONFIG_HOME` e `XDG_STATE_HOME`.
-Não importam contas, programas padrão, IDs de monitores ou configurações de
-autenticação do sistema original. Night Color, escalas de monitores e tiling
-continuam sob controle do destino. O splash utiliza o padrão Breeze.
+## Optional login appearance
 
-## Tela de login
-
-O instalador configura aparência completa para Plasma Login Manager ou SDDM:
-paleta, destaque vermelho, ícones, cursor e wallpaper. Os recursos necessários
-ficam acessíveis à conta do greeter, mesmo com a pasta pessoal do usuário privada.
-A interface de autenticação continua sendo a nativa Breeze.
+The administrative helper supports Plasma Login Manager and SDDM/Breeze, using
+native authentication UI. It installs accessible palette/icon/cursor/wallpaper
+resources without restarting the display manager or changing authentication/autologin.
 
 ```bash
 python3 install-login.py --dry-run
 sudo python3 install-login.py
+# Optional: follow a normal graphical-session user's palette.
+sudo python3 install-login.py --follow-user username
 ```
 
-Para acompanhar as trocas entre Light/Dark de um usuário:
+Install both variants for Light/Dark following. From the complete repository root,
+`sudo python3 tools/install-login.py --follow-user "$USER"` installs both profiles.
+Use `--manager plasma-login` or `--manager sddm` to select a backend explicitly.
+Unknown palettes are ignored; static installation remains selected until changed.
+
+Before restoring administrative snapshots or returning to static appearance:
 
 ```bash
-sudo python3 install-login.py --follow-user nome-do-usuario
+sudo systemctl disable --now papirus-breeze-login.path papirus-breeze-login.service
 ```
 
-Instale as duas variantes com essa opção. No repositório unificado, o comando
-`sudo python3 tools/install-login.py --follow-user "$USER"` executado da raiz
-instala ambas e o observador systemd. Uma instalação estática mantém a aparência
-escolhida até a próxima aplicação; o observador seleciona a variante conforme
-a paleta do usuário. Temas fora de Papirus Breeze são ignorados.
+## Backups and restoration
 
-`--manager plasma-login` ou `--manager sddm` permite explicitar o backend.
-A instalação não reinicia o display manager nem altera autenticação/autologin.
-O resultado é usado na próxima tela de login. Para desabilitar acompanhamento,
-execute `sudo systemctl disable --now papirus-breeze-login.path papirus-breeze-login.service`.
-Faça isso também antes de restaurar snapshots; após restaurar unidades, execute
-`sudo systemctl daemon-reload`.
-
-## Backup e restauração
-
-Os instaladores imprimem o caminho de cada backup. Os backups de usuário ficam
-em `~/.local/state/papirus-breeze-dark/backups/` ou no `XDG_STATE_HOME` equivalente;
-os de login, em `/var/lib/papirus-breeze-dark/backups/`.
+Each operation prints its backup. User backups default to
+`~/.local/state/papirus-breeze-dark/backups/`; administrative login backups use
+`/var/lib/papirus-breeze-dark/backups/`.
 
 ```bash
-python3 restore.py /caminho/do/backup --dry-run
-python3 restore.py /caminho/do/backup
+python3 restore.py /path/to/backup --dry-run
+python3 restore.py /path/to/backup
 ```
 
-Use `sudo` para restaurar backups do login. Para restaurar o perfil do usuário,
-encerre a sessão gráfica e execute em um TTY: o Plasma em execução pode gravar
-novamente suas configurações. A restauração recupera snapshots dos arquivos
-inteiros, incluindo alterações posteriores. Restaure múltiplos backups na ordem
-inversa, começando pelo mais recente.
+For Plasma configuration recovery, close the graphical session and use a TTY so
+it does not overwrite restored files. Restoration replaces whole files, including
+settings changed after the snapshot. Restore multiple snapshots newest first.
+Use `sudo` for administrative backups and run `sudo systemctl daemon-reload` if
+unit files were restored. User-level removal in the unified installer is separate
+from administrative login recovery.
 
-Para voltar ao Light, execute o instalador do pacote Light com `--apply`.
-Com o observador habilitado, o login acompanha a paleta escolhida. Sem ele,
-execute também o instalador de login correspondente com `sudo`.
-
-## Verificar e empacotar
+## Validate and package
 
 ```bash
 python3 -m unittest discover -s tests -v
 python3 build.py
 ```
 
-O arquivo para transferência é `dist/papirus-breeze-dark-1.0.13.tar.gz`. Os testes
-usam diretórios temporários; não ativam o tema na sessão atual. O manifesto
-registra hashes SHA-256 dos arquivos distribuídos.
+The archive is `dist/papirus-breeze-dark-1.0.13.tar.gz`. Tests use temporary
+directories and do not apply themes to the live session. The manifest records
+SHA-256 hashes. After intentional source edits in the complete repository, refresh
+hashes with its `tools/project.py manifest` before checking/building. Keep matching
+shared assets synchronized across variants; do not accept corrupted downloads by
+refreshing hashes.
 
-No conjunto unificado, o repositório Git fica na pasta pai; esta pasta contém
-somente o pacote Dark. `dist/` e caches são ignorados pelo Git. Confira [THIRD_PARTY.md](THIRD_PARTY.md) para créditos,
-licenças e descrição das adaptações antes de redistribuir.
-
-## Troca entre Light e Dark
-
-O pacote de wallpaper contém `contents/images/` (Moe Light) e `contents/images_dark/` (Moe Dark). O instalador seleciona a pasta do wallpaper, permitindo que o Plasma acompanhe o esquema claro/escuro automaticamente. Uma imagem avulsa selecionada manualmente continua fixa. O tema global declara o wallpaper Moe e inclui o layout nativo. Marcar **Desktop and window layout** recria um painel de 32 px por monitor, sem aplicativos fixados; sem essa opção, os painéis são preservados. O instalador também oferece `python3 install.py --apply --layout`.
-
-## Ícones vermelhos do sistema
-
-Além das pastas, o tema inclui variantes vermelhas para ações, menus, categorias, dispositivos e bandeja. Os símbolos usam vermelho fixo sem alterar a paleta dos textos. O estilo Plasma `PapirusBreezeRed` contém os sprites vermelhos e herda as superfícies do Breeze, acompanhando Light/Dark. Indicadores de erro, aviso e sucesso preservam os papéis semânticos quando presentes; aplicativos e marcas fora das preferências do sistema mantêm seus ícones originais.
-
-O ícone do Dolphin também usa a variante vermelha (#E93D58), preservando a forma Papirus, em todos os tamanhos e nos aliases org.kde.dolphin, dolphin e system-file-manager.
-
-## Konsole e Fish
-
-Os dois perfis `Papirus Breeze Light` e `Papirus Breeze Dark` acompanham cada
-pacote. Usam JetBrainsMono Nerd Font 11 pt, janela inicial de 96 × 24 caracteres,
-fundo branco ou escuro opaco e paletas ANSI com destaque vermelho.
-O cursor de texto usa um bloco vermelho `#E93D58`, com piscar e animação habilitados.
-`--apply` habilita a sincronização nativa do Konsole com o tema do sistema:
-a troca entre Light/Dark atualiza o perfil automaticamente, inclusive nas sessões
-abertas após essa configuração. O recurso foi validado no Konsole 26.08.2 instalado na origem, com a
-sincronização configurada no grupo LightDarkTheme do konsolerc. Em versões sem esse recurso, selecione
-um dos perfis manualmente. Instale Fish e JetBrainsMono Nerd Font no destino;
-os perfis iniciam o Fish sem trocar o shell de login do usuário.
-
-O Fish mostra somente três linhas: distribuição/arquitetura, kernel e
-Plasma/versão do Fish. O prompt Pure, quando disponível, passa a uma linha com
-vermelho. O instalador preserva a configuração da distribuição e acrescenta um
-bloco identificado no final de `fish/config.fish`, que carrega
-`fish/papirus-breeze.fish` somente em sessões interativas. Isso substitui a
-saudação extensa do Fastfetch. Outros perfis do Konsole permanecem disponíveis.
-Reabra o Konsole após a primeira aplicação para carregar os novos perfis.
-
-## Ícone do lançador
-
-![Ícone do lançador](assets/icons/PapirusBreezeDark/scalable/apps/papirus-breeze-launcher.svg)
-
-O arquivo editável fica em `assets/icons/PapirusBreezeDark/scalable/apps/papirus-breeze-launcher.svg`.
-O elemento `hexagon` define a forma vermelha e o recorte circular transparente.
-Edite `fill` para mudar a cor. O segundo trecho de `d` recorta o círculo de raio 25,
-centrado em 64,64; ajuste seus arcos e extremos para redimensioná-lo.
-O atributo `fill-rule="evenodd"` mantém o centro vazado, mostrando o fundo real do painel.
-A imagem usa fundo transparente e escala de 16 a 512 px. É uma recriação vetorial
-própria do desenho, sob GPL-3.0-only.
-
-`--apply` atualiza o ícone dos lançadores existentes. O layout nativo e `--layout`
-também usam esse ícone nos painéis novos. Para atualizar o desenho após editá-lo,
-reinstale os arquivos e recarregue o cache de ícones; a geração e verificação do
-pacote exigem atualizar os hashes em `manifest.json`.
+Read [THIRD_PARTY.md](THIRD_PARTY.md) and the files in [LICENSES](LICENSES/) before
+redistribution. The standalone archive includes its own credits and legal notices.

@@ -1,24 +1,26 @@
-# Créditos e licenças
+# Credits and licenses
 
-A licença na raiz cobre a composição e o código próprios. Os recursos de terceiros
-mantêm suas licenças individuais; o conjunto não deve ser tratado como se todos
-os seus arquivos tivessem uma única licença.
+The root license covers original code and composition. Third-party resources
+retain their individual licenses; the entire collection must not be treated as
+if every file shared a single license.
 
-| Componente | Origem | Licença e tratamento |
+| Component | Source | License and treatment |
 | --- | --- | --- |
-| Papirus / pastas Catppuccin | Papirus Development Team / Catppuccin | SVGs Papirus GPL-3.0; aviso MIT do Catppuccin preservado |
-| Breeze, paletas e sprites | KDE | Avisos LGPL e autoria originais preservados nos pacotes |
-| Moe Light | jomada, versão 1.1 | CC-BY-SA-4.0; metadados incluídos |
-| Moe Dark | Adaptação de Delta com ImageGen | Derivado distribuído em CC-BY-SA-4.0, com registro da adaptação e geração |
-| Amy Light Aurorae | l4k1, versão 1.2 | GPLv3 conforme metadados originais |
-| Amy Papirus Dark | Adaptação de Delta da decoração Amy | Mesma geometria, superfícies adaptadas; licença original mantida |
-| SVG do lançador, instaladores, perfis e composição | Delta | GPL-3.0-only |
+| Papirus / Catppuccin folders | Papirus Development Team / Catppuccin | Papirus SVGs: GPL-3.0; Catppuccin MIT notice preserved |
+| Breeze palettes and sprites | KDE | Original LGPL and authorship notices retained in packages |
+| Moe Light | jomada, version 1.1 | CC-BY-SA-4.0; original metadata included |
+| Moe Dark | Delta adaptation using ImageGen | CC-BY-SA-4.0 derivative with adaptation/generation records |
+| Amy Light Aurorae | l4k1, version 1.2 | GPLv3 according to original metadata |
+| Amy Papirus Dark | Delta adaptation of Amy | Geometry retained, dark surfaces adapted, original license retained |
+| Launcher SVG, installers, profiles, composition | Delta | GPL-3.0-only |
 
-Veja os créditos completos em [Light](light/THIRD_PARTY.md) e
-[Dark](dark/THIRD_PARTY.md), e os textos em [light/LICENSES](light/LICENSES/) e
-[dark/LICENSES](dark/LICENSES/). Os diretórios de wallpaper incluem `ADAPTATION.md`
-e `GENERATION.md` para documentar a procedência da versão Dark.
+See detailed [Light credits](light/THIRD_PARTY.md), [Dark credits](dark/THIRD_PARTY.md),
+and license texts in [light/LICENSES](light/LICENSES/) and [dark/LICENSES](dark/LICENSES/).
+Wallpaper directories include `ADAPTATION.md` and `GENERATION.md` for Dark provenance.
 
-Fontes, programas Fish/Konsole, prompt Pure, temas base Breeze e biblioteca Papirus
-completa são dependências externas. Não são redistribuídos integralmente aqui.
-O lançador em uso é um SVG vetorial próprio; não incorpora o bitmap de referência.
+Fonts, Fish/Konsole, Pure, base Breeze themes, and the full Papirus library are
+external dependencies, not redistributed in full. The launcher is an original
+vector SVG and does not embed its bitmap reference.
+
+Documentation translation does not replace original legal notices or translated
+upstream metadata. Preserve those files and their attribution when redistributing.

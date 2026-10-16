@@ -1,61 +1,60 @@
-# Alterações
+# Changelog
 
-Este registro descreve as mudanças conhecidas do trabalho local. Não representa
-releases ou tags já publicados no GitHub.
+This file records known changes. An entry does not imply a published release or tag.
 
-## Próximas alterações
+## Unreleased
 
-- Ponteiro do mouse escuro no tema Light e branco no tema Dark, incluindo GTK e login.
-- Mantido o tamanho de 18 px nas duas variantes.
+- Add a unified installer with a menu, prerequisite checks, installation, updates, and removal.
+- Register the Light/Dark Quick Settings pair and restore previous choices on removal.
+- Preserve customized resources, third-party profiles, dependencies, and backups during removal.
+- Build a complete distribution archive in `dist/` alongside the standalone packages.
+- Use a dark mouse pointer in Light and a white pointer in Dark, including GTK and login; keep 18 px sizing.
+- Make English the default for documentation and command-line messages; provide an optional pt-BR guide.
 
-## Organização unificada — 16 de outubro de 2026
+## Unified repository — October 16, 2026
 
-- Light e Dark reunidos em `light/` e `dark/`, com um Git na raiz.
-- Históricos Git anteriores preservados fora do repositório, em bundles e metadados.
-- Documentação central de instalação, aparência, personalização, manutenção e restauração.
-- Ferramenta única para conferir integridade, executar testes, atualizar hashes e empacotar.
-- Mantida a versão visual 1.0.11: a reorganização não altera o desktop instalado.
+- Combine Light and Dark under `light/` and `dark/`, with one Git repository at the root.
+- Record the original repositories' history in external bundles and metadata on the source workstation.
+- Centralize installation, appearance, customization, development, and recovery documentation.
+- Add one tool for integrity checks, tests, manifest updates, and packaging.
+- Preserve the visual version imported at the time: 1.0.11. The directory reorganization did not change the installed desktop.
 
 ## 1.0.13
 
-- Login passa a receber paleta, destaque vermelho, ícones, cursor e wallpaper.
-- Corrigido o acesso a recursos que estavam somente na pasta pessoal privada.
-- Paletas do greeter adaptam cores complementares para refletir Light/Dark.
-- Adicionado acompanhamento opcional de um usuário via observador systemd, com
-  perfis fixos administrativos e sem reiniciar o gerenciador de login.
-- Suporte a Plasma Login Manager e SDDM, preservando autenticação e autologin.
+- Include palette, red accent, icons, cursor, and wallpaper in login appearance.
+- Make greeter assets accessible outside the user's private home directory.
+- Adapt greeter complementary colors to the selected Light/Dark window colors.
+- Add optional per-user theme following through systemd path/service units and fixed administrative profiles.
+- Support Plasma Login Manager and SDDM while preserving authentication and autologin.
 
 ## 1.0.12
 
-- Corrigida a lixeira que aparecia como avatar no Dolphin: os nomes `user-trash`
-  e `user-trash-full` agora têm ícones locais explícitos, incluindo aliases simbólicos.
-- Incluídos os estados vazia/cheia vermelhos, preservando a forma Papirus em todos os tamanhos.
-- Testes impedem a ausência desses aliases e sua troca pela geometria do ícone de usuário.
+- Add explicit `user-trash` and `user-trash-full` icons so Dolphin does not fall back to a user avatar.
+- Include empty/full red trash icons and symbolic aliases with the original geometry.
+- Check that these aliases exist and do not use the user icon's geometry.
 
 ## 1.0.11
 
-- Círculo central do lançador convertido em recorte transparente real.
-- SVG usa `fill-rule="evenodd"`, mantendo o hexágono vermelho e o fundo vazado.
+- Replace the launcher's center with a real transparent cutout using `fill-rule="evenodd"`.
 
 ## 1.0.10
 
-- Criado o lançador vetorial editável: hexágono vermelho arredondado com círculo central.
-- Ícone incluído em ambos os temas de ícones, layouts nativos e atualização dos painéis existentes.
+- Add an editable red rounded hexagonal launcher SVG with a transparent circular center.
+- Include it in both icon themes, native layouts, and existing-panel updates.
 
 ## 1.0.9
 
-- Cursor do Konsole em bloco vermelho, com piscar e animação habilitados nos dois perfis.
+- Use a red block cursor with blinking and animation in both Konsole profiles.
 
 ## 1.0.8
 
-- Perfis Konsole Light/Dark com sincronização nativa ao tema do sistema.
-- Terminal com fundo branco/escuro, JetBrainsMono Nerd Font 11 pt e tamanho inicial de 96 × 24.
-- Fish com saudação de três linhas e prompt Pure em uma linha, preservando configuração da distribuição.
+- Add Light/Dark Konsole profiles with native system-theme synchronization.
+- Use JetBrainsMono Nerd Font 11 pt and an initial 96 × 24 terminal size.
+- Add a three-line Fish greeting and compact single-line Pure settings while retaining distribution configuration.
 
-## Base do conjunto
+## Original theme set
 
-- Exportação das variantes Light/Dark, wallpaper e bloqueio adaptativos e instaladores de login.
-- Layout nativo com um painel de 32 px por monitor, sem aplicativos fixados.
-- Pastas, aliases genéricos, subpastas e ícones de sistema vermelhos.
-- Estilo Plasma `PapirusBreezeRed` e ícone vermelho do Dolphin.
-- Instaladores com backup, restauração, testes, manifestos SHA-256 e empacotamento independente.
+- Export Light/Dark themes, adaptive wallpapers, lock-screen settings, and login installers.
+- Include an optional native 32 px panel per connected monitor with no pinned applications.
+- Provide red folders, system icons, Dolphin icons, and Plasma sprites.
+- Include installation backups, restoration, tests, SHA-256 manifests, and independent packaging.

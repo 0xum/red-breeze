@@ -1,21 +1,19 @@
-# Migração para o repositório unificado
+# Unified repository migration
 
-Em 16 de outubro de 2026, as pastas locais foram reorganizadas:
+## Historical source-workstation migration
 
-| Antes, dentro de `Projects/` | Agora, dentro de `Projects/papirus-breeze/` |
+On October 16, 2026, the original local packages were reorganized:
+
+| Previous directory under `Projects/` | Directory under the unified repository |
 | --- | --- |
 | `papirus-breeze-light/` | `light/` |
 | `papirus-breeze-dark/` | `dark/` |
 
-Os conteúdos foram movidos, incluindo arquivos de distribuição locais ignorados
-pelo Git. As cópias instaladas em `~/.local/share/` e as configurações da sessão
-não dependem do caminho do repositório e não foram alteradas por essa migração.
+Installed assets and session configuration were independent of the checkout path.
+The reorganization itself did not change the installed appearance.
 
-## Histórico preservado
-
-Antes de mover as pastas, os dois repositórios estavam sem alterações pendentes.
-Foram criados e verificados bundles completos, além de preservados os diretórios
-Git originais e logs em:
+The source-workstation migration record reported clean original repositories,
+verified Git bundles, original Git directories, and logs under:
 
 ```text
 ~/.local/state/papirus-breeze/repository-backups/20261016-141813/
@@ -28,30 +26,29 @@ Git originais e logs em:
 └── migration.json
 ```
 
-Esse backup fica fora do repositório e não será publicado. `migration.json`
-registra caminhos originais/novos e os HEADs anteriores. Os HEADs na migração eram:
-
-| Variante | Commit anterior |
-| --- | --- |
-| Light | `57c76d5` — Torna transparente o centro do ícone do lançador |
-| Dark | `8aeb91a` — Torna transparente o centro do ícone do lançador |
-
-Para consultar o histórico antigo em uma pasta separada, pode-se clonar um bundle:
+These are external historical backups, not files included in a clone or release.
+Do not assume they exist on another machine. If you have those bundles, inspect
+them before using them and clone into a new directory, for example:
 
 ```bash
-git clone ~/.local/state/papirus-breeze/repository-backups/20261016-141813/papirus-breeze-light.bundle /caminho/novo/historico-light
+git clone /path/to/papirus-breeze-light.bundle /path/to/new/light-history
 ```
 
-Escolha um destino novo. Não restaure os diretórios Git antigos dentro das
-variantes atuais: o conjunto usa somente o `.git` da raiz.
+The recorded original heads were Light `57c76d5` and Dark `8aeb91a`, both changes
+to the launcher's transparent center. The initial unified import represented
+visual version 1.0.11 and used separate commits for layout, Light, Dark, tooling,
+and documentation. No remote was created during that original local operation;
+this does not describe the current repository's remote configuration.
 
-## Histórico novo
+## Current checkout and installed copies
 
-O Git unificado foi iniciado na branch `main`, com commits separados para
-estrutura do repositório, importação Light, importação Dark, manutenção e docs.
-O conteúdo importado corresponde à versão 1.0.11 e mantém a instalação independente
-de cada pacote. Nenhum remoto foi criado ou publicação feita nessa etapa.
+The project is now available at [0xum/red-breeze](https://github.com/0xum/red-breeze).
+A checkout can have any directory name. Use `git rev-parse --show-toplevel`,
+`git status`, and `git remote -v` to establish its current state. Do not restore
+old `.git` directories inside `light/` or `dark/`.
 
-Use a nova pasta raiz no GitHub Desktop e atualize atalhos locais que apontavam
-para as pastas antigas. Os instaladores resolvem seus assets em relação ao próprio
-arquivo, portanto continuam funcionando a partir de qualquer diretório de execução.
+Installers locate sources relative to their own file, so moving the checkout does
+not relocate installed assets. Update local shortcuts if the checkout moves.
+To adopt an installation previously made with standalone scripts, run
+`python3 install.py install` from the complete repository; the unified remover
+then manages its assets. See [installation and removal](INSTALLATION.md#updates-and-removal).

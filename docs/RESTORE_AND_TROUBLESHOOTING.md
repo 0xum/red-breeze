@@ -1,117 +1,130 @@
-# Backups, restauração e solução de problemas
+# Backups, restoration, and troubleshooting
 
-## Onde ficam os backups
+## Backup locations
 
-Cada instalação imprime o caminho do snapshot. Por padrão:
+Each operation prints its snapshot directory. Default locations:
 
-| Operação | Local |
+| Operation | Directory |
 | --- | --- |
-| Usuário Light | `~/.local/state/papirus-breeze-light/backups/<data-hora>/` |
-| Usuário Dark | `~/.local/state/papirus-breeze-dark/backups/<data-hora>/` |
-| Login Light | `/var/lib/papirus-breeze-light/backups/<data-hora>/` |
-| Login Dark | `/var/lib/papirus-breeze-dark/backups/<data-hora>/` |
+| Unified install/remove | `~/.local/state/papirus-breeze/backups/<timestamp>/` |
+| Light user install | `~/.local/state/papirus-breeze-light/backups/<timestamp>/` |
+| Dark user install | `~/.local/state/papirus-breeze-dark/backups/<timestamp>/` |
+| Light login install | `/var/lib/papirus-breeze-light/backups/<timestamp>/` |
+| Dark login install | `/var/lib/papirus-breeze-dark/backups/<timestamp>/` |
 
-O estado de usuário respeita `XDG_STATE_HOME`. `restore.json` lista os destinos,
-se existiam e onde estão suas cópias. Recursos inexistentes antes da instalação
-são removidos durante a restauração. Diretórios de assets do pacote são copiados
-como unidades; não misture arquivos pessoais nesses diretórios dedicados.
+User backups respect `XDG_STATE_HOME`. `restore.json` records targets, whether they
+existed, and snapshot paths. Restoration removes resources created by the original
+operation. Asset directories are snapshotted as units; keep personal additions out
+of these reserved directories.
 
-## Restaurar
+## Restore a snapshot
 
-Para restaurar configurações do Plasma, encerre a sessão gráfica e execute em
-um TTY, pois a sessão em execução pode gravar novamente seus arquivos:
+For normal unified removal, use `python3 install.py remove`. It preserves unrelated
+configuration and custom resources. Snapshot restoration is a recovery operation
+that restores **whole files**, including settings changed after the snapshot.
+
+Close the graphical Plasma session and use a TTY before restoring its configuration,
+because a running session can write those files again:
 
 ```bash
-python3 light/restore.py /caminho/do/backup --dry-run
-python3 light/restore.py /caminho/do/backup
+python3 light/restore.py /path/to/backup --dry-run
+python3 light/restore.py /path/to/backup
 ```
 
-Para snapshots do login, desabilite o acompanhamento antes de restaurar:
+Both variant restorers accept the same format, including unified backups.
+For multiple operations, restore in reverse order, newest first. Review the
+`--dry-run` output before choosing snapshots.
+
+Before restoring administrative login snapshots, disable theme following:
 
 ```bash
 sudo systemctl disable --now papirus-breeze-login.path papirus-breeze-login.service
 ```
 
-Execute a restauração com `sudo` e depois `sudo systemctl daemon-reload` se os
-snapshots incluírem unidades systemd. Ambos os restauradores
-leem o mesmo formato de backup. A restauração recupera **arquivos inteiros**,
-inclusive alterações pessoais feitas depois do snapshot. Se houve várias
-instalações, restaure em ordem inversa, começando pela mais recente.
+Restore those snapshots with `sudo`. Run `sudo systemctl daemon-reload` afterward
+if unit files were restored. To undo both login-profile installations, restore
+both administrative snapshots in reverse order. The user remover does not undo
+this separate installation.
 
-Para simplesmente escolher a outra aparência, prefira seu instalador com
-`--apply`. Isso não é uma restauração do estado anterior. Com o acompanhamento administrativo habilitado, o login segue a paleta
-Papirus selecionada. Sem ele, use o instalador de login correspondente.
+To change appearance rather than restore state, use
+`python3 install.py install --apply light` or `--apply dark`. An installed login
+watcher follows the selected Papirus palette; otherwise apply the matching static
+login profile separately.
 
-## O painel voltou ao padrão
+## Quick Settings does not show both variants
 
-Confirme que instalou esta versão do pacote e selecionou o tema pelo ID próprio,
-`com.delta.papirus-breeze-light` ou `com.delta.papirus-breeze-dark`. O layout nativo
-fica em `contents/layouts/org.kde.plasma.desktop-layout.js` e acompanha o pacote.
-Na seleção do tema, **Desktop and window layout** recria os painéis. Pelo terminal,
-use `--apply --layout`. Isso remove os painéis atuais.
+Run `python3 install.py status`. The keys should be:
 
-Sem essa opção, a altura e os favoritos atuais são preservados. Um monitor ligado
-após a aplicação não recebe painel automaticamente por um serviço deste pacote.
+```ini
+[KDE]
+DefaultLightLookAndFeel=com.delta.papirus-breeze-light
+DefaultDarkLookAndFeel=com.delta.papirus-breeze-dark
+```
 
-## Pastas ou ícones ainda aparecem roxos/azuis
+Rerun `python3 install.py install` and reopen System Settings. Individual package
+installers do not register the full pair. A removed/customized asset directory may
+be preserved deliberately; inspect removal output and backups before deleting it.
 
-Confira o tema de ícones ativo e a presença de Papirus/Papirus-Dark. O complemento
-inclui aliases genéricos para subpastas e as variantes do Dolphin. Ícones antigos
-podem estar no cache de aplicativos já abertos; reabra-os ou inicie nova sessão.
+## Panels changed unexpectedly
 
-Ícones simbólicos da bandeja podem vir do estilo Plasma. Confira também
-`PapirusBreezeRed`, além do tema de ícones. Aplicativos externos ao conjunto
-continuam herdando seus ícones originais.
+`--layout` and the GUI's **Desktop and window layout** option replace panels.
+Omit them to retain panel height and pinned applications. The supplied layout
+creates one floating 32 px panel per currently connected monitor. No service
+creates panels when monitors are connected later.
 
-## A lixeira aparece como um usuário
+## Folders or icons are still blue or purple
 
-Isso foi corrigido na versão 1.0.12. Sem os aliases explícitos `user-trash` e
-`user-trash-full`, o KDE podia reduzir o nome para `user` e escolher o avatar do
-complemento antes de consultar a lixeira do tema herdado. Os pacotes agora incluem
-os dois estados e os aliases simbólicos em todos os tamanhos. Reinstale a variante
-e atualize o cache da sessão ou reabra o aplicativo. O bookmark de lixeira deve
-continuar usando `user-trash`; não é necessário alterar seus lugares pessoais.
+Check the active icon theme, Papirus/Papirus-Dark dependencies, and
+`PapirusBreezeRed` Plasma style. The overlay includes generic folder aliases and
+Dolphin icons. Running applications may cache icons; reopen them or start a new
+session. Unrelated applications inherit their original base icons.
 
-## O centro do lançador parece branco ou preto
+## Trash appears as a user avatar
 
-O SVG usa um recorte transparente real. O centro mostra o fundo sob ele; portanto
-pode parecer branco, escuro ou translúcido conforme o painel e wallpaper. Não é
-uma cor de preenchimento. Se aparece um desenho antigo, reinstale o SVG e atualize
-a sessão para descartar cache. Mantenha `fill-rule="evenodd"` ao personalizar.
+Version 1.0.12 added explicit empty/full trash icons and symbolic aliases. Without
+`user-trash` and `user-trash-full`, KDE could shorten the name to `user` and use
+the avatar. Reinstall and refresh the application/session. The trash bookmark
+should still use `user-trash`; personal Places entries do not need changing.
 
-## Konsole não acompanha Light/Dark
+## The launcher's center looks white or black
 
-Instale ambos os perfis, aplique o pacote com `--apply` e reabra o Konsole após a
-primeira configuração. Confirme a sincronização em `konsolerc`, grupo
-`LightDarkTheme`, e os nomes dos perfis. Versões sem suporte nativo podem usar
-seleção manual. A versão validada na origem foi 26.08.2.
+It is a transparent cutout and shows the background beneath it. If an old solid
+version remains, reinstall the SVG and refresh the session cache. Keep
+`fill-rule="evenodd"` when editing the compound path.
 
-Cursor de texto vermelho é uma opção de cada `.profile`; não muda o cursor do
-mouse. Fish e fonte precisam estar instalados para reproduzir todo o terminal.
+## Konsole does not follow Light/Dark
 
-## Fish continua mostrando Fastfetch
+Install both profiles, apply a variant at least once, and reopen Konsole. Check
+`konsolerc`'s `LightDarkTheme` group and the exact profile display names. Older
+versions may require manual profile selection; the source workstation used
+Konsole 26.08.2. The red terminal cursor is separate from the mouse pointer.
+Fish and the configured font are external prerequisites.
 
-O bloco Papirus Breeze precisa estar ao final de `fish/config.fish`, depois de
-carregar a configuração da distribuição. Ele carrega o helper apenas em sessões
-interativas. Abra uma nova sessão Fish. Outra redefinição posterior de
-`fish_greeting` pode substituir a saudação compacta.
+## Fish still displays Fastfetch
 
-## Wallpaper não troca ou o login usa outra imagem
+The managed block must come after distribution setup in `fish/config.fish` and
+source the helper only in interactive sessions. Start a new Fish session. A later
+`fish_greeting` definition can replace the compact greeting.
 
-Desktop e bloqueio devem referenciar a pasta do pacote adaptativo. Uma imagem
-avulsa selecionada manualmente fica fixa. O login só acompanha a paleta após a instalação administrativa com `--follow-user`.
-Confira `systemctl status papirus-breeze-login.path` e
-`journalctl -u papirus-breeze-login.service`. O usuário observado está em
-`/etc/papirus-breeze-login.json`; a última variante aplicada aparece em
-`/var/lib/papirus-breeze-login/current.json`. Um tema externo a Papirus Breeze é
-ignorado. As duas variantes precisam estar instaladas no login para alternar.
+## Wallpaper does not follow the palette or login uses another image
 
-Em uma instalação estática, execute o instalador da variante desejada. Se trocar
-o gerenciador de login, reinstale os perfis para a nova conta e backend.
+Desktop and lock-screen settings should reference the adaptive package directory;
+a manually selected single image remains fixed. Login only follows after
+administrative installation with `--follow-user`. Check:
 
-## Hash divergente ou dependência ausente
+```bash
+systemctl status papirus-breeze-login.path
+journalctl -u papirus-breeze-login.service
+```
 
-Se editou o código intencionalmente, siga a atualização dos manifestos em
-[Personalização](CUSTOMIZATION.md). Se não editou, recupere a cópia correta pelo Git
-ou pelo arquivo de distribuição. Os instaladores não baixam arquivos nem instalam
-dependências automaticamente; use o gerenciador de pacotes da distribuição.
+The watched user is recorded in `/etc/papirus-breeze-login.json`; last applied
+state is `/var/lib/papirus-breeze-login/current.json`. Other themes are ignored.
+Both login variants must be installed. After changing login managers, reinstall
+the profiles for the new account/backend.
+
+## A hash differs or a dependency is missing
+
+For intentional source edits, follow [customization](CUSTOMIZATION.md) and update
+manifests. Otherwise recover a correct copy from Git or a distribution archive;
+do not accept corrupted content by refreshing hashes. Install missing dependencies
+through your distribution. Installers do not download or install them automatically.

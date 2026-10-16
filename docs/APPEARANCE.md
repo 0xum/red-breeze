@@ -1,108 +1,107 @@
-# Aparência e comportamento
+# Appearance and behavior
 
-## Identidade visual
+## Visual identity
 
-O destaque é **vermelho `#E93D58`**, RGB `233,61,88`. Textos comuns mantêm suas cores
-claras/escuras para leitura. A fonte geral é Noto Sans 10 pt; animações KDE usam
-fator `0.25`; o alternador de janelas e o splash são Breeze.
+The accent is **`#E93D58`**, RGB `233,61,88`. Ordinary text retains readable
+light/dark colors. The general font is Noto Sans 10 pt; KDE animation duration
+uses factor `0.25`. The window switcher and splash use Breeze.
 
-| Componente | Light | Dark |
+| Component | Light | Dark |
 | --- | --- | --- |
-| Cores | `PapirusBreezeLight`, base Breeze Light | `PapirusBreezeDark`, base Breeze Dark |
-| Tema de ícones | `PapirusBreezeLight`, herda Papirus | `PapirusBreezeDark`, herda Papirus-Dark |
-| Estilo Plasma | `PapirusBreezeRed` | `PapirusBreezeRed` |
-| Estilo Qt | Breeze | Breeze |
-| GTK | Breeze, preferência clara | Breeze-Dark, preferência escura |
-| Aurorae | `Amy-Light-Aurorae-6` | `Amy-Papirus-Dark` |
-| Mouse | `breeze_cursors`, 18 px | `Breeze_Light`, 18 px |
-| Wallpaper registrado | `Moe` | `MoeDark` |
+| Colors | `PapirusBreezeLight`, based on Breeze Light | `PapirusBreezeDark`, based on Breeze Dark |
+| Icons | `PapirusBreezeLight`, inherits Papirus | `PapirusBreezeDark`, inherits Papirus-Dark |
+| Plasma style | `PapirusBreezeRed` | `PapirusBreezeRed` |
+| Qt style | Breeze | Breeze |
+| GTK | Breeze, light preference | Breeze-Dark, dark preference |
+| Aurorae decoration | `Amy-Light-Aurorae-6` | `Amy-Papirus-Dark` |
+| Mouse pointer | `breeze_cursors`, dark, 18 px | `Breeze_Light`, white, 18 px |
+| Registered wallpaper | `Moe` | `MoeDark` |
 
-A decoração tem botões pequenos; menu à esquerda e minimizar, maximizar e fechar
-à direita. A adaptação Dark preserva as proporções da Amy Light.
+Window decorations use small buttons: menu on the left; minimize, maximize, and
+close on the right. The Dark adaptation keeps Amy Light's geometry.
 
-## Painéis
+## Quick Settings
 
-O layout nativo e o script de instalação criam um painel inferior por monitor,
-altura de **32 px**, flutuante, com largura total, alinhamento central e opacidade
-adaptativa. A sequência de widgets é lançador, paginador, tarefas por ícones,
-separador, bandeja, relógio e mostrar desktop.
+The unified installer registers the pair in `[KDE]` of `kdeglobals` using
+`DefaultLightLookAndFeel` and `DefaultDarkLookAndFeel`. Reopen System Settings to
+refresh its Quick Settings page. Installing without `--apply` does not select a
+new appearance. Automatic switching by time of day remains the user's choice.
 
-A lista de lançadores fixados das tarefas começa vazia. O primeiro lançador tem
-atalho `Alt+F1`. A aplicação sem `--layout` atualiza o ícone dos lançadores existentes
-sem recriar painéis ou apagar favoritos da taskbar. Layouts são aplicados aos
-monitores conectados naquele momento; os IDs são resolvidos no destino.
+## Panels
 
-## Ícones vermelhos
+The optional native layout and installation script create one bottom panel per
+connected monitor: **32 px**, floating, full width, centered, and adaptively opaque.
+Widget order is launcher, pager, icon-only tasks, spacer, system tray, clock,
+and Show Desktop. No applications are initially pinned. The launcher has `Alt+F1`.
 
-O complemento inclui **835 aliases de pastas**: 539 Papirus Red, 7 derivados
-Copy Cloud recoloridos e 289 aliases adicionais. As referências genéricas
-`inode-directory`, `gtk-directory` e `stock_folder` também apontam para pastas
-vermelhas, cobrindo subpastas e atalhos entre categorias.
+Application without `--layout` updates existing launcher icons while retaining
+panel structure and taskbar favorites. Monitor IDs are resolved on the target
+system; only monitors present at application time are configured.
 
-Ações, menus, categorias, dispositivos e bandeja têm variantes vermelhas. Nos
-SVGs adaptados, glifos neutros usam vermelho fixo para evitar a recoloração
-automática do KDE como texto. Indicadores semânticos de erro, aviso e sucesso
-preservam seus papéis quando presentes. Outros aplicativos e marcas mantêm os
-ícones herdados dos temas base.
+## Red icons
 
-A bandeja do Plasma também usa sprites próprios em `PapirusBreezeRed`, pois esses
-ícones podem vir do estilo Plasma em vez do tema de ícones. As superfícies são
-herdadas do Breeze e acompanham a paleta Light/Dark.
+The folder overlay includes **835 aliases**: 539 Papirus Red aliases, 7 recolored
+Copy Cloud derivatives, and 289 additional aliases. Generic names such as
+`inode-directory`, `gtk-directory`, and `stock_folder` resolve to red folders.
 
-Dolphin usa vermelho `#E93D58` e sombra `#a62a3e`, preservando a forma Papirus.
-Os aliases `org.kde.dolphin`, `dolphin` e `system-file-manager` estão incluídos.
+Actions, menus, categories, devices, and tray icons have red variants. Adapted
+neutral SVG glyphs use a fixed red so KDE does not recolor them as text. Existing
+error, warning, and success indicators retain their semantic roles. Unrelated
+applications and brands inherit their original base-theme icons.
 
-A lixeira tem ícones próprios para vazia e cheia (`user-trash` e `user-trash-full`),
-incluindo os nomes simbólicos em todos os tamanhos. Isso evita que a redução de
-nomes do KDE selecione o avatar genérico `user`.
+Plasma tray icons can come from the Plasma style rather than the icon theme, so
+`PapirusBreezeRed` includes matching sprites. Surfaces inherit Breeze and follow
+the active palette. Dolphin uses `#E93D58` with `#a62a3e` shading; `org.kde.dolphin`,
+`dolphin`, and `system-file-manager` aliases are included.
 
-## Lançador SVG
+Empty/full trash icons use explicit `user-trash`/`user-trash-full` and symbolic
+aliases at every included size. This prevents KDE's name fallback from selecting
+the generic `user` avatar.
 
-`papirus-breeze-launcher.svg` contém um hexágono vermelho arredondado com recorte
-circular **transparente**, não branco. O centro deixa aparecer o fundo real do
-painel. O arquivo é vetorial, sem bitmap incorporado, e usa `fill-rule="evenodd"`.
-Está registrado no diretório `scalable/apps` dos dois temas de ícones.
+## Launcher SVG
 
-O layout novo e a atualização de painéis existentes usam o nome lógico
-`papirus-breeze-launcher`, sem caminho pessoal absoluto.
+`papirus-breeze-launcher.svg` is a rounded red hexagon with a **transparent circular
+cutout**. Its center shows the panel background. It contains no embedded bitmap
+and uses `fill-rule="evenodd"`. Both icon themes register it under `scalable/apps`.
+New layouts and existing-panel updates use the logical name
+`papirus-breeze-launcher`, without a personal absolute path.
 
-## Wallpaper, bloqueio e login
+## Wallpaper, lock screen, and login
 
-Cada pacote de wallpaper contém a imagem clara original em `contents/images/`
-(3073 × 1420) e a escura em `contents/images_dark/` (1844 × 853). Desktop e bloqueio
-referenciam a pasta do pacote, permitindo a seleção clara/escura pelo Plasma.
-Selecionar uma imagem avulsa manualmente fixa essa imagem.
+Each wallpaper package contains the original light image in `contents/images/`
+(3073 × 1420) and the dark image in `contents/images_dark/` (1844 × 853).
+Desktop and lock-screen settings reference the package directory so Plasma can
+choose the matching image. Selecting a single image manually fixes that image.
 
-O login precisa de instalação administrativa inicial, pois roda em outra conta.
-Com `--follow-user`, paleta, ícones, cursor e wallpaper acompanham as variantes
-Papirus Light/Dark; sem o observador, a seleção fica estática. O sincronizador usa
-perfis fixos instalados por root e a interface nativa do gerenciador. As paletas
-do greeter ajustam `Colors:Complementary` para as cores de Window, pois ambos os
-greeters Breeze usam esse grupo. As paletas do desktop permanecem intactas.
+Login appearance needs administrative installation because the greeter runs as
+another account. With `--follow-user`, palette, icons, cursor, and wallpaper follow
+the Papirus Light/Dark selection. Otherwise the selected appearance stays static.
+The watcher selects fixed profiles installed by root and uses the native greeter
+interface. Greeter `Colors:Complementary` matches window colors; desktop palettes
+are unchanged. See [installation](INSTALLATION.md#login-appearance).
 
 ## Konsole
 
-Ambos os pacotes incluem os perfis `Papirus Breeze Light` e `Papirus Breeze Dark`.
-A configuração `LightDarkTheme` do `konsolerc` ativa a sincronização nativa com a
-paleta do sistema. Ela foi validada inclusive em uma sessão já aberta.
+Both packages include `Papirus Breeze Light` and `Papirus Breeze Dark` profiles.
+The `LightDarkTheme` group in `konsolerc` enables native system-palette following
+on supported Konsole versions. Reopen Konsole after the first configuration.
 
-- Fundo branco no Light e carvão no Dark; opacidade 1, sem blur.
-- JetBrainsMono Nerd Font, 11 pt; janela inicial de 96 colunas × 24 linhas.
-- Paletas ANSI adaptadas para legibilidade e destaque vermelho.
-- Cursor em bloco vermelho `#E93D58`, com piscar e animação habilitados.
-- Texto sob o cursor em `20,22,24`; histórico de 10.000 linhas.
-- Comando inicial `fish`; outros perfis existentes são preservados.
+- White Light background; charcoal Dark background; opacity 1 and no blur.
+- JetBrainsMono Nerd Font, 11 pt; initial size 96 columns × 24 lines.
+- ANSI palettes adapted for readability and a red accent.
+- A red `#E93D58` block cursor with blinking and animation.
+- Cursor text color `20,22,24`; history of 10,000 lines.
+- Initial command `fish`; unrelated profiles remain available.
 
-O cursor do terminal é independente do tema de cursor do mouse.
+The terminal cursor is independent of the mouse pointer theme.
 
 ## Fish
 
-A saudação tem três linhas: distribuição/arquitetura, kernel e desktop/versão do
-Fish. Não usa logo ASCII ou Fastfetch. Um bloco gerenciado no fim de
-`fish/config.fish` carrega `fish/papirus-breeze.fish` somente em sessões interativas,
-depois da configuração da distribuição.
+The greeting shows distribution/architecture, kernel, and desktop/Fish version on
+three lines. A managed block at the end of `fish/config.fish` sources
+`fish/papirus-breeze.fish` only for interactive sessions, after the distribution
+configuration. It does not use an ASCII logo or Fastfetch.
 
-O prompt Pure existente, quando disponível, passa a uma linha com destaque
-vermelho. Os ajustes usam variáveis globais da sessão, sem substituir
-`fish_variables` ou alterar o shell de login do usuário. A configuração da
-distribuição e seus aliases continuam sendo carregados.
+When Pure is already installed, its settings request a compact single-line red
+prompt. Session-global variables are used; the installer does not replace
+`fish_variables`, change the login shell, or discard distribution aliases.

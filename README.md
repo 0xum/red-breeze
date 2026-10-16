@@ -1,95 +1,101 @@
 # Papirus Breeze
 
-Temas pessoais **Light e Dark para KDE Plasma 6**, reunidos em um único
-repositório. Versão dos pacotes: **1.0.13**.
+Light and Dark themes for **KDE Plasma 6**, built around Breeze, red Papirus
+icons, and the **`#E93D58`** accent. Package version: **1.0.13**.
 
-O conjunto usa Breeze, ícones Papirus com variantes vermelhas e destaque
-**vermelho `#E93D58`**. Inclui desktop, painéis, wallpaper adaptativo, bloqueio,
-configuração de wallpaper do login, Konsole e Fish.
+English is the default language for documentation and command-line output.
+An optional [Brazilian Portuguese guide](README.pt-BR.md) is available.
 
-![Ícone do lançador: hexágono vermelho com centro transparente](light/assets/icons/PapirusBreezeLight/scalable/apps/papirus-breeze-launcher.svg)
+![Red launcher with a transparent center](light/assets/icons/PapirusBreezeLight/scalable/apps/papirus-breeze-launcher.svg)
 
-| Recurso | Light | Dark |
+| Component | Light | Dark |
 | --- | --- | --- |
-| Tema global | `com.delta.papirus-breeze-light` | `com.delta.papirus-breeze-dark` |
-| Paleta / ícones | `PapirusBreezeLight` | `PapirusBreezeDark` |
-| Estilo Qt / Plasma | Breeze / `PapirusBreezeRed` | Breeze / `PapirusBreezeRed` |
-| Decoração | Amy Light Aurorae | Amy Papirus Dark |
+| Global theme | `com.delta.papirus-breeze-light` | `com.delta.papirus-breeze-dark` |
+| Color scheme / icons | `PapirusBreezeLight` | `PapirusBreezeDark` |
+| Qt / Plasma style | Breeze / `PapirusBreezeRed` | Breeze / `PapirusBreezeRed` |
+| Window decoration | Amy Light Aurorae | Amy Papirus Dark |
 | GTK | Breeze | Breeze-Dark |
-| Wallpaper | Moe, pacote adaptativo | MoeDark, pacote adaptativo |
-| Cursor do mouse | Breeze escuro, 18 px | Breeze Light, 18 px |
-| Konsole | Fundo branco | Fundo escuro |
+| Adaptive wallpaper | Moe | MoeDark |
+| Mouse pointer | Breeze Dark, 18 px | Breeze Light, 18 px |
+| Konsole | White background | Dark background |
 
-As duas variantes têm pastas e ícones do sistema vermelhos, Dolphin vermelho,
-lançador em SVG com centro transparente e cursor de texto vermelho animado.
-O layout incluído cria um painel de **32 px por monitor, sem aplicativos fixados**.
-O Fish mostra três linhas sobre o sistema, com prompt Pure compacto quando disponível.
+Both variants include red folders, system icons and Dolphin icons, a vector
+launcher with a transparent center, and a red animated terminal cursor.
+The optional layout creates one floating **32 px panel per connected monitor**,
+with no pinned applications. Fish includes a compact system greeting.
 
-## Começar
+## Install or remove
 
-Requisitos: KDE Plasma 6, Python 3.9+, Breeze/Aurorae, Papirus/Papirus-Dark e as
-ferramentas de configuração do KDE. Fish e JetBrainsMono Nerd Font são necessários
-para o terminal incluído. Veja a lista completa em [Instalação](docs/INSTALLATION.md).
+Requirements: Linux, KDE Plasma 6, Python 3.9+, Breeze/Aurorae, Papirus/Papirus-Dark,
+and the KDE configuration tools. Fish and JetBrainsMono Nerd Font are required
+for the supplied terminal profiles. See the full [installation guide](docs/INSTALLATION.md).
 
-Execute a partir desta pasta, como usuário normal, dentro da sessão Plasma:
-
-```bash
-# Disponibilizar os dois temas, sem aplicar aparência ou redefinir painéis.
-python3 light/install.py
-python3 dark/install.py
-
-# Aplicar uma variante; o ícone dos lançadores existentes também é atualizado.
-python3 light/install.py --apply
-# Ou: python3 dark/install.py --apply
-```
-
-Para também recriar os painéis conforme o pacote:
+From the repository root or the extracted complete package, run as your normal user:
 
 ```bash
-python3 light/install.py --apply --layout
+python3 install.py
 ```
 
-**`--layout` remove os painéis atuais.** Sem essa opção, a estrutura dos painéis
-é preservada. A aparência do login tem instalação administrativa separada. Para acompanhar
-as trocas Light/Dark de um usuário, instale os dois perfis e o observador:
+The menu offers installation, updates, Light/Dark application, removal, and
+prerequisite checks. Direct commands are also available:
+
+```bash
+python3 install.py check
+python3 install.py install
+python3 install.py install --apply light
+python3 install.py install --apply dark
+python3 install.py status
+python3 install.py remove --dry-run
+python3 install.py remove
+```
+
+Installation registers both variants as the Light/Dark pair in **System Settings
+→ Quick Settings**. Reopen System Settings if it was already running. Without
+`--apply`, installation keeps the current appearance and panel layout.
+User installation and removal do not require `sudo`.
+
+To replace the existing panels with the supplied layout:
+
+```bash
+python3 install.py install --apply light --layout
+```
+
+**`--layout` removes the current panels.** Omit it to keep their structure,
+height, and pinned applications. Removal restores the previous Quick Settings
+pair when available, preserves modified resources and backups, and switches an
+active Papirus theme to the matching Breeze variant before deleting assets.
+
+## Optional login appearance
+
+Login appearance has a separate administrative installer. To install both
+profiles and follow the current user's Light/Dark selection:
 
 ```bash
 python3 tools/install-login.py --follow-user "$USER" --dry-run
 sudo python3 tools/install-login.py --follow-user "$USER"
 ```
 
-Veja as diferenças entre Plasma Login Manager e SDDM no guia de instalação.
+The user installer does not install or remove this administrative integration.
+See [installation](docs/INSTALLATION.md#login-appearance) and
+[restoration](docs/RESTORE_AND_TROUBLESHOOTING.md#restore-a-snapshot).
 
-## Documentação
+## Documentation
 
-- [Instalação, troca de tema e login](docs/INSTALLATION.md).
-- [Aparência, painéis, ícones, Konsole e Fish](docs/APPEARANCE.md).
-- [Personalizar SVG, cores, wallpaper e terminal](docs/CUSTOMIZATION.md).
-- [Arquitetura e arquivos de configuração](docs/ARCHITECTURE.md).
-- [Backups, restauração e solução de problemas](docs/RESTORE_AND_TROUBLESHOOTING.md).
-- [Desenvolvimento, testes, distribuição e GitHub Desktop](docs/DEVELOPMENT.md).
-- [Históricos anteriores e migração das pastas](docs/MIGRATION.md).
-- [Alterações conhecidas](CHANGELOG.md) e [créditos/licenças](THIRD_PARTY.md).
-- Guias independentes das variantes: [Light](light/README.md) e [Dark](dark/README.md).
+- [Installation, Quick Settings, removal, and login](docs/INSTALLATION.md)
+- [Appearance, panels, icons, Konsole, and Fish](docs/APPEARANCE.md)
+- [Customization](docs/CUSTOMIZATION.md)
+- [Architecture and configuration files](docs/ARCHITECTURE.md)
+- [Backups, restoration, and troubleshooting](docs/RESTORE_AND_TROUBLESHOOTING.md)
+- [Development and distribution](docs/DEVELOPMENT.md)
+- [Repository migration history](docs/MIGRATION.md)
+- [Changelog](CHANGELOG.md) and [third-party credits](THIRD_PARTY.md)
+- Standalone packages: [Light](light/README.md) and [Dark](dark/README.md)
 
-## Organização
+## Repository and distribution
 
-```text
-papirus-breeze/
-├── light/             # Pacote Light independente, instalador e manifesto próprios
-├── dark/              # Pacote Dark independente, instalador e manifesto próprios
-├── docs/              # Documentação compartilhada
-├── tools/project.py   # Manutenção das duas variantes
-├── CHANGELOG.md
-├── THIRD_PARTY.md
-└── LICENSE
-```
-
-Há somente um repositório Git, nesta raiz. As variantes continuam instaláveis e
-empacotáveis separadamente. Os assets iguais permanecem em ambos os pacotes para
-que cada arquivo de distribuição seja autossuficiente.
-
-## Verificar e distribuir
+There is one Git repository at the root. `light/` and `dark/` are ordinary
+subdirectories, each with its own installer, assets, tests, and integrity manifest.
+Shared assets are intentionally duplicated so each variant can be distributed alone.
 
 ```bash
 python3 tools/project.py check
@@ -97,10 +103,10 @@ python3 tools/project.py test
 python3 tools/project.py build
 ```
 
-Os arquivos são gerados em `light/dist/` e `dark/dist/`. A ação `check` valida
-integridade; a verificação das dependências da sessão é feita com
-`python3 light/install.py --check` ou o equivalente Dark.
+The complete archive, including the unified installer, is written to `dist/`.
+Standalone archives are written to `light/dist/` and `dark/dist/`.
+Build outputs and Python caches are ignored by Git.
 
-Os scripts e a composição própria usam GPL-3.0-only. Componentes de terceiros
-mantêm suas licenças, incluindo as imagens CC-BY-SA-4.0 e recursos KDE LGPL.
-Confira [THIRD_PARTY.md](THIRD_PARTY.md) antes da redistribuição.
+Original scripts and composition use GPL-3.0-only. Third-party assets retain
+their own licenses, including CC-BY-SA-4.0 wallpapers and LGPL KDE resources.
+Read [THIRD_PARTY.md](THIRD_PARTY.md) before redistribution.

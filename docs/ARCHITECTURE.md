@@ -1,111 +1,121 @@
-# Arquitetura e configurações
+# Architecture and configuration
 
-## Um Git, dois pacotes
+## One repository, two standalone packages
 
-A raiz contém documentação, licença e ferramenta de manutenção. `light/` e `dark/`
-são pacotes autossuficientes com seus próprios assets, testes, instaladores,
-manifestos e `build.py`. Não há repositórios Git aninhados.
+The root contains the unified installer, shared documentation, maintenance tools,
+and tests. `light/` and `dark/` are self-contained packages with their own assets,
+installers, tests, manifests, and archive builders. They are not submodules or
+nested Git repositories.
 
-Os IDs das variantes diferem para que elas coexistam. O estilo Plasma
-`PapirusBreezeRed`, o ícone lógico do lançador e os nomes dos perfis Konsole são
-compartilhados. Por isso, cada pacote inclui cópias desses recursos; mantenha-as
-sincronizadas quando alterar comportamento comum.
+Global-theme IDs differ so variants coexist. `PapirusBreezeRed`, the logical
+launcher name, and Konsole profile names are shared. Common assets are duplicated
+intentionally; keep corresponding copies synchronized.
 
-## Conteúdo de uma variante
-
-| Caminho | Responsabilidade |
+| Path | Responsibility |
 | --- | --- |
-| `assets/plasma/look-and-feel/<ID>/` | Metadados, defaults, cores, preview e layout nativo |
-| `assets/plasma/desktoptheme/PapirusBreezeRed/` | Sprites vermelhos; herança das superfícies Breeze |
-| `assets/icons/PapirusBreezeLight/` ou `PapirusBreezeDark/` | Pastas, sistema, Dolphin, lançador e herança Papirus |
-| `assets/color-schemes/` | Paleta Light ou Dark |
-| `assets/aurorae/themes/` | Decoração Amy da variante |
-| `assets/wallpapers/` | Pacote adaptativo com imagens, metadados e procedência |
-| `assets/konsole/` | Ambos os perfis e paletas do terminal |
-| `assets/fish/` | Saudação e cores compactas |
-| `config/settings.json` | Chaves de aparência portáveis aplicadas com KConfig |
-| `scripts/layout.js` | Reconstrução dos painéis por monitor |
-| `scripts/launcher.js` | Atualização de ícones nos lançadores existentes |
-| `scripts/wallpaper.js` | Aplicação do wallpaper aos desktops existentes |
-| `scripts/red_icons.py` | Transformações dos SVGs de origem |
-| `install.py` | Instalação de usuário, aplicação e backups |
-| `install-login.py`, `scripts/login.py` | Aparência completa de Plasma Login Manager ou SDDM e sincronização opcional |
-| `restore.py` | Restauração de snapshots de arquivos completos |
-| `manifest.json` | Metadados da versão e hashes SHA-256 distribuídos |
-| `build.py` | Arquivo independente `.tar.gz` |
-| `tests/` | Integridade, portabilidade, layout, instalação e terminal |
-| `LICENSES/`, `THIRD_PARTY.md` | Textos de licença e autoria |
+| `install.py` | Unified menu/CLI, installation, Quick Settings registration, removal |
+| `tests/test_installer.py` | Unified installation/update/removal and preservation checks |
+| `tools/project.py` | Manifest updates, integrity checks, tests, standalone/complete archives |
+| `tools/install-login.py` | Coordinate both administrative login profiles |
+| `README.pt-BR.md` | Optional Brazilian Portuguese quick-start guide |
 
-## O que é alterado com `--apply`
+Within each variant:
 
-| Configuração | Chaves ou efeito |
+| Path | Responsibility |
 | --- | --- |
-| `kdeglobals` | Paleta, destaque, ícones, fonte, Breeze, tema global, animações e contraste |
-| `kwinrc` | Decoração Aurorae, botões e alternador Breeze |
-| `plasmarc` | Estilo `PapirusBreezeRed` |
-| `kcminputrc` | Tema e tamanho do cursor do mouse |
-| `auroraerc` | Tamanho dos botões da decoração |
-| `ksplashrc` | Splash Breeze |
-| `kscreenlockerrc` | URI do pacote de wallpaper de bloqueio, calculada no destino |
-| `konsolerc` | Perfis claro/escuro, sincronização e perfil padrão |
-| `gtk-3.0/settings.ini`, `gtk-4.0/settings.ini` | Preferência clara/escura, tema, ícones, fonte, cursor e integração |
-| `fish/config.fish` | Bloco gerenciado ao final, preservando configuração anterior |
-| `fish/papirus-breeze.fish` | Helper instalado com saudação e ajustes de prompt |
-| Estado do Plasma Shell | Wallpaper dos desktops e ícones dos lançadores; painéis somente com `--layout` |
+| `assets/plasma/look-and-feel/<ID>/` | Metadata, defaults, colors, preview, native layout |
+| `assets/plasma/desktoptheme/PapirusBreezeRed/` | Red sprites with Breeze surface inheritance |
+| `assets/icons/PapirusBreezeLight/` or `PapirusBreezeDark/` | Folder/system/Dolphin/launcher overlay |
+| `assets/color-schemes/` | Variant palette |
+| `assets/aurorae/themes/` | Amy window decoration |
+| `assets/wallpapers/` | Adaptive wallpaper, metadata, provenance |
+| `assets/konsole/`, `assets/fish/` | Both terminal profiles/palettes and Fish helper |
+| `config/settings.json` | Portable appearance keys applied through KConfig |
+| `scripts/layout.js` | Optional panel reconstruction |
+| `scripts/launcher.js`, `scripts/wallpaper.js` | Existing-launcher and wallpaper updates |
+| `scripts/red_icons.py` | Source SVG transformations |
+| `install.py` | Variant installation/application, `asset_paths()`, backup/copy helpers |
+| `install-login.py`, `scripts/login.py` | Administrative greeter appearance and optional following |
+| `restore.py` | Restore complete file snapshots |
+| `manifest.json` | Version metadata and distributed-file SHA-256 hashes |
+| `build.py`, `tests/` | Standalone archive and package checks |
+| `LICENSES/`, `THIRD_PARTY.md` | License texts and credits |
 
-As ferramentas KDE também podem sincronizar arquivos auxiliares de GTK; o
-instalador salva snapshots adicionais antes de aplicar. Os perfis Konsole são
-copiados individualmente para preservar perfis de terceiros na mesma pasta.
+## Unified installation and removal
 
-Os defaults do tema global não executam o helper Fish ou toda a integração extra
-do instalador. Por isso o guia diferencia selecionar um tema na interface de
-aplicar o pacote completo com `--apply`.
+The root installer loads variant modules under separate names and reuses
+`asset_paths()`, `Backup`, `copy_asset()`, and `apply_profile()`. It registers the
+Light/Dark pair with KConfig 6 tools. Its record is
+`$XDG_STATE_HOME/papirus-breeze/installation.json`, defaulting to
+`~/.local/state/papirus-breeze/installation.json`.
 
-## Instalação e integridade
+The record retains the original Quick Settings pair across updates and stores
+fingerprints of installed resources. Installation/removal failures restore file
+snapshots from that operation. Normal removal changes only owned configuration
+references rather than restoring entire user configuration files. It validates
+managed paths, preserves modified asset directories, and retains backups.
 
-O instalador verifica os hashes antes de copiar. Os destinos são derivados de XDG,
-e não do caminho pessoal usado na criação do tema. O manifesto de uma variante
-cobre somente sua própria pasta, incluindo seus documentos e scripts; não cobre
-a documentação e ferramenta da raiz. Git registra o conjunto completo.
+Before removing an active theme, live removal applies the matching native Breeze
+variant. Alternate destinations require data/config/state together and do not
+execute live-session appearance commands. User removal excludes administrative
+login installation and external dependencies.
 
-`build.py` exclui `.git`, `dist`, `__pycache__` e `.pyc`. O arquivo resultante contém
-uma pasta de versão que funciona sem a outra variante ou as ferramentas da raiz.
-Os testes de cada variante executam em processos separados, evitando colisões
-entre módulos de mesmo nome, como `install` e `restore`.
+## Configuration changed by application
 
-## Limites da exportação
+| File / state | Effect |
+| --- | --- |
+| `kdeglobals` | Palette, accent, icons, font, Qt style, global theme, animation/contrast |
+| `kwinrc` | Aurorae decoration/buttons and Breeze window switcher |
+| `plasmarc` | `PapirusBreezeRed` style |
+| `kcminputrc` | Mouse theme and size |
+| `auroraerc`, `ksplashrc` | Decoration button size and Breeze splash |
+| `kscreenlockerrc` | Target-system adaptive wallpaper URI |
+| `konsolerc` | Light/Dark profiles, synchronization, default profile |
+| `gtk-3.0/settings.ini`, `gtk-4.0/settings.ini` | Light/dark preference, theme, icons, font, cursor, integration |
+| `fish/config.fish` | Managed interactive-source block after existing configuration |
+| `fish/papirus-breeze.fish` | Compact greeting, colors, Pure settings |
+| Plasma Shell state | Desktop wallpaper and launcher icons; panels only with `--layout` |
 
-O pacote não reproduz contas, autenticação, atividades, IDs de monitores,
-resoluções, favoritos pessoais, atalhos gerais ou programas padrão. Night Color,
-escalas e tiling continuam sob controle do sistema. A instalação não muda o shell
-de login nem instala dependências. Configurar o login aplica sua aparência e, com acompanhamento, habilita as
-unidades próprias de sincronização. Não altera autenticação ou o display manager habilitado.
+KDE utilities can also synchronize GTK helper files; installers snapshot these
+before applying. Konsole profiles are copied individually to retain unrelated
+profiles. Global-theme defaults do not run Fish or all installer extras, so GUI
+selection and a complete `--apply` have different effects.
 
-A configuração legível de login do sistema original foi exportada. Ajustes que
-existissem somente no diretório privado do greeter original não foram lidos.
-O splash salvo originalmente não tinha animação própria; o conjunto usa Breeze.
+## Integrity and packaging
 
-## Integração administrativa do login
+Variant manifests cover files inside their own package, including docs/scripts,
+but exclude the manifest itself, Git, caches, and distribution outputs. Root files
+are tracked by Git rather than a variant manifest. Only refresh hashes after
+intentional edits. Paths derive from XDG directories, not the source workstation.
 
-`tools/install-login.py` instala os dois perfis por processos separados. O helper
-`scripts/login.py` é idêntico nas variantes e pode ser distribuído com cada pacote.
-Sua cópia instalada em `/usr/local/libexec/` executa `--sync` sem importar código
-do repositório pessoal. O observador systemd acorda o serviço quando o arquivo
-de paleta indicado muda; a unidade também aplica o último perfil no boot antes
-do display manager. O próprio display manager nunca é reiniciado pelo instalador.
+Each `build.py` creates a self-contained standalone archive. The maintenance tool
+also creates `dist/papirus-breeze-<version>.tar.gz` with both variants, the unified
+installer, documentation, and tests. Variant tests run in separate
+processes to avoid collisions between modules named `install`/`restore`.
 
-O serviço aceita somente dois valores conhecidos de paleta, verifica a origem
-como arquivo regular do usuário indicado e escolhe payloads administrativos fixos.
-Escritas de configuração são atômicas; alvos simbólicos são recusados. Os arquivos
-de greeter preservam chaves externas à aparência, e `/etc/plasmalogin.conf` ou
-`/etc/sddm.conf` mantêm os grupos de autenticação e sessão. O cache do greeter é
-limpo ao aplicar uma paleta nova, seguindo a necessidade documentada pelo helper
-nativo do KDE. Nenhum cache do usuário da sessão é removido.
+## Export boundaries
 
-Os recursos são copiados para fora da pasta pessoal privada do usuário. A conta
-do login recebe somente o complemento de ícones fornecido aqui e usa o Breeze
-instalado como fallback; a biblioteca Papirus completa não é duplicada.
+The package does not import accounts, authentication, activities, monitor IDs,
+resolutions, personal favorites, general shortcuts, default applications, Night
+Color, scaling, or tiling settings. User installation does not change the login
+shell or install dependencies. The splash uses native Breeze.
 
-A integração foi conferida com o código KDE da versão 6.8.0:
-[sincronizador nativo](https://github.com/KDE/plasma-login-manager/blob/v6.8.0/src/frontend/kcm/auth/plasmaloginauthhelper.cpp)
-e [greeter e grupo Complementary](https://github.com/KDE/plasma-login-manager/blob/v6.8.0/src/frontend/greeter/qml/Main.qml).
+## Administrative login integration
+
+The identical `scripts/login.py` helpers are distributed with both variants.
+The installed runtime in `/usr/local/libexec/` runs `--sync` without importing
+code from the personal repository. systemd path/service units react to changes
+in the selected user's palette and select fixed administrative profiles. They do
+not restart the display manager.
+
+The service accepts known palettes, checks a regular source file owned by the
+selected user, and refuses symlink configuration targets. Configuration writes
+are atomic and preserve unrelated authentication/session keys. Greeter-only
+caches are cleared when applying a changed palette. Assets remain accessible
+outside the normal user's private home; the greeter receives the supplied icon
+overlay with Breeze/hicolor fallbacks, not a copy of the full Papirus library.
+
+The original integration was checked against KDE 6.8.0 source:
+[native synchronization helper](https://github.com/KDE/plasma-login-manager/blob/v6.8.0/src/frontend/kcm/auth/plasmaloginauthhelper.cpp)
+and [Breeze greeter complementary colors](https://github.com/KDE/plasma-login-manager/blob/v6.8.0/src/frontend/greeter/qml/Main.qml).
+This is provenance, not a claim that every target system runs that version.

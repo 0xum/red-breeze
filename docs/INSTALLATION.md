@@ -1,161 +1,187 @@
-# Instalação
+# Installation
 
-Todos os exemplos partem da raiz do repositório unificado. Substitua `light` por
-`dark` quando quiser a variante escura. Os pacotes também funcionam extraídos
-separadamente; nesse caso execute `install.py` dentro da pasta extraída.
+Commands in this guide run from the repository root or the extracted complete
+archive. Use the standalone instructions near the end for an individual package.
+English is the default language. An optional [pt-BR guide](../README.pt-BR.md) is available.
 
-## Dependências
+## Requirements
 
-- Linux, KDE Plasma 6 e Python 3.9 ou superior.
-- Breeze para Qt/Plasma, suporte Aurorae e tema GTK Breeze/Breeze-Dark.
-- Papirus e Papirus-Dark; cursores `Breeze_Light` e `breeze_cursors`.
-- Noto Sans, tema de sons Ocean; Fish e JetBrainsMono Nerd Font para os perfis do Konsole.
-- Para aplicar na sessão: `kwriteconfig6`, `qdbus6`, `plasma-apply-lookandfeel`,
-  `plasma-apply-colorscheme`, `plasma-apply-desktoptheme` e `plasma-apply-cursortheme`.
-- Konsole com sincronização nativa Light/Dark; ela foi validada no Konsole 26.08.2
-  instalado no sistema de origem. Em versões sem o recurso, selecione o perfil manualmente.
-- Para o login: Plasma Login Manager, ou SDDM com o tema Breeze instalado.
+- Linux, KDE Plasma 6, and Python 3.9 or later.
+- Breeze for Qt/Plasma, Aurorae support, and Breeze/Breeze-Dark GTK themes.
+- Papirus and Papirus-Dark icons; `Breeze_Light` and `breeze_cursors` mouse themes.
+- Noto Sans and Ocean sounds. Fish and JetBrainsMono Nerd Font are needed for the supplied Konsole profiles.
+- `kreadconfig6` and `kwriteconfig6` for unified installation and registration.
+- For live application/removal: `qdbus6`, `plasma-apply-lookandfeel`, `plasma-apply-colorscheme`, `plasma-apply-desktoptheme`, and `plasma-apply-cursortheme`.
+- A Konsole version with native Light/Dark profile synchronization, or manual profile selection on older versions. The source workstation used Konsole 26.08.2.
+- For optional login appearance: Plasma Login Manager, or SDDM with its Breeze theme installed.
 
-Instale as dependências pelo gerenciador de pacotes da distribuição. Os scripts
-não instalam programas nem fazem downloads. A checagem do instalador cobre temas
-base de ícones/cursores e ferramentas de aplicação; não substitui toda a lista acima.
+Install dependencies through your distribution's package manager. The installers
+do not download software or invoke a package manager. Checks cover base
+icon/cursor themes and KDE tools; they do not verify every font, GTK theme, or
+optional terminal feature. Live application and removal require the destination
+user's accessible Plasma session on D-Bus.
 
-## Conferir antes de aplicar
+## Unified installer
+
+Download the full repository or extract `papirus-breeze-1.0.13.tar.gz`. Run as your
+normal user, without `sudo`:
+
+```bash
+python3 install.py
+```
+
+The menu offers installation/updates, Light/Dark application, removal, and checks.
+Equivalent direct commands are:
+
+```bash
+python3 install.py check
+python3 install.py install --dry-run
+python3 install.py install
+python3 install.py install --apply light
+python3 install.py install --apply dark
+python3 install.py status
+python3 install.py remove --dry-run
+python3 install.py remove
+```
+
+`install` copies both variants and registers `DefaultLightLookAndFeel` and
+`DefaultDarkLookAndFeel` under `[KDE]` in `kdeglobals`. These are the
+[official Plasma Quick Settings keys](https://github.com/KDE/plasma-desktop/blob/v6.7.5/kcms/landingpage/landingpage_kdeglobalssettings.kcfg).
+Reopen **System Settings → Quick Settings** to see the pair if the window was
+already open. Registration does not enable automatic switching by time of day.
+
+Without `--apply`, installation keeps the current appearance and panels.
+`--apply light` or `--apply dark` also sets the palette, window decoration, font,
+mouse cursor, Plasma style, GTK integration, wallpaper, lock screen, Konsole,
+Fish, and existing launcher icons. Reopen Konsole after the first application.
+Other running applications may need to be reopened or a new graphical session.
+
+To replace panels with the supplied layout:
+
+```bash
+python3 install.py install --apply light --layout
+```
+
+**`--layout` removes the current panels.** It creates a floating 32 px panel on
+each currently connected monitor, with no pinned applications. Without it,
+panel structure, height, and favorites are preserved. Connecting another monitor
+later does not automatically create a new panel through this package.
+
+## Updates and removal
+
+Rerun `install` to update both variants. Dedicated asset directories are replaced
+with backups, and the original Quick Settings selection is retained across updates.
+Keep custom source changes in the repository rather than inside installed asset directories.
+
+`remove` switches an active Papirus global theme to the matching Breeze variant
+before deleting resources. It restores the previous Quick Settings pair if the
+previous themes remain installed; otherwise it uses Breeze/Breeze Dark. Later
+user changes to those keys are preserved. Removal also clears package references
+in Konsole and lock-screen settings and removes the managed Fish startup block.
+
+Modified asset directories, unrelated profiles, panel layouts, dependencies, and
+backups are preserved. Preserved custom resources are reported and may remain in
+the list of available themes. The installation record is removed when removal
+completes; preserved resources can then be reviewed manually.
+
+To adopt a legacy installation made with the per-variant scripts, run
+`python3 install.py install` once. The unified remover then manages those Papirus
+assets; their previous contents remain in the installation backup.
+
+The user remover does not undo administrative login integration. See
+[login appearance](#login-appearance) and
+[snapshot restoration](RESTORE_AND_TROUBLESHOOTING.md#restore-a-snapshot).
+
+## Isolated destinations
+
+The installer respects `XDG_DATA_HOME`, `XDG_CONFIG_HOME`, and `XDG_STATE_HOME`.
+For a test installation, supply all three alternate directories together:
+
+```bash
+python3 install.py install --data-dir /tmp/papirus/share --config-dir /tmp/papirus/config --state-dir /tmp/papirus/state
+python3 install.py remove --data-dir /tmp/papirus/share --config-dir /tmp/papirus/config --state-dir /tmp/papirus/state
+```
+
+Alternate destinations disable live application/removal actions. `--apply` cannot
+be combined with them. Dependency checks can still find base icons installed in
+the real user's data directory. `--dry-run` does not write files.
+
+## Standalone packages
+
+The individual archives remain installable without the unified installer.
+From the complete repository:
 
 ```bash
 python3 light/install.py --check
 python3 light/install.py --apply --dry-run
-```
-
-`--check` valida hashes e dependências para a sessão. Pode falhar fora de uma
-sessão Plasma acessível por D-Bus. `--dry-run` mostra ações sem gravar arquivos.
-O instalador de usuário deve rodar como usuário normal.
-
-## Disponibilizar ambas as variantes
-
-```bash
 python3 light/install.py
 python3 dark/install.py
-```
-
-Os temas aparecem em Configurações do Sistema → Cores e temas → Tema global.
-Essa instalação copia assets e gera backups; não aplica configurações do usuário.
-Cada pacote inclui os dois perfis do Konsole para permitir a sincronização.
-
-## Aplicar uma variante
-
-```bash
 python3 light/install.py --apply
-# Ou:
-python3 dark/install.py --apply
+# Or: python3 dark/install.py --apply
 ```
 
-Aplica paleta, decoração, fonte, cursor do mouse, estilo Plasma, integração GTK,
-wallpaper, bloqueio, configuração de Konsole/Fish e ícone dos lançadores existentes.
-Mantém a estrutura dos painéis, inclusive sua altura e aplicativos fixados atuais.
-Reabra o Konsole após a primeira aplicação. Aplicativos já abertos podem precisar
-ser reabertos ou de uma nova sessão gráfica para atualizar todos os componentes.
+From an extracted standalone archive, run `python3 install.py` or
+`python3 install.py --apply` inside that package. The individual installer copies
+assets without applying appearance unless `--apply` is supplied. It does not
+register both Quick Settings choices or provide the unified `remove` command.
+Each package includes both Konsole profiles. Selecting the global theme in the
+GUI applies its defaults; use `--apply` at least once for the extra GTK/Fish/Konsole
+configuration. Selecting **Desktop and window layout** replaces panels just like
+`--apply --layout`.
 
-A seleção do tema global pela interface aplica os defaults e o layout nativo
-quando solicitado. Para reproduzir também as configurações complementares de
-GTK, Fish e Konsole, use o instalador com `--apply` pelo menos uma vez.
+## Login appearance
 
-## Recriar painéis
+Login appearance runs under another account and requires an initial administrative
+installation. The helper detects Plasma Login Manager or SDDM/Breeze. The source
+workstation used Plasma Login Manager 6.8.0; verify your installed backend rather
+than assuming the source version matches your system.
 
-```bash
-python3 light/install.py --apply --layout
-```
-
-Esse comando remove os painéis atuais e cria um painel de 32 px por monitor
-conectado, sem apps fixados. O layout contém lançador, paginador, tarefas por
-ícones, separador, bandeja, relógio e mostrar desktop. Na interface do tema global,
-a opção **Desktop and window layout** carrega o mesmo layout nativo.
-
-O pacote configura os monitores presentes no momento da aplicação. Não instala
-um serviço para criar painéis quando um novo monitor é conectado posteriormente.
-
-## Login: acompanhar o tema global
-
-O sistema de origem usa **Plasma Login Manager 6.8.0**. O instalador detecta o
-serviço ativo e também suporta SDDM/Breeze em outros sistemas. A instalação de
-usuário não pode gravar a aparência de outra conta; execute uma instalação
-administrativa inicial para disponibilizar os assets e perfis no login.
-
-A partir da raiz, simule e depois instale ambas as variantes com acompanhamento:
+To install both profiles and follow the normal user's Light/Dark theme:
 
 ```bash
 python3 tools/install-login.py --follow-user "$USER" --dry-run
 sudo python3 tools/install-login.py --follow-user "$USER"
 ```
 
-O nome deve ser o usuário normal da sessão, não `root`. O Polkit também pode
-executar o mesmo comando quando a aplicação chama o instalador via `pkexec`.
+Pass the graphical session's normal user, not `root`. A caller can also use
+Polkit through `pkexec`. The watcher reads the selected user's `kdeglobals` and
+applies only the known `PapirusBreezeLight`/`PapirusBreezeDark` profiles. Other
+themes are ignored. Both administrative profiles must be installed to switch.
 
-O acompanhamento observa `~/.config/kdeglobals` do usuário indicado. Quando sua
-paleta é `PapirusBreezeLight` ou `PapirusBreezeDark`, seleciona o perfil instalado
-correspondente para a próxima tela de login. Outros temas são ignorados. Não há
-consulta periódica nem execução de scripts dentro da pasta pessoal pelo serviço.
+The installer writes:
 
-São instalados:
+- Icons and Plasma style resources into the `plasmalogin` or `sddm` account's data directory.
+- Wallpapers and fixed profiles in `/usr/local/share/papirus-breeze-login/`.
+- Greeter-only `PapirusBreezeLoginLight/Dark` palettes, with complementary colors matching window colors.
+- The administrative runtime at `/usr/local/libexec/papirus-breeze-login.py`.
+- `/etc/papirus-breeze-login.json`, identifying the user, source path, and backend.
+- `papirus-breeze-login.path` and `.service` systemd units.
 
-- Recursos de ícones e estilo na área de dados da conta `plasmalogin` ou `sddm`.
-- Wallpapers e perfis fixos em `/usr/local/share/papirus-breeze-login/`.
-- Paletas próprias `PapirusBreezeLoginLight/Dark` na conta do greeter, com cores
-  complementares ajustadas para que o login claro seja realmente claro.
-- `/usr/local/libexec/papirus-breeze-login.py`, cópia administrativa do sincronizador.
-- `/etc/papirus-breeze-login.json`, indicando apenas o usuário, a origem e o gerenciador.
-- `papirus-breeze-login.path` e `papirus-breeze-login.service`, habilitados no systemd.
+The watcher selects fixed administrative profiles from a palette name. It does
+not copy the user's entire `kdeglobals`, execute scripts from the user's home,
+restart the display manager, or change authentication/autologin. Applied state is
+stored in `/var/lib/papirus-breeze-login/current.json`; unrelated config writes do
+not repeatedly apply the same palette. The result appears on the next login screen.
 
-O sincronizador usa apenas o nome da paleta para escolher os perfis fixos instalados
-por root. Não copia todo o `kdeglobals` pessoal, não muda autenticação/autologin e
-não reinicia o gerenciador de login. O estado aplicado fica em
-`/var/lib/papirus-breeze-login/current.json`; a mesma paleta não é reaplicada a cada
-escrita sem relação com o tema. A tela usa a identidade Breeze nativa, com recursos
-Papirus vermelhos e o wallpaper da variante. Dependências de ícones não incluídas
-no complemento continuam usando os fallbacks Breeze/hicolor do sistema.
-
-### Aplicação estática de uma variante
-
-Para aplicar uma aparência uma vez, sem instalar acompanhamento automático:
+For a static appearance without following a user:
 
 ```bash
 python3 light/install-login.py --dry-run
 sudo python3 light/install-login.py
-# Ou dark/install-login.py.
+# Or: sudo python3 dark/install-login.py
 ```
 
-Para explicitar o gerenciador:
+Specify `--manager plasma-login` or `--manager sddm` to select the backend.
+Standalone packages can use their own `install-login.py --follow-user username`;
+install both variants with that option. SDDM uses dedicated Breeze-derived themes
+and `/etc/sddm.conf`; Plasma Login Manager uses appearance keys in `/etc/plasmalogin.conf`.
 
-```bash
-sudo python3 dark/install-login.py --manager plasma-login
-sudo python3 dark/install-login.py --manager sddm
-```
-
-Um pacote independente pode usar `--follow-user nome`; instale ambos os pacotes
-com essa opção para que as duas variantes estejam disponíveis ao observador.
-No SDDM, o instalador cria temas Breeze dedicados e define sua seleção em
-`/etc/sddm.conf`, que tem prioridade sobre arquivos antigos de `conf.d`.
-No Plasma Login Manager, altera os campos de aparência em `/etc/plasmalogin.conf`.
-
-Se já habilitou o acompanhamento, ele continua seguindo a paleta observada. Para
-voltar à configuração estática, desabilite as unidades antes de aplicar uma variante:
+If following is already enabled, disable it before returning to static selection
+or restoring administrative snapshots:
 
 ```bash
 sudo systemctl disable --now papirus-breeze-login.path papirus-breeze-login.service
 ```
 
-O resultado será usado na próxima tela de login. Não saia da sessão apenas para
-executar o instalador; ele não encerra a sessão atual.
-
-## Diretórios alternativos
-
-São respeitados `XDG_DATA_HOME`, `XDG_CONFIG_HOME` e `XDG_STATE_HOME`.
-Para instalar somente arquivos em uma área de teste:
-
-```bash
-python3 light/install.py --data-dir /tmp/papirus-share --config-dir /tmp/papirus-config --state-dir /tmp/papirus-state
-```
-
-Essas opções são recusadas com `--apply`, para evitar misturar um destino de teste
-com a sessão atual. A instalação imprime o caminho do backup; conserve-o para
-[restauração](RESTORE_AND_TROUBLESHOOTING.md).
+Do not log out just to run installation. For administrative removal/recovery,
+follow the [restoration procedure](RESTORE_AND_TROUBLESHOOTING.md#restore-a-snapshot).

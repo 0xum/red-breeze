@@ -1,31 +1,41 @@
-# Créditos e licenças
+# Credits, adaptations, and licenses
 
-Este pacote reúne configurações pessoais e componentes independentes. Cada
-componente mantém a licença indicada abaixo.
+Each component retains its own license. License texts and the Papirus author list
+are included in `LICENSES/`. Original authorship remains in asset metadata.
 
-| Componente | Origem / autor | Licença | Alterações nesta exportação |
+| Component | Source / author | License | Adaptation in this package |
 | --- | --- | --- | --- |
-| Wallpaper Moe | jomada, versão 1.1, conforme os metadados originais incluídos | CC-BY-SA-4.0 | Imagem e metadados sem alteração; também usada como preview |
-| Amy-Light-Aurorae-6 | l4k1, versão 1.2, conforme os metadados originais incluídos | GPL-3.0 (metadados: `GPLv3`) | Arquivos originais sem alteração |
-| Esquema Breeze Light | KDE, autores preservados no cabeçalho do `.colors` | LGPL-2.0-or-later | Exportada a paleta atual com destaque `#E93D58`; novo nome PapirusBreezeLight |
-| Ícones de pastas Papirus / Catppuccin | [Papirus Development Team](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme), [Catppuccin papirus-folders](https://github.com/catppuccin/papirus-folders) | GPL-3.0 e aviso MIT do Catppuccin | 835 aliases vermelhos exportados como SVGs (539 Papirus Red nativos e 7 derivados Copy Cloud recoloridos); tema novo herda o Papirus instalado |
-| Instaladores, scripts e composição do tema | Delta, 2026 | GPL-3.0-only | Arquivos novos desta exportação |
+| Moe Light | jomada, version 1.1; original metadata included | CC-BY-SA-4.0 | Original light image and metadata retained; image also used as a preview |
+| Amy-Light-Aurorae-6 | l4k1, version 1.2; original metadata included | GPL-3.0 (metadata: GPLv3) | Original decoration files retained |
+| Papirus Breeze Light palette | Based on KDE Breeze Light; authors in the `.colors` header | LGPL-2.0-or-later | Exported/adapted palette, red `#E93D58` accent, distinct scheme name |
+| Papirus / Catppuccin folders | [Papirus Development Team](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme), [Catppuccin papirus-folders](https://github.com/catppuccin/papirus-folders) | GPL-3.0 and retained Catppuccin MIT notice | 835 red folder aliases; remaining icons inherit the installed base theme |
+| Scripts, terminal profiles, launcher, and composition | Delta, 2026 | GPL-3.0-only | Original integration and theme-specific adaptations |
 
-Os textos das licenças e a lista de autores do Papirus estão em `LICENSES/`.
-Os créditos originais da decoração e do wallpaper estão nos próprios metadados.
-O pacote não inclui a biblioteca completa de ícones Papirus, o Breeze, as fontes
-Noto ou o tema de sons Ocean; esses componentes vêm do sistema de destino.
+The adaptive wallpaper includes original Moe Light by jomada and Moe Dark adapted
+by Delta using ImageGen. Both images are distributed under CC-BY-SA-4.0. The dark
+image is in `contents/images_dark/`; see the wallpaper's `ADAPTATION.md` and
+`GENERATION.md` for provenance. Original light metadata remains included.
 
-O wallpaper adaptativo inclui o Moe Light original de jomada e o Moe Dark adaptado por Delta com ImageGen. Ambas as variantes são distribuídas sob CC-BY-SA-4.0; o modo escuro está em `contents/images_dark/`.
+Of the folder aliases, 539 use unchanged Papirus Red SVGs and 7 Copy Cloud icons
+retain Catppuccin/Papirus geometry recolored to Papirus Red (`#e25252`, `#bf4b4b`).
+A further 289 aliases resolve to red SVGs, including `inode-directory`,
+`gtk-directory`, `stock_folder`, and cross-category shortcuts.
 
-Pastas vermelhas: 539 aliases usam os SVGs Papirus Red sem alteração. Os 7 ícones Copy Cloud preservam a geometria Catppuccin/Papirus e foram recoloridos para a paleta Papirus Red (#e25252, #bf4b4b).
+System icons derive from Papirus SVGs (GPL-3.0), with neutral glyphs converted to
+`#E93D58`. `PapirusBreezeRed` adapts KDE Visual Design Group Breeze sprites whose
+original license metadata is LGPL. Original metadata is retained in
+`LICENSES/Breeze-original-metadata.json`; surfaces and other resources inherit the
+installed Breeze style.
 
-Incluídos 289 aliases adicionais resolvidos para os SVGs vermelhos, entre eles inode-directory, gtk-directory, stock_folder e atalhos entre categorias.
+Dolphin icons retain original Papirus geometry/cutouts, recolored from blue to
+`#E93D58` with `#a62a3e` shading (GPL-3.0). Empty/full trash icons and symbolic
+aliases retain Papirus geometry/shading with gray changed to red (GPL-3.0).
+Explicit `user-trash` aliases prevent fallback to a user avatar.
 
-Ícones do sistema: variantes dos SVGs Papirus (GPL-3.0), com glifos neutros convertidos para #E93D58. O estilo Plasma PapirusBreezeRed contém adaptações dos sprites Breeze do KDE Visual Design Group, cuja identificação original de licença é LGPL. Os metadados originais foram preservados em LICENSES/Breeze-original-metadata.json. As superfícies e os demais recursos do estilo são herdados do Breeze instalado.
+The Konsole profiles/palettes and compact Fish configuration under `assets/konsole/`
+and `assets/fish/` are original package adaptations under GPL-3.0-only. Pure,
+Fish/Konsole applications, fonts, Ocean sounds, Breeze, and the full Papirus
+library are external dependencies and are not redistributed in full.
 
-Dolphin: SVGs Papirus originais recoloridos de azul para vermelho (#E93D58 e sombra #a62a3e), com forma e recortes preservados. Licença GPL-3.0.
-
-Os perfis e paletas do Konsole e a configuração compacta do Fish em `assets/konsole/` e `assets/fish/` são adaptações próprias deste pacote sob GPL-3.0-only. O prompt Pure e os programas Fish/Konsole são dependências externas e não são redistribuídos.
-
-Lixeira: incluídos SVGs Papirus vazia/cheia e aliases simbólicos, com geometria e sombreamento preservados e tons cinza recoloridos para vermelho. Licença Papirus GPL-3.0; resolução explícita de user-trash evita fallback para o avatar user.
+English documentation does not replace original legal notices or upstream
+localized metadata. Preserve attribution and license files in distributions.

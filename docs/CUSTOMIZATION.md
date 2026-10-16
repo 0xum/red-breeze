@@ -1,120 +1,111 @@
-# Personalização
+# Customization
 
-Edite os arquivos no repositório e reinstale a variante desejada. As cópias em
-`~/.local/share/` são os arquivos instalados; alterar apenas essas cópias não
-atualiza o que será enviado ao GitHub ou distribuído para outro sistema.
+Edit repository sources and reinstall. Files under `~/.local/share/` are installed
+copies; editing only those copies does not update future distributions.
+When a change applies to both variants, update both. Shared assets are duplicated
+intentionally to keep standalone packages self-contained.
 
-Quando uma mudança deve valer para Light e Dark, faça-a nas duas variantes.
-Os assets compartilhados são duplicados intencionalmente para manter pacotes independentes.
+## Launcher SVG
 
-## Lançador em SVG
-
-Arquivos:
+Sources:
 
 - `light/assets/icons/PapirusBreezeLight/scalable/apps/papirus-breeze-launcher.svg`
 - `dark/assets/icons/PapirusBreezeDark/scalable/apps/papirus-breeze-launcher.svg`
 
-O SVG tem `viewBox="0 0 128 128"`. O `path` identificado como `hexagon` combina o
-contorno externo com o recorte circular. O atributo `fill="#E93D58"` define a cor;
-as curvas `Q` definem os cantos arredondados.
-
-O segundo trecho do caminho é o círculo transparente, centrado em `(64,64)`:
+The SVG has `viewBox="0 0 128 128"`. The `hexagon` path combines the outer contour
+with a circular cutout. `fill="#E93D58"` sets its color; `Q` curves round its corners.
+The second path segment describes the transparent circle centered at `(64,64)`:
 
 ```text
 M 89 64 A 25 25 0 1 0 39 64 A 25 25 0 1 0 89 64 Z
 ```
 
-Para raio 20, por exemplo, substitua esse trecho por:
+For a radius of 20, replace that segment with:
 
 ```text
 M 84 64 A 20 20 0 1 0 44 64 A 20 20 0 1 0 84 64 Z
 ```
 
-Mantenha `fill-rule="evenodd"` para que o centro continue vazado. Um círculo com
-`fill="none"` sobre um hexágono preenchido não recorta a forma abaixo. Um editor
-vetorial pode editar o caminho composto diretamente. O desenho não contém imagem
-rasterizada, filtro ou máscara dependente de suporte específico do renderizador.
+Keep `fill-rule="evenodd"`. A `fill="none"` circle above a filled hexagon does not
+cut through the underlying shape. Edit the compound path directly in a vector
+editor. The asset needs no bitmap, filter, or renderer-specific mask.
 
-## Paleta e ícones
+## Palette and icons
 
-As paletas ficam em `assets/color-schemes/PapirusBreezeLight.colors` e no equivalente
-Dark. Cada tema global também inclui uma cópia em `contents/colors`; mantenha-a
-idêntica à paleta da respectiva variante, como os testes exigem.
+Each variant has `assets/color-schemes/PapirusBreezeLight.colors` or its Dark
+equivalent. Keep the global theme's `contents/colors` copy byte-identical to that
+palette, as required by the tests.
 
-O destaque também está em `config/settings.json`. Os ícones do sistema e os sprites
-do estilo Plasma têm vermelho fixo, portanto alterar somente `AccentColor` não os
-recolore. Para mudar a identidade completa, revise também:
+The accent is also stored in `config/settings.json`. System icons and Plasma
+sprites use fixed red values, so changing `AccentColor` alone does not recolor
+them. For a complete color change, also review both icon overlays,
+`assets/plasma/desktoptheme/PapirusBreezeRed/`, the launcher SVG, and Konsole assets.
 
-- `assets/icons/PapirusBreezeLight/` e `assets/icons/PapirusBreezeDark/`.
-- `assets/plasma/desktoptheme/PapirusBreezeRed/`.
-- SVG do lançador e perfis/paletas em `assets/konsole/`.
+`scripts/red_icons.py` records the SVG transformations. The installer uses the
+included final SVGs and does not run this generator. Preserve authorship,
+licenses, semantic success/warning/error colors, and base-icon inheritance.
 
-`scripts/red_icons.py` contém as transformações usadas nos SVGs de origem. Não é
-executado pelo instalador: os SVGs finais já estão incluídos. Preserve autoria,
-licenças, papéis de sucesso/aviso/erro e a herança do tema de ícones.
+## Mouse pointers
 
-## Painéis
+Light uses `breeze_cursors`; Dark uses `Breeze_Light`, both at 18 px. A pointer
+change must agree across `config/settings.json`, global-theme `contents/defaults`,
+installer dependency checks, GTK settings, the live cursor command, and
+`scripts/login.py`. Keep the two login helpers identical and update their tests.
 
-A lógica compartilhada de cada variante fica em `scripts/layout.js`. A cópia
-nativa é `assets/plasma/look-and-feel/<ID>/contents/layouts/org.kde.plasma.desktop-layout.js`.
+## Panels
 
-O script de instalação usa `__WALLPAPER_URI__`, substituído pelo destino real.
-Na cópia nativa, use a expressão `"file://" + userDataPath("data") + "/wallpapers/Moe"`
-(ou `MoeDark`), sem caminho pessoal absoluto. Os testes comparam essas duas formas.
+Each variant keeps installation logic in `scripts/layout.js` and a native copy at
+`assets/plasma/look-and-feel/<ID>/contents/layouts/org.kde.plasma.desktop-layout.js`.
+The installer substitutes `__WALLPAPER_URI__` with the target directory. The native
+copy uses `"file://" + userDataPath("data") + "/wallpapers/Moe"` or `MoeDark`;
+never add a personal absolute path. Tests compare the two forms.
 
-A altura está em `panel.height = 32`; a lista vazia de tarefas em
-`tasks.writeConfig("launchers", "")`. O ícone é configurado tanto nesse layout
-quanto em `scripts/launcher.js`, que atualiza os painéis existentes sem recriá-los.
+Panel height is `panel.height = 32`; the initial pinned-task list is
+`tasks.writeConfig("launchers", "")`. Launcher icons are set both in the layout
+and in `scripts/launcher.js`, which updates existing panels without recreating them.
+Edits do not affect existing panels until applied. Use `--layout` only when panel
+replacement is intended; normal `--apply` already updates launcher icons.
 
-Alterar o script não muda painéis já existentes até aplicá-lo. Use `--layout`
-quando realmente quiser recriar todos os painéis. Para trocar somente o ícone,
-a aplicação normal `--apply` já atualiza os lançadores.
+## Wallpaper and lock screen
 
-## Wallpaper e bloqueio
+Sources are `light/assets/wallpapers/Moe/` and `dark/assets/wallpapers/MoeDark/`.
+Keep light images in `contents/images/` and dark images in `contents/images_dark/`.
+Update metadata, previews, credits, and adaptation records when replacing images.
+Reference the package directory to retain adaptive desktop/lock-screen behavior.
+The login helper selects a specific image in `scripts/login.py`; update its
+filename references if image names or dimensions change.
 
-Os pacotes ficam em `light/assets/wallpapers/Moe/` e `dark/assets/wallpapers/MoeDark/`.
-Mantenha as imagens claras em `contents/images/` e as escuras em
-`contents/images_dark/`. Revise metadados, previews, licenças e o registro de
-adaptação quando substituir imagens. Referencie a pasta do pacote para preservar
-o comportamento adaptativo no desktop e bloqueio.
+## Konsole and Fish
 
-O instalador de login usa um arquivo específico e seu tamanho aparece em
-`install-login.py`. Ao mudar o nome/tamanho do arquivo, atualize também essa referência.
+Each variant ships both `.profile` and `.colorscheme` files under `assets/konsole/`.
+Keep corresponding copies synchronized.
 
-## Konsole e Fish
+In profiles, `[Appearance]` selects font/palette and `[General]` selects shell and
+initial dimensions. `[Cursor Options]` uses RGB `CustomCursorColor` when
+`UseCustomCursorColor=true`; `[Terminal Features]` controls
+`BlinkingCursorEnabled` and `AnimatingCursorEnabled`.
 
-Cada variante inclui os dois `.profile` e os dois `.colorscheme` em `assets/konsole/`.
-Mantenha ambas as cópias sincronizadas ao personalizar o terminal.
+`LightThemeProfile` and `DarkThemeProfile` in `config/settings.json` use profile
+display names; `DefaultProfile` uses a filename. Update all references when
+renaming a profile. Greeting, ANSI colors, and Pure settings live in
+`assets/fish/papirus-breeze.fish`. Do not replace the user's whole Fish or
+distribution configuration to change presentation.
 
-Nos perfis, `[Appearance]` seleciona fonte e paleta; `[General]` define shell e
-tamanho inicial. Em `[Cursor Options]`, `CustomCursorColor` é RGB e
-`UseCustomCursorColor=true` habilita a cor. `[Terminal Features]` controla
-`BlinkingCursorEnabled` e `AnimatingCursorEnabled`.
+## Validate and reinstall
 
-Os nomes de exibição dos perfis são usados por `LightThemeProfile` e
-`DarkThemeProfile` em `config/settings.json`. `DefaultProfile` usa o nome do arquivo.
-Ao renomear um perfil, ajuste essas referências também.
-
-A saudação, cores ANSI e ajustes do Pure ficam em `assets/fish/papirus-breeze.fish`.
-Não substitua o arquivo completo de configuração pessoal ou a configuração da
-distribuição para mudar apenas a apresentação.
-
-## Validar e reinstalar
-
-Depois de revisar as alterações intencionais:
+After reviewing intentional edits:
 
 ```bash
 python3 tools/project.py manifest
 python3 tools/project.py check
 python3 tools/project.py test
 python3 tools/project.py build
-python3 light/install.py --apply
+python3 install.py install --apply light
 ```
 
-A atualização de manifesto aceita o conteúdo local como a nova referência de
-integridade; não corrige um download corrompido. Para alterar só uma variante,
-use `--variant light` ou `--variant dark` nas ações de manutenção.
-
-Ícones já carregados podem exigir nova sessão gráfica para atualizar o cache.
-Reabra o Konsole para carregar perfis modificados. Veja os procedimentos de
-[restauração](RESTORE_AND_TROUBLESHOOTING.md) antes de reverter snapshots completos.
+The final command changes the live session; run it only when you intend to apply
+the theme. For one variant's maintenance, use `--variant light` or `--variant dark`.
+Manifest refresh accepts local contents as the integrity baseline; it does not
+repair a damaged download. Reopen Konsole for changed profiles; cached icons may
+need application or session restart. Read [recovery instructions](RESTORE_AND_TROUBLESHOOTING.md)
+before restoring complete snapshots.

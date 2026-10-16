@@ -1,18 +1,20 @@
-# Desenvolvimento e distribuição
+# Development and distribution
 
-## Estrutura do Git
+## Repository layout
 
-O repositório fica na raiz `papirus-breeze/`, branch `main`. `light/` e `dark/`
-são diretórios comuns, sem submódulos ou `.git` próprios. A importação e a
-organização foram registradas em commits de escopo: repositório, Light, Dark,
-ferramentas e documentação.
+The repository has one `.git` at the root. `light/` and `dark/` are regular
+subdirectories, not submodules or independent checkouts. The repository is hosted
+at [0xum/red-breeze](https://github.com/0xum/red-breeze); inspect `git remote -v`
+and `git status` for the current checkout rather than relying on historical notes.
+Build outputs, Python caches, and external history bundles are ignored.
 
-Nenhum remoto foi configurado ou envio ao GitHub realizado durante a organização.
-Os diretórios `dist/`, caches Python e bundles de histórico são ignorados.
+English is the default for documentation, comments, help, diagnostics, and new
+commit descriptions. The optional [pt-BR guide](../README.pt-BR.md) links back to
+the English documentation.
 
-## Comandos de manutenção
+## Maintenance commands
 
-A ferramenta usa somente a biblioteca padrão do Python:
+The tools use Python's standard library:
 
 ```bash
 python3 tools/project.py check
@@ -20,31 +22,19 @@ python3 tools/project.py test
 python3 tools/project.py build
 ```
 
-| Ação | Efeito |
+| Action | Effect |
 | --- | --- |
-| `check` | Verifica os hashes dos arquivos de cada variante, sem aplicar tema |
-| `test` | Executa os testes de Light e Dark em processos isolados |
-| `build` | Verifica hashes e gera os dois arquivos independentes |
-| `manifest` | Recalcula os hashes locais após alterações intencionais; não altera versões |
+| `check` | Verify both variant manifests without applying appearance |
+| `test` | Run isolated Light/Dark suites and root installer tests |
+| `build` | Verify manifests; create two standalone archives and one complete archive |
+| `manifest` | Recalculate hashes after intentional edits; leave versions unchanged |
 
-Para uma única variante:
+For one variant, append `--variant light` or `--variant dark`. For session
+prerequisites, use `python3 install.py check` or a variant's `install.py --check`.
+These checks are distinct from source integrity and can require a live D-Bus
+session. Building archives does not require applying a theme.
 
-```bash
-python3 tools/project.py test --variant light
-python3 tools/project.py build --variant dark
-```
-
-A verificação de dependências da sessão é diferente da integridade:
-
-```bash
-python3 light/install.py --check
-python3 dark/install.py --check
-```
-
-Esses comandos verificam também acesso ao Plasma por D-Bus. Não são necessários
-para gerar um arquivo em um ambiente que apenas tenha Python.
-
-## Fluxo após editar arquivos
+## After editing package files
 
 ```bash
 python3 tools/project.py manifest
@@ -55,57 +45,55 @@ git diff --check
 git status --short
 ```
 
-Revise o diff antes do commit. Os testes validam integridade, portabilidade,
-instalação/restauração, composição do layout e integração dos perfis Konsole/Fish.
-Alguns checks são pulados se ferramentas opcionais como Node ou Fish estiverem
-ausentes; consulte a saída para saber a cobertura efetiva. Na organização local,
-os 30 testes passaram sem falhas.
+Review edits before refreshing hashes: manifest updates accept local contents as
+the new baseline. Include changed manifests with the corresponding sources.
+Root documentation and tooling are outside the variant manifests; variant docs,
+installers, and wallpaper provenance are covered by them.
 
-Ao adicionar/remover SVGs, revise também os totais e diretórios esperados nos
-checks de exportação. Os testes de layout devem continuar confirmando um painel
-por monitor, altura de 32 px, lista de apps fixados vazia e o ícone próprio.
+Tests cover integrity, portability, install/restore, layouts, icon composition,
+terminal integration, unified install/update/remove, preservation, and failure
+recovery. Optional checks may be skipped when Node, Fish, systemd tools, or KConfig
+6 are unavailable. Report the actual current results and skips rather than a fixed
+historical test count. Tests use temporary directories; do not apply a theme,
+replace panels, or install administrative login services just to run tests.
 
-`manifest` recalcula somente o mapa SHA-256 de cada pacote. Quando publicar uma
-nova versão visual, atualize também `manifest.json`, o `KPlugin.Version` do tema
-global, referências de versão em docs/build e a expectativa de versão dos testes.
-Mantenha o registro de alterações coerente com o conteúdo final.
+When adding/removing SVGs, review the expected counts and directories. Layout
+checks must retain one panel per monitor, 32 px height, no pinned applications,
+and the package launcher. Keep shared assets and both login helpers synchronized.
 
-## Arquivos de distribuição
+## Versions and archives
 
-A versão atual gera:
+For a release version change, update variant `manifest.json` versions,
+`KPlugin.Version` metadata, build/doc references, and version assertions together.
+Keep both package versions equal for a complete archive. An unreleased edit or a
+local build does not by itself imply a new published release.
+
+Current output paths:
 
 ```text
+dist/papirus-breeze-1.0.13.tar.gz
 light/dist/papirus-breeze-light-1.0.13.tar.gz
 dark/dist/papirus-breeze-dark-1.0.13.tar.gz
 ```
 
-Cada arquivo é instalável sozinho. O empacotador preserva as licenças e créditos
-da respectiva variante e exclui Git, caches e outros arquivos de distribuição.
-Esses arquivos não entram no Git; podem ser anexados a uma release quando houver
-publicação. O repositório completo contém ambas as variantes e documentação comum.
+The complete archive includes both variants, unified installer, documentation,
+and tests. Each standalone archive works without the other variant
+or root files. Builders exclude Git, caches, and nested distribution outputs.
+Generated archives stay out of Git; attach them to a release only when publishing
+is requested. Extract and smoke-test a changed archive builder before distribution.
 
-## Commits de escopo
+## Commits and publishing
 
-Use mensagens que indiquem a área afetada, por exemplo:
+Use a concise English description of the final change, for example:
 
 ```text
-feat(light): ajusta a paleta clara
-fix(layout): mantém tarefas sem aplicativos fixados
-feat(icons): atualiza o SVG do lançador nas duas variantes
-build(tools): melhora a verificação dos pacotes
-docs: registra instalação e personalização
+feat(installer): register the Light and Dark Quick Settings pair
+fix(cursor): use contrasting pointers in both themes
+docs: document installation and recovery
 ```
 
-Inclua o manifesto atualizado junto dos arquivos da variante modificados, pois
-seu instalador recusa arquivos com hashes divergentes. Não edite automaticamente
-a configuração do desktop ao executar testes de desenvolvimento.
-
-## GitHub Desktop
-
-Adicione a pasta **`papirus-breeze` como repositório local existente** no GitHub
-Desktop. O Git já está inicializado; não crie outro repositório dentro de `light/`
-ou `dark/`. Confira a branch `main`, o histórico de commits e as licenças.
-
-Quando quiser publicar, use o fluxo de publicação do GitHub Desktop para escolher
-nome, conta e visibilidade. Até essa ação, o trabalho permanece local e sem remoto.
-Os históricos anteriores estão preservados conforme [Migração](MIGRATION.md).
+Inspect the complete diff, preserve existing local work, and include updated
+manifests. Commit, push, or publish only when requested. Adding a checkout to
+GitHub Desktop does not require a new repository: add the existing root and keep
+both variants inside it. See [migration history](MIGRATION.md) for the original
+source-workstation reorganization.

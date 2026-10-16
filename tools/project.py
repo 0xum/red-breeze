@@ -59,7 +59,7 @@ def main(argv=None):
         archive = ROOT / 'dist' / (name + '.tar.gz')
         archive.parent.mkdir(exist_ok=True)
         with tarfile.open(archive, 'w:gz', format=tarfile.PAX_FORMAT) as tar:
-            for entry in ('install.py', 'README.md', 'CHANGELOG.md', 'LICENSE', 'THIRD_PARTY.md', 'docs', 'tools', 'tests', *VARIANTS):
+            for entry in ('install.py', 'README.md', 'README.pt-BR.md', 'CHANGELOG.md', 'LICENSE', 'THIRD_PARTY.md', 'docs', 'tools', 'tests', *VARIANTS):
                 source = ROOT / entry
                 for path in ([source] if source.is_file() else sorted(source.rglob('*'))):
                     relative = path.relative_to(ROOT)
