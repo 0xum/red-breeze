@@ -62,7 +62,7 @@ class PackageTests(unittest.TestCase):
 
     def test_manifest_and_portability(self):
         manifest = install.verify_assets()
-        self.assertEqual(manifest["version"], "1.0.11")
+        self.assertEqual(manifest["version"], "1.0.12")
         for path in list((ROOT / "assets").rglob("*")) + list((ROOT / "config").rglob("*")):
             if path.is_file() and path.suffix in {".json", ".colors", ".js", ".desktop", ".theme"}:
                 self.assertNotIn("/home/delta", path.read_text())
@@ -103,7 +103,7 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(config["General"]["AccentColor"], "233,61,88")
         self.assertEqual(config["Colors:Window"]["BackgroundNormal"], "32,35,38")
         overlay = ROOT / "assets/icons/PapirusBreezeDark"
-        self.assertEqual(len(list(overlay.rglob("*.svg"))), 22530)
+        self.assertEqual(len(list(overlay.rglob("*.svg"))), 22562)
         config.read(overlay / "index.theme")
         self.assertEqual(config["Icon Theme"]["Inherits"], "Papirus-Dark,breeze-dark,hicolor")
         self.assertFalse(any(p.is_symlink() for p in (ROOT / "assets").rglob("*")))
@@ -124,6 +124,28 @@ class PackageTests(unittest.TestCase):
         palette = configparser.ConfigParser(interpolation=None)
         palette.read(ROOT / "assets/color-schemes/PapirusBreezeDark.colors")
         self.assertNotEqual(palette["Colors:Window"]["ForegroundNormal"], "233,61,88")
+
+    def test_trash_aliases_do_not_fall_back_to_generic_user(self):
+        import xml.etree.ElementTree as ET
+        overlay = ROOT / "assets/icons/PapirusBreezeDark"
+        index = configparser.ConfigParser(interpolation=None)
+        index.read(overlay / "index.theme")
+        directories = index["Icon Theme"]["Directories"].split(",")
+        generic = ET.parse(overlay / "22x22/actions/user.svg").getroot()
+        generic_paths = [node.get("d") for node in generic.iter() if node.tag.endswith("}path")]
+        for size in (16, 22, 24, 32, 48, 64, 96, 128):
+            directory = f"{size}x{size}/places"
+            self.assertIn(directory, directories)
+            for name in ("user-trash", "user-trash-full", "user-trash-symbolic", "user-trash-full-symbolic"):
+                with self.subTest(size=size, name=name):
+                    icon = overlay / directory / (name + ".svg")
+                    self.assertTrue(icon.is_file(), "KDE can fall back from user-trash to user")
+                    self.assertIn("#E93D58", icon.read_text())
+                    geometry = ET.parse(icon).getroot()
+                    paths = [node.get("d") for node in geometry.iter() if node.tag.endswith("}path")]
+                    self.assertNotEqual(paths, generic_paths)
+            self.assertNotEqual((overlay / directory / "user-trash.svg").read_bytes(),
+                                (overlay / directory / "user-trash-full.svg").read_bytes())
 
     def test_generic_directory_aliases_use_red_folder(self):
         overlay = ROOT / "assets/icons/PapirusBreezeDark"

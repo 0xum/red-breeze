@@ -157,7 +157,7 @@ python3 -m unittest discover -s tests -v
 python3 build.py
 ```
 
-O segundo comando gera `dist/papirus-breeze-light-1.0.11.tar.gz`, com a mesma pasta
+O segundo comando gera `dist/papirus-breeze-light-1.0.12.tar.gz`, com a mesma pasta
 pronta para copiar, extrair e instalar. `dist/`, caches e backups não entram no Git.
 Os testes usam diretórios temporários e não aplicam o tema à sessão atual.
 

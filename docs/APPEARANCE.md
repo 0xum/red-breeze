@@ -52,6 +52,10 @@ herdadas do Breeze e acompanham a paleta Light/Dark.
 Dolphin usa vermelho `#E93D58` e sombra `#a62a3e`, preservando a forma Papirus.
 Os aliases `org.kde.dolphin`, `dolphin` e `system-file-manager` estão incluídos.
 
+A lixeira tem ícones próprios para vazia e cheia (`user-trash` e `user-trash-full`),
+incluindo os nomes simbólicos em todos os tamanhos. Isso evita que a redução de
+nomes do KDE selecione o avatar genérico `user`.
+
 ## Lançador SVG
 
 `papirus-breeze-launcher.svg` contém um hexágono vermelho arredondado com recorte

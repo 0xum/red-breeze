@@ -56,6 +56,15 @@ podem estar no cache de aplicativos já abertos; reabra-os ou inicie nova sessã
 `PapirusBreezeRed`, além do tema de ícones. Aplicativos externos ao conjunto
 continuam herdando seus ícones originais.
 
+## A lixeira aparece como um usuário
+
+Isso foi corrigido na versão 1.0.12. Sem os aliases explícitos `user-trash` e
+`user-trash-full`, o KDE podia reduzir o nome para `user` e escolher o avatar do
+complemento antes de consultar a lixeira do tema herdado. Os pacotes agora incluem
+os dois estados e os aliases simbólicos em todos os tamanhos. Reinstale a variante
+e atualize o cache da sessão ou reabra o aplicativo. O bookmark de lixeira deve
+continuar usando `user-trash`; não é necessário alterar seus lugares pessoais.
+
 ## O centro do lançador parece branco ou preto
 
 O SVG usa um recorte transparente real. O centro mostra o fundo sob ele; portanto

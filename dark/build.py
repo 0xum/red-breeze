@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create dist/papirus-breeze-dark-1.0.11.tar.gz without git or private backups."""
+"""Create dist/papirus-breeze-dark-1.0.12.tar.gz without git or private backups."""
 # SPDX-License-Identifier: GPL-3.0-only
 import tarfile
 from install import ROOT, verify_assets

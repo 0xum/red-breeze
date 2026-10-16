@@ -137,7 +137,7 @@ python3 -m unittest discover -s tests -v
 python3 build.py
 ```
 
-O arquivo para transferência é `dist/papirus-breeze-dark-1.0.11.tar.gz`. Os testes
+O arquivo para transferência é `dist/papirus-breeze-dark-1.0.12.tar.gz`. Os testes
 usam diretórios temporários; não ativam o tema na sessão atual. O manifesto
 registra hashes SHA-256 dos arquivos distribuídos.
 

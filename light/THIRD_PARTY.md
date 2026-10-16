@@ -27,3 +27,5 @@ Incluídos 289 aliases adicionais resolvidos para os SVGs vermelhos, entre eles 
 Dolphin: SVGs Papirus originais recoloridos de azul para vermelho (#E93D58 e sombra #a62a3e), com forma e recortes preservados. Licença GPL-3.0.
 
 Os perfis e paletas do Konsole e a configuração compacta do Fish em `assets/konsole/` e `assets/fish/` são adaptações próprias deste pacote sob GPL-3.0-only. O prompt Pure e os programas Fish/Konsole são dependências externas e não são redistribuídos.
+
+Lixeira: incluídos SVGs Papirus vazia/cheia e aliases simbólicos, com geometria e sombreamento preservados e tons cinza recoloridos para vermelho. Licença Papirus GPL-3.0; resolução explícita de user-trash evita fallback para o avatar user.

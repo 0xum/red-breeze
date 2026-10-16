@@ -1,7 +1,7 @@
 # Papirus Breeze
 
 Temas pessoais **Light e Dark para KDE Plasma 6**, reunidos em um único
-repositório. Versão dos pacotes: **1.0.11**.
+repositório. Versão dos pacotes: **1.0.12**.
 
 O conjunto usa Breeze, ícones Papirus com variantes vermelhas e destaque
 **vermelho `#E93D58`**. Inclui desktop, painéis, wallpaper adaptativo, bloqueio,

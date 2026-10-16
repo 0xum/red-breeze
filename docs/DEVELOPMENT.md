@@ -75,8 +75,8 @@ Mantenha o registro de alterações coerente com o conteúdo final.
 A versão atual gera:
 
 ```text
-light/dist/papirus-breeze-light-1.0.11.tar.gz
-dark/dist/papirus-breeze-dark-1.0.11.tar.gz
+light/dist/papirus-breeze-light-1.0.12.tar.gz
+dark/dist/papirus-breeze-dark-1.0.12.tar.gz
 ```
 
 Cada arquivo é instalável sozinho. O empacotador preserva as licenças e créditos

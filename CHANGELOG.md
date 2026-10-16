@@ -11,6 +11,13 @@ releases ou tags já publicados no GitHub.
 - Ferramenta única para conferir integridade, executar testes, atualizar hashes e empacotar.
 - Mantida a versão visual 1.0.11: a reorganização não altera o desktop instalado.
 
+## 1.0.12
+
+- Corrigida a lixeira que aparecia como avatar no Dolphin: os nomes `user-trash`
+  e `user-trash-full` agora têm ícones locais explícitos, incluindo aliases simbólicos.
+- Incluídos os estados vazia/cheia vermelhos, preservando a forma Papirus em todos os tamanhos.
+- Testes impedem a ausência desses aliases e sua troca pela geometria do ícone de usuário.
+
 ## 1.0.11
 
 - Círculo central do lançador convertido em recorte transparente real.
