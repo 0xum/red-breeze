@@ -17,7 +17,7 @@ configuração de wallpaper do login, Konsole e Fish.
 | Decoração | Amy Light Aurorae | Amy Papirus Dark |
 | GTK | Breeze | Breeze-Dark |
 | Wallpaper | Moe, pacote adaptativo | MoeDark, pacote adaptativo |
-| Cursor do mouse | Breeze Light, 18 px | Breeze escuro, 18 px |
+| Cursor do mouse | Breeze escuro, 18 px | Breeze Light, 18 px |
 | Konsole | Fundo branco | Fundo escuro |
 
 As duas variantes têm pastas e ícones do sistema vermelhos, Dolphin vermelho,

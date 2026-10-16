@@ -21,7 +21,7 @@ class PackageTests(unittest.TestCase):
         profile = json.loads((ROOT / "config/settings.json").read_text())
         self.assertEqual(profile["kdeglobals"]["General"]["ColorScheme"], "PapirusBreezeDark")
         self.assertEqual(profile["kdeglobals"]["General"]["AccentColor"], "233,61,88")
-        self.assertEqual(profile["kcminputrc"]["Mouse"]["cursorTheme"], "breeze_cursors")
+        self.assertEqual(profile["kcminputrc"]["Mouse"]["cursorTheme"], "Breeze_Light")
         self.assertEqual(profile["kwinrc"]["org.kde.kdecoration2"]["theme"], "__aurorae__svg__Amy-Papirus-Dark")
         package = ROOT / "assets/plasma/look-and-feel/com.delta.papirus-breeze-dark"
         metadata = json.loads((package / "metadata.json").read_text())

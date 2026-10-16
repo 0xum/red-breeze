@@ -3,6 +3,11 @@
 Este registro descreve as mudanças conhecidas do trabalho local. Não representa
 releases ou tags já publicados no GitHub.
 
+## Próximas alterações
+
+- Ponteiro do mouse escuro no tema Light e branco no tema Dark, incluindo GTK e login.
+- Mantido o tamanho de 18 px nas duas variantes.
+
 ## Organização unificada — 16 de outubro de 2026
 
 - Light e Dark reunidos em `light/` e `dark/`, com um Git na raiz.

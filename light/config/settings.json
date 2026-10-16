@@ -37,7 +37,7 @@
   },
   "kcminputrc": {
     "Mouse": {
-      "cursorTheme": "Breeze_Light",
+      "cursorTheme": "breeze_cursors",
       "cursorSize": "18"
     }
   },

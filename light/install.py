@@ -35,7 +35,7 @@ def data_roots(data):
 def dependency_errors(data, applying=False):
     errors = []
     roots = data_roots(data)
-    for name in ("Papirus", "Breeze_Light"):
+    for name in ("Papirus", "breeze_cursors"):
         if not any((p / "icons" / name / "index.theme").exists() or
                    (p.name == ".icons" and (p / name / "index.theme").exists()) for p in roots):
             errors.append(f"Tema de ícones/cursor ausente: {name}")
@@ -112,7 +112,7 @@ def write_gtk(path, backup):
     for key, value in {
         "gtk-application-prefer-dark-theme": "false", "gtk-theme-name": "Breeze",
         "gtk-icon-theme-name": "PapirusBreezeLight", "gtk-font-name": "Noto Sans 10",
-        "gtk-cursor-theme-name": "Breeze_Light", "gtk-cursor-theme-size": "18",
+        "gtk-cursor-theme-name": "breeze_cursors", "gtk-cursor-theme-size": "18",
         "gtk-decoration-layout": "icon:minimize,maximize,close", "gtk-enable-animations": "true",
         "gtk-sound-theme-name": "ocean",
     }.items():
@@ -160,7 +160,7 @@ def apply_profile(data, config, backup, layout=False):
     subprocess.run(["plasma-apply-lookandfeel", "--apply", THEME_ID], check=True)
     subprocess.run(["plasma-apply-colorscheme", "PapirusBreezeLight"], check=True)
     subprocess.run(["plasma-apply-desktoptheme", "PapirusBreezeRed"], check=True)
-    subprocess.run(["plasma-apply-cursortheme", "--size", "18", "Breeze_Light"], check=True)
+    subprocess.run(["plasma-apply-cursortheme", "--size", "18", "breeze_cursors"], check=True)
     for filename, groups in settings.items():
         for group, values in groups.items():
             for key, value in values.items():

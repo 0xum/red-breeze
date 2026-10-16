@@ -64,10 +64,10 @@ class LoginTests(unittest.TestCase):
             store = base / 'store'
             profile = store / 'profiles/light'
             profile.mkdir(parents=True)
-            (profile / 'profile.json').write_text(json.dumps({'manager': 'plasma-login', 'image': '/installed/light.png', 'cursor': 'Breeze_Light'}))
+            (profile / 'profile.json').write_text(json.dumps({'manager': 'plasma-login', 'image': '/installed/light.png', 'cursor': 'breeze_cursors'}))
             for name, groups in {'kdeglobals': {'General': {'ColorScheme': 'PapirusBreezeLoginLight'}},
                                  'plasmarc': {'Theme': {'name': 'PapirusBreezeRed'}},
-                                 'kcminputrc': {'Mouse': {'cursorTheme': 'Breeze_Light'}}}.items():
+                                 'kcminputrc': {'Mouse': {'cursorTheme': 'breeze_cursors'}}}.items():
                 login.set_values(profile / name, groups)
             config_root = base / 'etc'
             config_root.mkdir()
@@ -89,7 +89,7 @@ class LoginTests(unittest.TestCase):
             base = Path(directory)
             profile = base / 'store/profiles/dark'
             profile.mkdir(parents=True)
-            (profile / 'profile.json').write_text(json.dumps({'manager': 'sddm', 'image': '/installed/dark.png', 'cursor': 'breeze_cursors'}))
+            (profile / 'profile.json').write_text(json.dumps({'manager': 'sddm', 'image': '/installed/dark.png', 'cursor': 'Breeze_Light'}))
             for name in ('kdeglobals', 'plasmarc', 'kcminputrc'):
                 login.set_values(profile / name, {'General': {'Name': 'test'}})
             etc = base / 'etc'; etc.mkdir()
@@ -100,7 +100,7 @@ class LoginTests(unittest.TestCase):
                 self.assertTrue(login.apply_variant('dark', 'sddm'))
             config = login.config_file(etc / 'sddm.conf')
             self.assertEqual(config['Theme']['Current'], 'papirus-breeze-dark')
-            self.assertEqual(config['Theme']['CursorTheme'], 'breeze_cursors')
+            self.assertEqual(config['Theme']['CursorTheme'], 'Breeze_Light')
             self.assertEqual(config['Autologin']['User'], 'keep')
             self.assertEqual(config['Autologin']['Session'], 'plasma')
 

@@ -20,7 +20,7 @@ bloqueio e de login.
 | Cores | Breeze Light com destaque vermelho `#E93D58`, paleta exportada |
 | Ícones | Papirus, com as pastas Papirus Red presentes no desktop original |
 | Decoração das janelas | Amy-Light-Aurorae-6, botões pequenos; menu à esquerda, minimizar/maximizar/fechar à direita |
-| Cursor | Breeze Light, 18 px |
+| Cursor | Breeze escuro (`breeze_cursors`), 18 px |
 | Fonte geral / GTK | Noto Sans, 10 pt |
 | Animações KDE | Fator `0.25` |
 | Alternador de janelas | Breeze |
@@ -36,7 +36,7 @@ a variante vermelha sem embutir a biblioteca completa de ícones.
 ## Dependências
 
 - Linux com KDE Plasma 6 e Python 3.9 ou superior.
-- Breeze, Breeze Light (cursor), suporte Aurorae e tema GTK Breeze.
+- Breeze, Breeze escuro (`breeze_cursors`, cursor), suporte Aurorae e tema GTK Breeze.
 - [Papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme), Noto Sans
   e tema de sons Ocean instalados pelo gerenciador de pacotes da distribuição.
 - Para aplicar na sessão atual: `kwriteconfig6`, `qdbus6`,

@@ -21,7 +21,7 @@ Pacote independente para KDE Plasma 6, preparado em 16 de outubro de 2026.
 | GTK | Breeze-Dark, preferência por tema escuro |
 | Ícones | Papirus-Dark com pastas Papirus Red |
 | Decoração | Amy Papirus Dark, adaptação da Amy Light com as mesmas proporções |
-| Cursor | Breeze escuro (`breeze_cursors`), 18 px |
+| Cursor | Breeze Light (`Breeze_Light`), 18 px |
 | Fonte | Noto Sans 10 pt |
 | Wallpaper, bloqueio e login | Moe Dark, 1844 × 853, carvão e vermelho |
 | Painéis opcionais | Inferiores, flutuantes, 32 px, um por monitor conectado |
@@ -35,7 +35,7 @@ a lado. A variante usa o vermelho do conjunto original.
 ## Dependências
 
 - Linux com KDE Plasma 6 e Python 3.9 ou superior.
-- Breeze, Breeze-Dark para GTK, suporte Aurorae e cursor `breeze_cursors`.
+- Breeze, Breeze-Dark para GTK, suporte Aurorae e cursor `Breeze_Light`.
 - Papirus-Dark, Noto Sans e tema de sons Ocean, fornecidos pela distribuição.
 - Para aplicar: `kwriteconfig6`, `qdbus6`, `plasma-apply-lookandfeel`,
   `plasma-apply-colorscheme`, `plasma-apply-desktoptheme` e

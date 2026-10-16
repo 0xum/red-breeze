@@ -14,7 +14,7 @@ fator `0.25`; o alternador de janelas e o splash são Breeze.
 | Estilo Qt | Breeze | Breeze |
 | GTK | Breeze, preferência clara | Breeze-Dark, preferência escura |
 | Aurorae | `Amy-Light-Aurorae-6` | `Amy-Papirus-Dark` |
-| Mouse | `Breeze_Light`, 18 px | `breeze_cursors`, 18 px |
+| Mouse | `breeze_cursors`, 18 px | `Breeze_Light`, 18 px |
 | Wallpaper registrado | `Moe` | `MoeDark` |
 
 A decoração tem botões pequenos; menu à esquerda e minimizar, maximizar e fechar

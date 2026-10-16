@@ -28,7 +28,7 @@ LayoutName=org.kde.breeze.desktop
 name=PapirusBreezeRed
 
 [kcminputrc][Mouse]
-cursorTheme=Breeze_Light
+cursorTheme=breeze_cursors
 cursorSize=18
 
 [auroraerc][Amy-Light-Aurorae-6]

@@ -129,7 +129,7 @@ def provision(package, variant, manager, backup, account):
     backup.save(payload)
     payload.mkdir(parents=True, exist_ok=True)
     write_config(payload / 'kdeglobals', palette)
-    cursor = 'Breeze_Light' if variant == 'light' else 'breeze_cursors'
+    cursor = 'breeze_cursors' if variant == 'light' else 'Breeze_Light'
     set_values(payload / 'kcminputrc', {'Mouse': {'cursorTheme': cursor, 'cursorSize': '18'}})
     set_values(payload / 'plasmarc', {'Theme': {'name': 'PapirusBreezeRed'}})
     image = wallpaper / ('contents/images/3073x1420.png' if variant == 'light' else 'contents/images_dark/1844x853.png')
