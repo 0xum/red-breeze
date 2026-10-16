@@ -1,5 +1,21 @@
 # Appearance and behavior
 
+## Screenshots
+
+### Papirus Breeze Light
+
+Light surfaces, red Papirus icons, Dolphin, the application launcher, and the
+Brightness & Color controls with the Light/Dark theme switch.
+
+![Papirus Breeze Light desktop](screenshots/papirus-breeze-light.png)
+
+### Papirus Breeze Dark
+
+Dark surfaces, red Papirus icons, Dolphin, the application launcher, and the
+Status and Notifications panel.
+
+![Papirus Breeze Dark desktop](screenshots/papirus-breeze-dark.png)
+
 ## Visual identity
 
 The accent is **`#E93D58`**, RGB `233,61,88`. Ordinary text retains readable

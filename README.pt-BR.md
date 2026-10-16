@@ -6,6 +6,14 @@ O inglês é o idioma padrão da documentação, dos comandos de ajuda e das men
 dos instaladores. Este guia resume a instalação em português; os guias técnicos
 completos em inglês são a referência quando não houver uma tradução equivalente.
 
+## Capturas de tela
+
+| Papirus Breeze Light | Papirus Breeze Dark |
+| --- | --- |
+| ![Desktop claro com Dolphin, lançador de aplicativos e controles de brilho e cor](docs/screenshots/papirus-breeze-light.png) | ![Desktop escuro com Dolphin, lançador de aplicativos e painel de status e notificações](docs/screenshots/papirus-breeze-dark.png) |
+
+Veja as imagens em largura completa no [guia de aparência](docs/APPEARANCE.md#screenshots).
+
 ## Instalar e remover
 
 O conjunto oferece temas Light e Dark para KDE Plasma 6, com destaque vermelho

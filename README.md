@@ -24,6 +24,14 @@ launcher with a transparent center, and a red animated terminal cursor.
 The optional layout creates one floating **32 px panel per connected monitor**,
 with no pinned applications. Fish includes a compact system greeting.
 
+## Screenshots
+
+| Papirus Breeze Light | Papirus Breeze Dark |
+| --- | --- |
+| ![Light desktop with Dolphin, the application launcher, and Brightness & Color controls](docs/screenshots/papirus-breeze-light.png) | ![Dark desktop with Dolphin, the application launcher, and Status and Notifications](docs/screenshots/papirus-breeze-dark.png) |
+
+See the [appearance guide](docs/APPEARANCE.md#screenshots) for full-width screenshots.
+
 ## Install or remove
 
 Requirements: Linux, KDE Plasma 6, Python 3.9+, Breeze/Aurorae, Papirus/Papirus-Dark,
