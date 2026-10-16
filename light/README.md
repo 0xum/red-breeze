@@ -84,34 +84,34 @@ para incluir wallpaper, bloqueio e integração GTK de forma completa. Na interf
 
 ## Tela de login
 
-No sistema original, o serviço é `plasmalogin.service`. A configuração legível
-aponta para `Moe` no diretório de wallpapers desse serviço. Esta exportação inclui
-a imagem original do desktop e recria a mesma referência para a conta do greeter
-no sistema de destino. O diretório privado do greeter original não pôde ser lido;
-eventuais ajustes adicionais existentes somente ali não foram exportados.
-
-Primeiro simule; depois aplique com privilégios administrativos:
+O instalador configura aparência completa para Plasma Login Manager ou SDDM:
+paleta, destaque vermelho, ícones, cursor e wallpaper. Os recursos necessários
+ficam acessíveis à conta do greeter, mesmo com a pasta pessoal do usuário privada.
+A interface de autenticação continua sendo a nativa Breeze.
 
 ```bash
 python3 install-login.py --dry-run
 sudo python3 install-login.py
 ```
 
-No Plasma Login Manager, o script altera somente o wallpaper em
-`/etc/plasmalogin.conf` e instala a imagem no diretório da conta `plasmalogin`.
-Preserva outras configurações de login e autenticação.
-
-Em outro sistema que utilize SDDM:
+Para acompanhar as trocas entre Light/Dark de um usuário:
 
 ```bash
-python3 install-login.py --manager sddm --dry-run
-sudo python3 install-login.py --manager sddm
+sudo python3 install-login.py --follow-user nome-do-usuario
 ```
 
-Essa alternativa cria uma cópia do tema Breeze do SDDM com o wallpaper Moe,
-relógio e cursor Breeze Light. A interface segue o Breeze instalado no destino.
-O script seleciona essa cópia por um arquivo em `/etc/sddm.conf.d/`.
-Não troca o gerenciador de login habilitado e não reinicia serviços.
+Instale as duas variantes com essa opção. No repositório unificado, o comando
+`sudo python3 tools/install-login.py --follow-user "$USER"` executado da raiz
+instala ambas e o observador systemd. Uma instalação estática mantém a aparência
+escolhida até a próxima aplicação; o observador seleciona a variante conforme
+a paleta do usuário. Temas fora de Papirus Breeze são ignorados.
+
+`--manager plasma-login` ou `--manager sddm` permite explicitar o backend.
+A instalação não reinicia o display manager nem altera autenticação/autologin.
+O resultado é usado na próxima tela de login. Para desabilitar acompanhamento,
+execute `sudo systemctl disable --now papirus-breeze-login.path papirus-breeze-login.service`.
+Faça isso também antes de restaurar snapshots; após restaurar unidades, execute
+`sudo systemctl daemon-reload`.
 
 ## Backup e restauração
 
@@ -157,7 +157,7 @@ python3 -m unittest discover -s tests -v
 python3 build.py
 ```
 
-O segundo comando gera `dist/papirus-breeze-light-1.0.12.tar.gz`, com a mesma pasta
+O segundo comando gera `dist/papirus-breeze-light-1.0.13.tar.gz`, com a mesma pasta
 pronta para copiar, extrair e instalar. `dist/`, caches e backups não entram no Git.
 Os testes usam diretórios temporários e não aplicam o tema à sessão atual.
 

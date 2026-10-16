@@ -37,7 +37,7 @@ class PackageTests(unittest.TestCase):
 
     def test_manifest_and_portability(self):
         manifest = install.verify_assets()
-        self.assertEqual(manifest["version"], "1.0.12")
+        self.assertEqual(manifest["version"], "1.0.13")
         for path in list((ROOT / "assets").rglob("*")) + list((ROOT / "config").rglob("*")):
             if path.is_file() and path.suffix in {".json", ".colors", ".js", ".desktop", ".theme"}:
                 self.assertNotIn("/home/delta", path.read_text())
