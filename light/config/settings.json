@@ -1,0 +1,65 @@
+{
+  "kdeglobals": {
+    "General": {
+      "ColorScheme": "PapirusBreezeLight",
+      "AccentColor": "233,61,88",
+      "LastUsedCustomAccentColor": "233,61,88",
+      "font": "Noto Sans,10,-1,5,50,0,0,0,0,0"
+    },
+    "Icons": {
+      "Theme": "PapirusBreezeLight"
+    },
+    "KDE": {
+      "widgetStyle": "Breeze",
+      "LookAndFeelPackage": "com.delta.papirus-breeze-light",
+      "AnimationDurationFactor": "0.25",
+      "contrast": "4",
+      "frameContrast": "0.2"
+    }
+  },
+  "kwinrc": {
+    "org.kde.kdecoration2": {
+      "library": "org.kde.kwin.aurorae.v2",
+      "theme": "__aurorae__svg__Amy-Light-Aurorae-6",
+      "NoPlugin": "false",
+      "BorderSizeAuto": "true",
+      "ButtonsOnLeft": "M",
+      "ButtonsOnRight": "IAX"
+    },
+    "TabBox": {
+      "LayoutName": "org.kde.breeze.desktop"
+    }
+  },
+  "plasmarc": {
+    "Theme": {
+      "name": "PapirusBreezeRed"
+    }
+  },
+  "kcminputrc": {
+    "Mouse": {
+      "cursorTheme": "Breeze_Light",
+      "cursorSize": "18"
+    }
+  },
+  "auroraerc": {
+    "Amy-Light-Aurorae-6": {
+      "ButtonSize": "0"
+    }
+  },
+  "ksplashrc": {
+    "KSplash": {
+      "Engine": "KSplashQML",
+      "Theme": "org.kde.breeze.desktop"
+    }
+  },
+  "konsolerc": {
+    "LightDarkTheme": {
+      "SyncProfileWithSystemTheme": "true",
+      "LightThemeProfile": "Papirus Breeze Light",
+      "DarkThemeProfile": "Papirus Breeze Dark"
+    },
+    "Desktop Entry": {
+      "DefaultProfile": "PapirusBreezeLight.profile"
+    }
+  }
+}

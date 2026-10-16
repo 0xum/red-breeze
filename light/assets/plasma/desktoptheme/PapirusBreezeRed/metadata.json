@@ -1,0 +1,19 @@
+{
+  "KPlugin": {
+    "Id": "PapirusBreezeRed",
+    "Name": "Papirus Breeze Red",
+    "Description": "Breeze with fixed red system symbols; inherits Breeze surfaces.",
+    "Version": "1.0.6",
+    "License": "LGPL",
+    "Authors": [
+      {
+        "Name": "KDE Visual Design Group"
+      },
+      {
+        "Name": "Delta",
+        "Task": "Red glyph adaptation"
+      }
+    ]
+  },
+  "X-Plasma-API": "5.0"
+}

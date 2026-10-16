@@ -1,0 +1,20 @@
+{
+  "KPlugin": {
+    "Authors": [
+      {
+        "Email": "gicalucejo@gmail.com",
+        "Name": "jomada"
+      },
+      {
+        "Name": "Delta",
+        "Task": "Dark adaptation and adaptive package"
+      }
+    ],
+    "Id": "Moe",
+    "License": "CC-BY-SA-4.0",
+    "Version": "1.1",
+    "Name": "Moe",
+    "Name[x-test]": "xxMoexx",
+    "Description": "Moe adaptive Light/Dark wallpaper; original by jomada, Dark adaptation by Delta with ImageGen."
+  }
+}

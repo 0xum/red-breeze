@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:ns3="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" width="22" height="22" viewBox="0 0 22 22" id="svg2" version="1.1" inkscape:version="0.91 r13725" style=";color:#E93D58">
+  <defs id="defs4">
+    <style id="current-color-scheme" type="text/css">
+      .ColorScheme-Text {
+        color:#31363b;
+      }
+      </style>
+    </defs>
+  <metadata id="metadata7">
+    <rdf:RDF>
+      <ns3:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </ns3:Work>
+    </rdf:RDF>
+  </metadata>
+  <g inkscape:label="Layer 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-1030.3621)">
+    <g id="vlc">
+      <rect y="1030.3621" x="0" height="22" width="22" id="rect4246" style="opacity:1;fill:none;fill-opacity:1;stroke:none;stroke-width:3.29999995;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;color:#E93D58" />
+      <rect style="opacity:1;fill:#E93D58;fill-opacity:1;stroke:none;stroke-width:3.29999995;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;color:#E93D58" id="rect4271" width="16" height="2" x="3" y="1047.3621" />
+      <path style="opacity:1;fill:#E93D58;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate;color:#E93D58" d="m 9.1191406,1033.3613 -4.1015625,14.8672 0.9648438,0.2656 3.8984375,-14.1328 2.2382816,0 3.898437,14.1328 0.964844,-0.2656 -4.101563,-14.8672 -3.7617184,0 z" id="path4273" inkscape:connector-curvature="0" />
+      <path style="fill:#E93D58;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;color:#E93D58" d="m 9,1036.3621 4,0 1,3 -6,0 z" id="path4275" inkscape:connector-curvature="0" />
+      <path style="fill:#E93D58;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;color:#E93D58" d="m 7.5,1042.3621 7,0 1,3 -9,0 z" id="path4277" inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>

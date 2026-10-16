@@ -1,0 +1,16 @@
+{
+  "KPackageStructure": "Plasma/LookAndFeel",
+  "KPlugin": {
+    "Id": "com.delta.papirus-breeze-light",
+    "Name": "Papirus Breeze Light",
+    "Description": "Breeze Light, red accent, Papirus Red folders and system symbols, Amy Light and Moe wallpaper.",
+    "Authors": [
+      {
+        "Name": "Delta"
+      }
+    ],
+    "Version": "1.0.11",
+    "License": "GPL-3.0-only"
+  },
+  "X-Plasma-APIVersion": "2"
+}

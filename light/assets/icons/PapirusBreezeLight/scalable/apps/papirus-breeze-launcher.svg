@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <title>Papirus Breeze Launcher</title>
+  <desc>Rounded red hexagon with a centered transparent circular cutout, on a transparent background.</desc>
+  <!-- Edit fill to customize the hexagon color. Coordinates define its rounded corners. -->
+  <path id="hexagon" fill="#E93D58" fill-rule="evenodd"
+     d="M 116.000 57.072 Q 120.000 64.000 116.000 70.928
+       L 96.000 105.569 Q 92.000 112.497 84.000 112.497
+       L 44.000 112.497 Q 36.000 112.497 32.000 105.569
+       L 12.000 70.928 Q 8.000 64.000 12.000 57.072
+       L 32.000 22.431 Q 36.000 15.503 44.000 15.503
+       L 84.000 15.503 Q 92.000 15.503 96.000 22.431 Z
+       M 89 64 A 25 25 0 1 0 39 64 A 25 25 0 1 0 89 64 Z"/>
+  <!-- The second subpath cuts a transparent circle: center 64,64; radius 25.
+       Keep fill-rule="evenodd" so the desktop shows through the center. -->
+</svg>
