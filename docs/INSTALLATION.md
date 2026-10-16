@@ -14,6 +14,7 @@ English is the default language. An optional [pt-BR guide](../README.pt-BR.md) i
 - For live application/removal: `qdbus6`, `plasma-apply-lookandfeel`, `plasma-apply-colorscheme`, `plasma-apply-desktoptheme`, and `plasma-apply-cursortheme`.
 - A Konsole version with native Light/Dark profile synchronization, or manual profile selection on older versions. The source workstation used Konsole 26.08.2.
 - For optional login appearance: Plasma Login Manager, or SDDM with its Breeze theme installed.
+- For unified login setup: `pkexec` and a graphical Polkit authentication agent.
 
 Install dependencies through your distribution's package manager. The installers
 do not download software or invoke a package manager. Checks cover base
@@ -50,7 +51,22 @@ python3 install.py remove
 Reopen **System Settings → Quick Settings** to see the pair if the window was
 already open. Registration does not enable automatic switching by time of day.
 
-Without `--apply`, installation keeps the current appearance and panels.
+Without `--apply`, installation keeps the current desktop appearance and panels.
+It sets the native lock screen's image plugin to the installed adaptive Moe package,
+which contains both Light/Dark images. Password requirements, lock timeouts, and
+other security settings are preserved. No custom lock-screen QML is installed.
+Administrative login following is configured by default through the system
+authentication dialog. To skip that step:
+
+```bash
+python3 install.py install --no-login
+```
+
+If authentication is cancelled or login setup fails, the command reports failure
+for that step while retaining the completed user-theme installation. Rerun
+installation to retry. `--dry-run` never authenticates or installs services;
+alternate test destinations always skip administrative setup.
+
 `--apply light` or `--apply dark` also sets the palette, window decoration, font,
 mouse cursor, Plasma style, GTK integration, wallpaper, lock screen, Konsole,
 Fish, and existing launcher icons. Reopen Konsole after the first application.
@@ -132,7 +148,8 @@ configuration. Selecting **Desktop and window layout** replaces panels just like
 ## Login appearance
 
 Login appearance runs under another account and requires an initial administrative
-installation. The helper detects Plasma Login Manager or SDDM/Breeze. The source
+installation, performed by the unified installer unless `--no-login` is used.
+The helper detects Plasma Login Manager or SDDM/Breeze. The source
 workstation used Plasma Login Manager 6.8.0; verify your installed backend rather
 than assuming the source version matches your system.
 
@@ -142,6 +159,12 @@ To install both profiles and follow the normal user's Light/Dark theme:
 python3 tools/install-login.py --follow-user "$USER" --dry-run
 sudo python3 tools/install-login.py --follow-user "$USER"
 ```
+
+The unified installer passes the actual XDG configuration file with `--source`.
+For a custom `XDG_CONFIG_HOME`, the separate command can use
+`--source /absolute/path/to/kdeglobals` with `--follow-user`. The source must be an
+absolute regular file owned by that user; symlinks are refused. Updating setup
+restarts only the watcher so a changed source path takes effect immediately.
 
 Pass the graphical session's normal user, not `root`. A caller can also use
 Polkit through `pkexec`. The watcher reads the selected user's `kdeglobals` and

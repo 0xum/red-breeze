@@ -125,3 +125,39 @@ class LoginTests(unittest.TestCase):
             provision.assert_not_called()
             follow.assert_not_called()
             run.assert_not_called()
+
+    def test_follow_watches_explicit_xdg_config_and_restarts_existing_watch(self):
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            source = base / 'custom-config/kdeglobals'
+            source.parent.mkdir()
+            source.write_text('[General]\nColorScheme=OtherTheme\n')
+            runtime = base / 'source.py'
+            runtime.write_text('# fixed administrative runtime\n')
+            account = types.SimpleNamespace(pw_dir=str(base / 'home'), pw_uid=os.getuid(), pw_gid=os.getgid())
+            units = base / 'units'
+            units.mkdir()
+            import install
+            backup = install.Backup(base / 'state')
+            with patch.object(login.pwd, 'getpwnam', return_value=account), \
+                    patch.object(login, 'SETTINGS', base / 'settings.json'), \
+                    patch.object(login, 'RUNTIME', base / 'runtime.py'), \
+                    patch.object(login, 'UNIT_DIR', units), patch.object(login.subprocess, 'run') as run:
+                login.follow_user('example', 'plasma-login', backup, runtime, source=source)
+            self.assertEqual(json.loads((base / 'settings.json').read_text())['source'], str(source))
+            self.assertIn('PathChanged=' + str(source), (units / login.PATH_UNIT).read_text())
+            self.assertIn(['systemctl', 'restart', login.PATH_UNIT], [c.args[0] for c in run.call_args_list])
+
+    def test_follow_rejects_symlink_source_before_administrative_writes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            original = base / 'original'
+            original.write_text('[General]\nColorScheme=PapirusBreezeLight\n')
+            alias = base / 'alias'
+            alias.symlink_to(original)
+            account = types.SimpleNamespace(pw_dir=str(base), pw_uid=os.getuid())
+            with patch.object(login.pwd, 'getpwnam', return_value=account), \
+                    patch.object(login, 'SETTINGS', base / 'settings.json'):
+                with self.assertRaisesRegex(ValueError, 'symbolic link'):
+                    login.follow_user('example', 'plasma-login', None, base / 'runtime.py', source=alias)
+            self.assertFalse((base / 'settings.json').exists())

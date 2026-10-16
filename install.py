@@ -7,6 +7,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import pwd
 import shutil
 import subprocess
 import sys
@@ -26,8 +27,10 @@ def load_variant(variant):
 
 
 def read_key(config, filename, group, key):
-    return subprocess.check_output(['kreadconfig6', '--file', str(config / filename),
-                                    '--group', group, '--key', key], text=True).strip()
+    command = ['kreadconfig6', '--file', str(config / filename)]
+    for part in group.split(']['):
+        command += ['--group', part]
+    return subprocess.check_output(command + ['--key', key], text=True).strip()
 
 
 def write_key(config, filename, group, key, value):
@@ -115,6 +118,34 @@ def atomic_json(path, value):
     temporary.replace(path)
 
 
+def configure_lockscreen(data, config, backup):
+    """Use KDE's native lock UI and one adaptive package for either palette."""
+    backup.save(config / 'kscreenlockerrc')
+    write_key(config, 'kscreenlockerrc', 'Greeter', 'WallpaperPlugin', 'org.kde.image')
+    wallpaper = (data / 'wallpapers/Moe').as_uri()
+    for key in ('Image', 'PreviewImage'):
+        write_key(config, 'kscreenlockerrc', 'Greeter][Wallpaper][org.kde.image][General', key, wallpaper)
+
+
+def configure_login(config, dry_run=False):
+    """Install fixed administrative profiles; let Polkit handle authentication."""
+    username = pwd.getpwuid(os.getuid()).pw_name
+    command = ['/usr/bin/python3', str(ROOT / 'tools/install-login.py'),
+               '--follow-user', username, '--source', str(config / 'kdeglobals')]
+    if dry_run:
+        print('Login: install both profiles and enable automatic Light/Dark following (administrator authentication required).')
+        return
+    pkexec = shutil.which('pkexec')
+    if not pkexec:
+        raise RuntimeError('User themes installed, but login synchronization needs pkexec. '
+                           'Install Polkit or run tools/install-login.py with sudo; use --no-login to skip login setup.')
+    print('Configuring login synchronization. Authenticate in the system dialog.', flush=True)
+    result = subprocess.run([pkexec, '--disable-internal-agent', *command])
+    if result.returncode:
+        raise RuntimeError('User themes installed, but administrative login setup did not complete '
+                           f'(exit {result.returncode}). Rerun install to retry, or use --no-login to skip it.')
+
+
 def install(data, config, state, apply=None, layout=False, dry_run=False):
     sources = assets()
     errors = check(data, applying=bool(apply))
@@ -127,6 +158,7 @@ def install(data, config, state, apply=None, layout=False, dry_run=False):
     for relative in sources:
         safe_target(data, relative)
     print('Install/update Light and Dark and register both in Quick Settings.')
+    print('Lock screen: native KDE UI with adaptive wallpaper; security preferences preserved.')
     if apply:
         print('Apply: ' + apply + ('; replace panels.' if layout else '; preserve panels.'))
     if dry_run:
@@ -146,6 +178,7 @@ def install(data, config, state, apply=None, layout=False, dry_run=False):
             module.copy_asset(source, data / relative, backup)
         for key, value in QUICK.items():
             write_key(config, 'kdeglobals', 'KDE', key, value)
+        configure_lockscreen(data, config, backup)
         if apply:
             for name in ('gtkrc', 'gtkrc-2.0', 'gtk-3.0/settings.ini', 'gtk-4.0/settings.ini',
                          'xsettingsd/xsettingsd.conf', 'fish/config.fish', 'fish/papirus-breeze.fish'):
@@ -316,6 +349,7 @@ def main(argv=None):
     parser.add_argument('--apply', choices=tuple(THEMES), help='apply Light or Dark after installation')
     parser.add_argument('--layout', action='store_true', help='with --apply, replace the current panels')
     parser.add_argument('--dry-run', action='store_true', help='simulate without changing files')
+    parser.add_argument('--no-login', action='store_true', help='skip administrative login synchronization during installation')
     for kind in ('data', 'config', 'state'):
         parser.add_argument('--' + kind + '-dir', type=Path, help='test destination; all three directories are required')
     args = parser.parse_args(argv)
@@ -357,9 +391,17 @@ def main(argv=None):
         print('Managed installation: ' + ('yes' if (state / 'papirus-breeze/installation.json').exists() else 'no'))
         for key in QUICK:
             print(key + ': ' + read_key(config, 'kdeglobals', 'KDE', key))
+        settings = Path('/etc/papirus-breeze-login.json')
+        if settings.is_file():
+            login = json.loads(settings.read_text())
+            print('Login sync: configured for ' + login['user'] + ' (' + login['manager'] + ')')
+        else:
+            print('Login sync: not configured. Run install to enable it.')
         return 0
     if args.action == 'install':
         install(data, config, state, args.apply, args.layout, args.dry_run)
+        if not alternate and not args.no_login:
+            configure_login(config, args.dry_run)
     else:
         remove(data, config, state, args.dry_run, live=not alternate)
     return 0

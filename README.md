@@ -59,8 +59,10 @@ python3 install.py remove
 
 Installation registers both variants as the Light/Dark pair in **System Settings
 → Quick Settings**. Reopen System Settings if it was already running. Without
-`--apply`, installation keeps the current appearance and panel layout.
-User installation and removal do not require `sudo`.
+`--apply`, installation keeps the current desktop appearance and panel layout.
+It configures the native lock screen with the adaptive Light/Dark wallpaper.
+Run as your normal user; login synchronization opens a system authentication dialog.
+Use `python3 install.py install --no-login` to skip administrative login setup.
 
 To replace the existing panels with the supplied layout:
 
@@ -73,17 +75,18 @@ height, and pinned applications. Removal restores the previous Quick Settings
 pair when available, preserves modified resources and backups, and switches an
 active Papirus theme to the matching Breeze variant before deleting assets.
 
-## Optional login appearance
+## Login synchronization
 
-Login appearance has a separate administrative installer. To install both
-profiles and follow the current user's Light/Dark selection:
+The unified installer installs both login profiles and enables Light/Dark
+following by default, using Polkit for administrator authentication. The display
+manager is not restarted. A separate repair command remains available:
 
 ```bash
 python3 tools/install-login.py --follow-user "$USER" --dry-run
 sudo python3 tools/install-login.py --follow-user "$USER"
 ```
 
-The user installer does not install or remove this administrative integration.
+User-level removal does not undo this administrative integration.
 See [installation](docs/INSTALLATION.md#login-appearance) and
 [restoration](docs/RESTORE_AND_TROUBLESHOOTING.md#restore-a-snapshot).
 

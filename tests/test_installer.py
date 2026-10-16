@@ -175,3 +175,42 @@ class InstallerTests(unittest.TestCase):
                 patch.object(installer, 'load_variant', return_value=module):
             errors = self.original_check(self.data)
         self.assertNotIn(dependency, errors)
+
+    def test_lockscreen_uses_adaptive_wallpaper_and_preserves_security_settings(self):
+        installer.write_key(self.config, 'kscreenlockerrc', 'Daemon', 'RequirePassword', 'true')
+        installer.write_key(self.config, 'kscreenlockerrc', 'Daemon', 'Timeout', '12')
+        self.install()
+        read = lambda group, key: installer.read_key(self.config, 'kscreenlockerrc', group, key)
+        self.assertEqual(read('Greeter', 'WallpaperPlugin'), 'org.kde.image')
+        self.assertEqual(read('Greeter][Wallpaper][org.kde.image][General', 'Image'), (self.data / 'wallpapers/Moe').as_uri())
+        self.assertEqual(read('Daemon', 'RequirePassword'), 'true')
+        self.assertEqual(read('Daemon', 'Timeout'), '12')
+        self.remove()
+        self.assertEqual(read('Greeter][Wallpaper][org.kde.image][General', 'Image'), '')
+        self.assertEqual(read('Daemon', 'RequirePassword'), 'true')
+
+    def test_cli_installs_login_by_default_but_skips_it_for_isolated_or_opt_out_runs(self):
+        with patch.object(installer, 'install'), patch.object(installer, 'configure_login') as login:
+            self.assertEqual(installer.main(['install', '--dry-run']), 0)
+            self.assertTrue(login.call_args.args[1])
+            login.reset_mock()
+            self.assertEqual(installer.main(['install', '--no-login']), 0)
+            login.assert_not_called()
+            self.assertEqual(installer.main(['install', '--data-dir', str(self.data),
+                                             '--config-dir', str(self.config), '--state-dir', str(self.state)]), 0)
+            login.assert_not_called()
+
+    def test_login_privilege_request_passes_selected_user_and_config_and_reports_failure(self):
+        account = types.SimpleNamespace(pw_name='example')
+        with patch.object(installer.pwd, 'getpwuid', return_value=account), \
+                patch.object(installer.shutil, 'which', return_value='/usr/bin/pkexec'), \
+                patch.object(installer.subprocess, 'run', return_value=installer.subprocess.CompletedProcess([], 126)) as run:
+            with self.assertRaisesRegex(RuntimeError, 'did not complete'):
+                installer.configure_login(self.config)
+            command = run.call_args.args[0]
+            self.assertEqual(command[:3], ['/usr/bin/pkexec', '--disable-internal-agent', '/usr/bin/python3'])
+            self.assertIn('example', command)
+            self.assertIn(str(self.config / 'kdeglobals'), command)
+            run.reset_mock()
+            installer.configure_login(self.config, dry_run=True)
+            run.assert_not_called()

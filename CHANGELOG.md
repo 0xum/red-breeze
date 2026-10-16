@@ -4,6 +4,10 @@ This file records known changes. An entry does not imply a published release or 
 
 ## Unreleased
 
+- Configure administrative Light/Dark login following from the unified installer by default; add `--no-login`.
+- Set an adaptive wallpaper on the native lock screen while preserving lock/security preferences.
+- Read nested KConfig groups correctly so wallpaper references are cleaned up during removal.
+- Support explicit XDG configuration sources for login watching and restart the watcher after updates.
 - Add a unified installer with a menu, prerequisite checks, installation, updates, and removal.
 - Register the Light/Dark Quick Settings pair and restore previous choices on removal.
 - Preserve customized resources, third-party profiles, dependencies, and backups during removal.

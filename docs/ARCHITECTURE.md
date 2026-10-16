@@ -61,6 +61,14 @@ variant. Alternate destinations require data/config/state together and do not
 execute live-session appearance commands. User removal excludes administrative
 login installation and external dependencies.
 
+Unified installation configures the lock screen's native image plugin and an
+adaptive wallpaper without changing daemon/security settings. It then requests
+Polkit authentication to install both fixed greeter profiles and the watcher;
+`--no-login`, dry runs, and alternate destinations skip administrative execution.
+An authentication failure is reported separately from the successful user install.
+The watched source follows the actual XDG configuration path, is ownership-checked,
+and does not accept symlinks.
+
 ## Configuration changed by application
 
 | File / state | Effect |

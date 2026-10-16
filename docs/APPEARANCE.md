@@ -89,8 +89,11 @@ Each wallpaper package contains the original light image in `contents/images/`
 Desktop and lock-screen settings reference the package directory so Plasma can
 choose the matching image. Selecting a single image manually fixes that image.
 
+The lock screen uses native KDE UI and the adaptive wallpaper package, so a palette
+change selects its Light/Dark image without replacing the authentication UI.
 Login appearance needs administrative installation because the greeter runs as
-another account. With `--follow-user`, palette, icons, cursor, and wallpaper follow
+another account; unified installation now requests this by default. With
+`--follow-user`, palette, icons, cursor, and wallpaper follow
 the Papirus Light/Dark selection. Otherwise the selected appearance stays static.
 The watcher selects fixed profiles installed by root and uses the native greeter
 interface. Greeter `Colors:Complementary` matches window colors; desktop palettes

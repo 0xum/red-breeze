@@ -20,6 +20,7 @@ SERVICE = 'papirus-breeze-login.service'
 PATH_UNIT = 'papirus-breeze-login.path'
 STATE = Path('/var/lib/papirus-breeze-login/current.json')
 CONFIG_ROOT = Path('/etc')
+UNIT_DIR = Path('/etc/systemd/system')
 VARIANTS = ('light', 'dark')
 
 
@@ -188,7 +189,7 @@ def apply_variant(variant, manager, backup=None, force=False):
         shutil.rmtree(home / '.cache')
     STATE.parent.mkdir(parents=True, exist_ok=True)
     STATE.write_text(json.dumps({'variant': variant, 'signature': signature, 'manager': manager}, indent=2) + '\n')
-    print('Login aplicado: Papirus Breeze ' + variant.title(), flush=True)
+    print('Login applied: Papirus Breeze ' + variant.title(), flush=True)
     return True
 
 
@@ -211,14 +212,18 @@ def unit_contents(source):
     }
 
 
-def follow_user(username, manager, backup, runtime_source):
+def follow_user(username, manager, backup, runtime_source, source=None):
     from install import copy_asset
     user = pwd.getpwnam(username)
     if user.pw_uid == 0:
         raise ValueError('Choose the graphical session user, not root.')
-    source = Path(user.pw_dir) / '.config/kdeglobals'
+    source = Path(source) if source is not None else Path(user.pw_dir) / '.config/kdeglobals'
+    if not source.is_absolute() or source.is_symlink():
+        raise ValueError('The watched kdeglobals must be an absolute regular path, not a symbolic link.')
     if not source.is_file():
         raise RuntimeError('Session kdeglobals not found: ' + str(source))
+    if source.stat().st_uid != user.pw_uid:
+        raise ValueError('The watched kdeglobals must belong to the selected user.')
     if any(char in str(source) for char in ('\n', '\r', '%', '\\')):
         raise ValueError('Path is incompatible with the systemd unit')
     backup.save(SETTINGS)
@@ -228,13 +233,14 @@ def follow_user(username, manager, backup, runtime_source):
     RUNTIME.chmod(0o755)
     units = unit_contents(source)
     for name, content in units.items():
-        path = Path('/etc/systemd/system') / name
+        path = UNIT_DIR / name
         backup.save(path)
         path.write_text(content)
         path.chmod(0o644)
     subprocess.run(['systemctl', 'daemon-reload'], check=True)
     subprocess.run(['systemctl', 'enable', SERVICE], check=True)
     subprocess.run(['systemctl', 'enable', '--now', PATH_UNIT], check=True)
+    subprocess.run(['systemctl', 'restart', PATH_UNIT], check=True)
     # Calling sync directly preserves the installation's backup for the first apply.
     variant = selected_variant(source, user.pw_uid)
     if variant is not None and (STORE / 'profiles' / variant / 'profile.json').exists():
@@ -246,9 +252,12 @@ def main(package=None, argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--manager', choices=('auto', 'plasma-login', 'sddm'), default='auto')
     parser.add_argument('--follow-user', help="follow this user's Light/Dark changes through systemd.path")
+    parser.add_argument('--source', type=Path, help="explicit path to the selected user's kdeglobals")
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--sync', action='store_true', help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
+    if args.source and not args.follow_user:
+        parser.error('--source requires --follow-user')
     if args.sync:
         if os.geteuid() != 0:
             raise RuntimeError('Synchronization runs through the installed administrative service.')
@@ -277,7 +286,7 @@ def main(package=None, argv=None):
         backup.save(STATE)
         provision(package, variant, manager, backup, account)
         if args.follow_user:
-            follow_user(args.follow_user, manager, backup, Path(__file__).resolve())
+            follow_user(args.follow_user, manager, backup, Path(__file__).resolve(), source=args.source)
         else:
             apply_variant(variant, manager, backup, force=True)
     finally:

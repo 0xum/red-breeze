@@ -43,7 +43,10 @@ python3 install.py remove
 
 A instalação cadastra as duas variantes como o par claro/escuro em **Configurações
 do Sistema → Configurações rápidas (Quick Settings)**. Reabra essa janela se ela
-já estava aberta. Sem `--apply`, a aparência atual e os painéis são mantidos.
+já estava aberta. Sem `--apply`, a aparência do desktop e os painéis são mantidos.
+O bloqueio recebe o wallpaper adaptativo e usa a interface nativa do KDE.
+Por padrão, a instalação abre a autenticação do sistema para sincronizar o login.
+Para instalar apenas os temas do usuário, use `python3 install.py install --no-login`.
 
 Para usar o layout incluído:
 
@@ -59,7 +62,8 @@ Breeze correspondente antes de remover os arquivos.
 
 ## Login e backups
 
-A aparência do login tem instalação administrativa separada:
+A sincronização do login é configurada pelo instalador unificado. O comando
+administrativo separado continua disponível para reparo:
 
 ```bash
 python3 tools/install-login.py --follow-user "$USER" --dry-run

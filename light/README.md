@@ -87,6 +87,8 @@ python3 install.py install
 python3 install.py remove
 ```
 
+Unified installation also requests system authentication to enable login following;
+use its `--no-login` option to skip administrative setup.
 Those commands are for the **root unified installer**, not this package's script.
 To undo a standalone installation, use its backup restoration procedure below.
 

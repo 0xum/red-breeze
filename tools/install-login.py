@@ -9,17 +9,20 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--follow-user', required=True)
     parser.add_argument('--manager', choices=('auto', 'plasma-login', 'sddm'), default='auto')
+    parser.add_argument('--source', type=Path, help="explicit path to the selected user's kdeglobals (for XDG_CONFIG_HOME)")
     parser.add_argument('--dry-run', action='store_true')
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     for variant in ('light', 'dark'):
         command = [sys.executable, str(ROOT / variant / 'install-login.py'),
                    '--follow-user', args.follow_user, '--manager', args.manager]
         if args.dry_run:
             command.append('--dry-run')
+        if args.source:
+            command += ['--source', str(args.source)]
         subprocess.run(command, check=True)
     return 0
 

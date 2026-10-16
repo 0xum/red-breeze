@@ -151,7 +151,8 @@ def evaluate(script):
 def apply_profile(data, config, backup, layout=False):
     settings = json.loads((ROOT / "config/settings.json").read_text())
     wallpaper = (data / "wallpapers/Moe").as_uri()
-    settings["kscreenlockerrc"] = {"Greeter][Wallpaper][org.kde.image][General": {
+    settings["kscreenlockerrc"] = {"Greeter": {"WallpaperPlugin": "org.kde.image"},
+                                   "Greeter][Wallpaper][org.kde.image][General": {
         "Image": wallpaper, "PreviewImage": wallpaper,
     }}
     # Snapshot before any KDE utility changes a file.

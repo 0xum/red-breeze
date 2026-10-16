@@ -122,6 +122,31 @@ state is `/var/lib/papirus-breeze-login/current.json`. Other themes are ignored.
 Both login variants must be installed. After changing login managers, reinstall
 the profiles for the new account/backend.
 
+`python3 install.py status` also reports whether login following is configured.
+If it is absent, rerun `python3 install.py install` and complete the system
+authentication dialog. `--no-login` deliberately omits that step. No display
+manager restart or logout is required to install the profiles.
+
+## The lock screen reports that it is broken
+
+Check the journal for the actual error before replacing theme files:
+
+```bash
+journalctl -b -t kwin_wayland_wrapper -t kscreenlocker_greet
+```
+
+After an in-session Plasma upgrade, an older running KWin can invoke a newer
+locker with removed arguments. For example, `Unknown option 'ksldfd'` was observed
+after a 6.7.5 → 6.8.0 upgrade before the session was restarted. This is a component
+version mismatch, not evidence of a malformed wallpaper or theme QML. Complete the
+upgrade and start a new graphical session before testing locking. Do not disable
+password requirements to work around it.
+
+The installer retains KDE's native lock UI and configures only its image plugin
+and adaptive wallpaper. `kscreenlockerrc`'s `Daemon` settings are preserved. Native
+QML can be checked in an isolated offscreen `kscreenlocker_greet --testing` preview;
+a preview is not an end-to-end authentication test.
+
 ## A hash differs or a dependency is missing
 
 For intentional source edits, follow [customization](CUSTOMIZATION.md) and update
