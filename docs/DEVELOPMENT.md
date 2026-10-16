@@ -8,9 +8,10 @@ at [0xum/red-breeze](https://github.com/0xum/red-breeze); inspect `git remote -v
 and `git status` for the current checkout rather than relying on historical notes.
 Build outputs, Python caches, and external history bundles are ignored.
 
-English is the default for documentation, comments, help, diagnostics, and new
-commit descriptions. The optional [pt-BR guide](../README.pt-BR.md) links back to
-the English documentation.
+Read [AGENTS.md](../AGENTS.md) and the [.agents task map](../.agents/README.md)
+for contributor guidance. English is the default for documentation, comments,
+help, diagnostics, and new commit descriptions. Optional pt-BR translations link
+to their English source; see the [language policy](../.agents/LANGUAGE.md).
 
 ## Maintenance commands
 
@@ -77,7 +78,7 @@ dark/dist/papirus-breeze-dark-1.0.13.tar.gz
 ```
 
 The complete archive includes both variants, unified installer, documentation,
-and tests. Each standalone archive works without the other variant
+agent guidance, and tests. Each standalone archive works without the other variant
 or root files. Builders exclude Git, caches, and nested distribution outputs.
 Generated archives stay out of Git; attach them to a release only when publishing
 is requested. Extract and smoke-test a changed archive builder before distribution.

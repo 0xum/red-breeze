@@ -81,7 +81,7 @@ git diff --check
 O pacote completo fica em `dist/`; os independentes ficam em `light/dist/` e
 `dark/dist/`. Os testes usam pastas temporárias e não aplicam temas à sessão.
 
-Consulte os [guias em inglês](README.md#documentation) e os
-[créditos/licenças](THIRD_PARTY.md).
+Consulte os [guias em inglês](README.md#documentation), as
+[orientações para agentes](AGENTS.md) e os [créditos/licenças](THIRD_PARTY.md).
 Novas contribuições devem ser escritas em inglês. Traduções pt-BR são opcionais,
 identificadas como traduções e ligadas à fonte correspondente em inglês.

@@ -17,6 +17,7 @@ intentionally; keep corresponding copies synchronized.
 | `tests/test_installer.py` | Unified installation/update/removal and preservation checks |
 | `tools/project.py` | Manifest updates, integrity checks, tests, standalone/complete archives |
 | `tools/install-login.py` | Coordinate both administrative login profiles |
+| `AGENTS.md`, `.agents/` | Contributor instructions, task routing, workflows, language policy |
 | `README.pt-BR.md` | Optional Brazilian Portuguese quick-start guide |
 
 Within each variant:
@@ -90,7 +91,7 @@ intentional edits. Paths derive from XDG directories, not the source workstation
 
 Each `build.py` creates a self-contained standalone archive. The maintenance tool
 also creates `dist/papirus-breeze-<version>.tar.gz` with both variants, the unified
-installer, documentation, and tests. Variant tests run in separate
+installer, documentation, agent guidance, and tests. Variant tests run in separate
 processes to avoid collisions between modules named `install`/`restore`.
 
 ## Export boundaries

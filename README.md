@@ -90,6 +90,7 @@ See [installation](docs/INSTALLATION.md#login-appearance) and
 - [Repository migration history](docs/MIGRATION.md)
 - [Changelog](CHANGELOG.md) and [third-party credits](THIRD_PARTY.md)
 - Standalone packages: [Light](light/README.md) and [Dark](dark/README.md)
+- Contributor instructions: [AGENTS.md](AGENTS.md) and [.agents/README.md](.agents/README.md)
 
 ## Repository and distribution
 

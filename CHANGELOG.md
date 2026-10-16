@@ -10,6 +10,7 @@ This file records known changes. An entry does not imply a published release or 
 - Build a complete distribution archive in `dist/` alongside the standalone packages.
 - Use a dark mouse pointer in Light and a white pointer in Dark, including GTK and login; keep 18 px sizing.
 - Make English the default for documentation and command-line messages; provide an optional pt-BR guide.
+- Add repository-level agent instructions and a `.agents/` guide to maintenance workflows.
 
 ## Unified repository — October 16, 2026
 
