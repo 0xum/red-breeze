@@ -61,6 +61,9 @@ painéis. A remoção recupera o par anterior do Quick Settings quando disponív
 preserva recursos personalizados e backups e troca um tema Papirus ativo pelo
 Breeze correspondente antes de remover os arquivos.
 
+O [guia do painel](docs/CUSTOMIZATION.md#panels) detalha os widgets opcionais de
+clima, CPU e RAM com espaçamento de 3 px e a troca do ícone da área de transferência.
+
 O pacote completo inclui um [perfil opcional de blur e cantos arredondados](docs/CUSTOMIZATION.md#optional-window-effects) para Wayland.
 
 ## Login e backups

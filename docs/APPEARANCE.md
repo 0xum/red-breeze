@@ -55,6 +55,10 @@ Application without `--layout` updates existing launcher and Peek at Desktop ico
 panel structure and taskbar favorites. Monitor IDs are resolved on the target
 system; only monitors present at application time are configured.
 
+The optional CPU, RAM, and weather widgets use 3 px internal spacing in the
+reference setup. See the [panel customization guide](CUSTOMIZATION.md#panels)
+for the widget settings and the compact clipboard tray icon.
+
 ## Red icons
 
 The folder overlay includes **835 aliases**: 539 Papirus Red aliases, 7 recolored

@@ -64,27 +64,62 @@ Panel height is `panel.height = 32`; the initial pinned-task list is
 `tasks.writeConfig("launchers", "")`. Launcher icons are set both in the layout
 and in `scripts/launcher.js`, which updates existing panels without recreating them.
 Both paths also set the Peek at Desktop icon to `view-grid-symbolic`.
-The tray clipboard icon resolves `klipper-symbolic` to the existing Papirus
-clipboard artwork at 16, 22, and 24 px.
 Edits do not affect existing panels until applied. Use `--layout` only when panel
-replacement is intended; normal `--apply` already updates both panel icons.
+replacement is intended. Normal `--apply` updates the launcher and Peek at Desktop.
+
+### Clipboard tray icon
+
+The Plasma 6.8 clipboard widget requests `klipper-symbolic`. Both icon themes
+supply that name with the compact Papirus `clipboard.svg` artwork. This changes
+the glyph inside the existing tray slot. In each variant, look under
+`assets/icons/PapirusBreezeLight/` or `assets/icons/PapirusBreezeDark/` for
+`16x16/panel/klipper-symbolic.svg`, `22x22/panel/klipper-symbolic.svg`, and
+`24x24/panel/klipper-symbolic.svg`. Keep each file in sync with the
+`clipboard.svg` in the same directory. If the old glyph is cached after
+reinstalling, reload Plasma Shell.
 
 ### Optional CPU, RAM, and weather widgets
 
-For a compact panel, place System Monitor and Open-Meteo Weather Card between
-the tray and the clock. The default layout has no dependency on these optional
-widgets. Use the [Text with Icon sensor face](https://github.com/PatrickSzela/libksysguard-texticon)
-with sensors `cpu/all/usage` and `memory/physical/used`. Set spacing to 3 px,
-choose 16 px icons `cpu-symbolic` and `drive-ram-symbolic`, and arrange the
-formatter as icon, CPU value, icon, RAM value. Use precision 0 for CPU and 1
-for RAM. The formatter needs no spacer entry.
+In the reference layout, the order after the system tray is **CPU and RAM,
+weather, clock, Peek at Desktop**. Add the optional widgets to each panel you
+want to customize. The bundled layout runs without them.
 
-For [Open-Meteo Weather Card](https://github.com/tiamed/plasma-openmeteo-weather),
-the tested customization sets the compact row spacing to 3 px. In
-`contents/ui/CompactRepresentation.qml`, use `content.implicitWidth` for the
-horizontal minimum and preferred widths when temperature text is visible.
-Remove the temperature label's fill-width and width-dependent maximum to let
-the row size to its contents. Reload Plasma Shell after editing QML.
+#### CPU and RAM
+
+Add **System Monitor**, then select the
+[Text with Icon sensor face](https://github.com/PatrickSzela/libksysguard-texticon).
+Choose `cpu/all/usage` and `memory/physical/used` as the high-priority sensors,
+in that order. Disable the title in the compact panel. In the face settings,
+set spacing to **3 px** (previously 4 px) and use this formatter:
+
+| Entry | Value |
+| --- | --- |
+| CPU icon | `cpu-symbolic`, 16 px |
+| CPU value | Sensor 0, precision 0 |
+| RAM icon | `drive-ram-symbolic`, 16 px |
+| RAM value | Sensor 1, precision 1 |
+
+Remove the blank text entry between the CPU value and RAM icon. The same
+3 px spacing then applies between all four entries.
+
+#### Weather
+
+Add [Open-Meteo Weather Card](https://github.com/tiamed/plasma-openmeteo-weather),
+select system icons and Celsius, and enable temperature text in the panel.
+In the installed widget's `contents/ui/CompactRepresentation.qml`, apply the
+following changes to the compact representation:
+
+- Set `spacing: 3` on the `RowLayout` with `id: content`.
+- When temperature text is visible, use `content.implicitWidth` for the
+  compact item's horizontal minimum and preferred widths. Keep the existing
+  icon-only width values for the other states.
+- Remove `Layout.fillWidth: true` and the width-dependent
+  `Layout.maximumWidth` from the temperature label so the row can use its
+  natural width.
+
+This removes the extra space around the weather reading and brings it closer
+to the clock. Reload Plasma Shell after editing QML. A widget update may
+overwrite the local change.
 
 ## Optional window effects
 
