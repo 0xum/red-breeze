@@ -19,7 +19,7 @@ unified installer with a menu, Quick Settings registration, and removal.
 | Colors / icons | `PapirusBreezeDark`, red `#E93D58` accent |
 | Qt / Plasma | Breeze / `PapirusBreezeRed` |
 | GTK | Breeze-Dark |
-| Window decoration | Amy Papirus Dark, small buttons |
+| Window decoration | MoeDark 1.9, small buttons |
 | Mouse pointer | Breeze Light (`Breeze_Light`), white, 18 px |
 | General / GTK font | Noto Sans, 10 pt |
 | KDE animation factor | `0.25` |

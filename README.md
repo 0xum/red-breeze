@@ -13,7 +13,7 @@ An optional [Brazilian Portuguese guide](README.pt-BR.md) is available.
 | Global theme | `com.delta.papirus-breeze-light` | `com.delta.papirus-breeze-dark` |
 | Color scheme / icons | `PapirusBreezeLight` | `PapirusBreezeDark` |
 | Qt / Plasma style | Breeze / `PapirusBreezeRed` | Breeze / `PapirusBreezeRed` |
-| Window decoration | Amy Light Aurorae | Amy Papirus Dark |
+| Window decoration | Moe 1.9 | MoeDark 1.9 |
 | GTK | Breeze | Breeze-Dark |
 | Adaptive wallpaper | Moe | MoeDark |
 | Mouse pointer | Breeze Dark, 18 px | Breeze Light, 18 px |
@@ -22,7 +22,8 @@ An optional [Brazilian Portuguese guide](README.pt-BR.md) is available.
 Both variants include red folders, system icons and Dolphin icons, a vector
 launcher with a transparent center, and a red animated terminal cursor.
 The optional layout creates one floating **32 px panel per connected monitor**,
-with no pinned applications. Fish includes a compact system greeting.
+with no pinned applications and a grid icon for Peek at Desktop. Fish includes
+a compact system greeting.
 
 ## Screenshots
 
@@ -30,7 +31,7 @@ with no pinned applications. Fish includes a compact system greeting.
 | --- | --- |
 | ![Light desktop with Dolphin, the application launcher, and Brightness & Color controls](docs/screenshots/papirus-breeze-light.png) | ![Dark desktop with Dolphin, the application launcher, and Status and Notifications](docs/screenshots/papirus-breeze-dark.png) |
 
-See the [appearance guide](docs/APPEARANCE.md#screenshots) for full-width screenshots.
+The screenshots show the previous Amy decorations. See the [appearance guide](docs/APPEARANCE.md#screenshots) for full-width screenshots.
 
 ## Install or remove
 

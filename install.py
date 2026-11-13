@@ -226,9 +226,11 @@ def cleanup_config(data, config, backup, live):
         replace(filename, 'General', 'ColorScheme', lambda v: v in ('PapirusBreezeLight', 'PapirusBreezeDark'), 'BreezeDark' if dark else 'BreezeLight')
         replace(filename, 'Icons', 'Theme', lambda v: v in ('PapirusBreezeLight', 'PapirusBreezeDark'), 'breeze-dark' if dark else 'breeze')
     replace('plasmarc', 'Theme', 'name', lambda v: v == 'PapirusBreezeRed', 'default')
+    decorations = ('__aurorae__svg__Moe', '__aurorae__svg__MoeDark',
+                   '__aurorae__svg__Amy-Light-Aurorae-6', '__aurorae__svg__Amy-Papirus-Dark')
     replace('kwinrc', 'org.kde.kdecoration2', 'library',
-            lambda v: read_key(config, 'kwinrc', 'org.kde.kdecoration2', 'theme') in ('__aurorae__svg__Amy-Light-Aurorae-6', '__aurorae__svg__Amy-Papirus-Dark'), 'org.kde.breeze')
-    replace('kwinrc', 'org.kde.kdecoration2', 'theme', lambda v: v in ('__aurorae__svg__Amy-Light-Aurorae-6', '__aurorae__svg__Amy-Papirus-Dark'), 'Breeze')
+            lambda v: read_key(config, 'kwinrc', 'org.kde.kdecoration2', 'theme') in decorations, 'org.kde.breeze')
+    replace('kwinrc', 'org.kde.kdecoration2', 'theme', lambda v: v in decorations, 'Breeze')
     for version in ('gtk-3.0', 'gtk-4.0'):
         replace(version + '/settings.ini', 'Settings', 'gtk-icon-theme-name',
                 lambda v: v in ('PapirusBreezeLight', 'PapirusBreezeDark'), 'breeze-dark' if dark else 'breeze')

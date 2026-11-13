@@ -28,7 +28,7 @@ Within each variant:
 | `assets/plasma/desktoptheme/PapirusBreezeRed/` | Red sprites with Breeze surface inheritance |
 | `assets/icons/PapirusBreezeLight/` or `PapirusBreezeDark/` | Folder/system/Dolphin/launcher overlay |
 | `assets/color-schemes/` | Variant palette |
-| `assets/aurorae/themes/` | Amy window decoration |
+| `assets/aurorae/themes/` | Moe window decoration and legacy Amy alternative |
 | `assets/wallpapers/` | Adaptive wallpaper, metadata, provenance |
 | `assets/konsole/`, `assets/fish/` | Both terminal profiles/palettes and Fish helper |
 | `config/settings.json` | Portable appearance keys applied through KConfig |

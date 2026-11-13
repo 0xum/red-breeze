@@ -180,7 +180,8 @@ def apply_profile(data, config, backup, layout=False):
 
 
 def asset_paths():
-    assets = [Path("plasma/desktoptheme/PapirusBreezeRed"), Path("wallpapers/Moe"), Path("aurorae/themes/Amy-Light-Aurorae-6"),
+    assets = [Path("plasma/desktoptheme/PapirusBreezeRed"), Path("wallpapers/Moe"), Path("aurorae/themes/Moe"),
+              Path("aurorae/themes/Amy-Light-Aurorae-6"),
               Path("icons/PapirusBreezeLight"), Path("color-schemes/PapirusBreezeLight.colors"),
               Path("plasma/look-and-feel") / THEME_ID]
     assets += [Path("konsole") / path.name for path in sorted((ROOT / "assets/konsole").iterdir()) if path.is_file()]

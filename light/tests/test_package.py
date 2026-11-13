@@ -78,7 +78,7 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(config["General"]["AccentColor"], "233,61,88")
         self.assertEqual(config["Colors:Window"]["BackgroundNormal"], "239,240,241")
         overlay = ROOT / "assets/icons/PapirusBreezeLight"
-        self.assertEqual(len(list(overlay.rglob("*.svg"))), 22578)
+        self.assertEqual(len(list(overlay.rglob("*.svg"))), 22581)
         config.read(overlay / "index.theme")
         self.assertIn("Papirus", config["Icon Theme"]["Inherits"])
         self.assertFalse(any(p.is_symlink() for p in (ROOT / "assets").rglob("*")))
@@ -178,7 +178,7 @@ class PackageTests(unittest.TestCase):
             dbus = [c for c in calls if "org.kde.PlasmaShell.evaluateScript" in c]
             self.assertEqual(len(dbus), 1)
             self.assertNotIn("panel.remove()", dbus[0][-1])
-            self.assertIn('widget.writeConfig("icon", "papirus-breeze-launcher")', dbus[0][-1])
+            self.assertIn('icon = "papirus-breeze-launcher"', dbus[0][-1])
             self.assertIn((data / "wallpapers/Moe").as_uri(), dbus[0][-1])
             self.assertTrue(any("kscreenlockerrc" in " ".join(c) and "Greeter" in c for c in calls))
             self.assertFalse(any("BrowserApplication" in c for c in calls))
@@ -215,6 +215,7 @@ created.forEach((p, i) => {
     const tasks = p.widgets.filter(w => w.plugin === "org.kde.plasma.icontasks");
     assert.equal(tasks.length, 1);
     assert.equal(tasks[0].config.launchers, "");
+    assert.equal(p.widgets.find(w => w.plugin === "org.kde.plasma.showdesktop").config.icon, "view-grid-symbolic");
 });
 assert.equal(desktop.Image, 'file:///test/share/wallpapers/Moe');
 '''

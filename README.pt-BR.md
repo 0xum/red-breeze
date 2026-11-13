@@ -12,13 +12,14 @@ completos em inglês são a referência quando não houver uma tradução equiva
 | --- | --- |
 | ![Desktop claro com Dolphin, lançador de aplicativos e controles de brilho e cor](docs/screenshots/papirus-breeze-light.png) | ![Desktop escuro com Dolphin, lançador de aplicativos e painel de status e notificações](docs/screenshots/papirus-breeze-dark.png) |
 
-Veja as imagens em largura completa no [guia de aparência](docs/APPEARANCE.md#screenshots).
+As capturas mostram as decorações Amy anteriores. Veja as imagens em largura completa no [guia de aparência](docs/APPEARANCE.md#screenshots).
 
 ## Instalar e remover
 
 O conjunto oferece temas Light e Dark para KDE Plasma 6, com destaque vermelho
 `#E93D58`, ícones Papirus vermelhos, wallpapers adaptativos e perfis de terminal.
-O ponteiro é escuro no Light e branco no Dark, sempre com 18 px.
+As decorações padrão são Moe no Light e MoeDark no Dark. O layout inclui o ícone
+de grade para Espiar a Área de Trabalho. O ponteiro é escuro no Light e branco no Dark, sempre com 18 px.
 
 Instale as dependências indicadas no [guia de instalação](docs/INSTALLATION.md).
 Abra um terminal na raiz do repositório ou na pasta extraída do pacote completo

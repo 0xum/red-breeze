@@ -22,7 +22,7 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(profile["kdeglobals"]["General"]["ColorScheme"], "PapirusBreezeDark")
         self.assertEqual(profile["kdeglobals"]["General"]["AccentColor"], "233,61,88")
         self.assertEqual(profile["kcminputrc"]["Mouse"]["cursorTheme"], "Breeze_Light")
-        self.assertEqual(profile["kwinrc"]["org.kde.kdecoration2"]["theme"], "__aurorae__svg__Amy-Papirus-Dark")
+        self.assertEqual(profile["kwinrc"]["org.kde.kdecoration2"]["theme"], "__aurorae__svg__MoeDark")
         package = ROOT / "assets/plasma/look-and-feel/com.delta.papirus-breeze-dark"
         metadata = json.loads((package / "metadata.json").read_text())
         self.assertEqual(metadata["KPlugin"]["Id"], install.THEME_ID)
@@ -103,7 +103,7 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(config["General"]["AccentColor"], "233,61,88")
         self.assertEqual(config["Colors:Window"]["BackgroundNormal"], "32,35,38")
         overlay = ROOT / "assets/icons/PapirusBreezeDark"
-        self.assertEqual(len(list(overlay.rglob("*.svg"))), 22562)
+        self.assertEqual(len(list(overlay.rglob("*.svg"))), 22565)
         config.read(overlay / "index.theme")
         self.assertEqual(config["Icon Theme"]["Inherits"], "Papirus-Dark,breeze-dark,hicolor")
         self.assertFalse(any(p.is_symlink() for p in (ROOT / "assets").rglob("*")))
@@ -203,7 +203,7 @@ class PackageTests(unittest.TestCase):
             dbus = [c for c in calls if "org.kde.PlasmaShell.evaluateScript" in c]
             self.assertEqual(len(dbus), 1)
             self.assertNotIn("panel.remove()", dbus[0][-1])
-            self.assertIn('widget.writeConfig("icon", "papirus-breeze-launcher")', dbus[0][-1])
+            self.assertIn('icon = "papirus-breeze-launcher"', dbus[0][-1])
             self.assertIn((data / "wallpapers/MoeDark").as_uri(), dbus[0][-1])
             self.assertTrue(any("kscreenlockerrc" in " ".join(c) and "Greeter" in c for c in calls))
             self.assertFalse(any("BrowserApplication" in c for c in calls))
@@ -242,6 +242,7 @@ created.forEach((p, i) => {
     const tasks = p.widgets.filter(w => w.plugin === "org.kde.plasma.icontasks");
     assert.equal(tasks.length, 1);
     assert.equal(tasks[0].config.launchers, "");
+    assert.equal(p.widgets.find(w => w.plugin === "org.kde.plasma.showdesktop").config.icon, "view-grid-symbolic");
 });
 assert.equal(desktop.Image, 'file:///test/share/wallpapers/MoeDark');
 '''

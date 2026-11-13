@@ -28,7 +28,9 @@ for (var screen = 0; screen < screenCount; screen++) {
     panel.addWidget("org.kde.plasma.marginsseparator");
     panel.addWidget("org.kde.plasma.systemtray");
     panel.addWidget("org.kde.plasma.digitalclock");
-    panel.addWidget("org.kde.plasma.showdesktop");
+    var peek = panel.addWidget("org.kde.plasma.showdesktop");
+    peek.currentConfigGroup = ["General"];
+    peek.writeConfig("icon", "view-grid-symbolic");
 }
 
 // userDataPath("data") respects the destination user's XDG data directory.

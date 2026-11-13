@@ -29,12 +29,13 @@ uses factor `0.25`. The window switcher and splash use Breeze.
 | Plasma style | `PapirusBreezeRed` | `PapirusBreezeRed` |
 | Qt style | Breeze | Breeze |
 | GTK | Breeze, light preference | Breeze-Dark, dark preference |
-| Aurorae decoration | `Amy-Light-Aurorae-6` | `Amy-Papirus-Dark` |
+| Aurorae decoration | `Moe` 1.9 | `MoeDark` 1.9 |
 | Mouse pointer | `breeze_cursors`, dark, 18 px | `Breeze_Light`, white, 18 px |
 | Registered wallpaper | `Moe` | `MoeDark` |
 
 Window decorations use small buttons: menu on the left; minimize, maximize, and
-close on the right. The Dark adaptation keeps Amy Light's geometry.
+close on the right. Moe and MoeDark are Aurorae decorations by jomada. The
+previous Amy decorations remain available as alternatives.
 
 ## Quick Settings
 
@@ -48,9 +49,9 @@ new appearance. Automatic switching by time of day remains the user's choice.
 The optional native layout and installation script create one bottom panel per
 connected monitor: **32 px**, floating, full width, centered, and adaptively opaque.
 Widget order is launcher, pager, icon-only tasks, spacer, system tray, clock,
-and Show Desktop. No applications are initially pinned. The launcher has `Alt+F1`.
+and Peek at Desktop with a grid icon. No applications are initially pinned. The launcher has `Alt+F1`.
 
-Application without `--layout` updates existing launcher icons while retaining
+Application without `--layout` updates existing launcher and Peek at Desktop icons while retaining
 panel structure and taskbar favorites. Monitor IDs are resolved on the target
 system; only monitors present at application time are configured.
 

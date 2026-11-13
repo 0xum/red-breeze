@@ -63,8 +63,45 @@ never add a personal absolute path. Tests compare the two forms.
 Panel height is `panel.height = 32`; the initial pinned-task list is
 `tasks.writeConfig("launchers", "")`. Launcher icons are set both in the layout
 and in `scripts/launcher.js`, which updates existing panels without recreating them.
+Both paths also set the Peek at Desktop icon to `view-grid-symbolic`.
+The tray clipboard icon resolves `klipper-symbolic` to the existing Papirus
+clipboard artwork at 16, 22, and 24 px.
 Edits do not affect existing panels until applied. Use `--layout` only when panel
-replacement is intended; normal `--apply` already updates launcher icons.
+replacement is intended; normal `--apply` already updates both panel icons.
+
+### Optional CPU, RAM, and weather widgets
+
+For a compact panel, place System Monitor and Open-Meteo Weather Card between
+the tray and the clock. The default layout has no dependency on these optional
+widgets. Use the [Text with Icon sensor face](https://github.com/PatrickSzela/libksysguard-texticon)
+with sensors `cpu/all/usage` and `memory/physical/used`. Set spacing to 3 px,
+choose 16 px icons `cpu-symbolic` and `drive-ram-symbolic`, and arrange the
+formatter as icon, CPU value, icon, RAM value. Use precision 0 for CPU and 1
+for RAM. The formatter needs no spacer entry.
+
+For [Open-Meteo Weather Card](https://github.com/tiamed/plasma-openmeteo-weather),
+the tested customization sets the compact row spacing to 3 px. In
+`contents/ui/CompactRepresentation.qml`, use `content.implicitWidth` for the
+horizontal minimum and preferred widths when temperature text is visible.
+Remove the temperature label's fill-width and width-dependent maximum to let
+the row size to its contents. Reload Plasma Shell after editing QML.
+
+## Optional window blur
+
+[KWin Effects Glass](https://github.com/4v3ngR/kwin-effects-glass#usage) is a
+separate effect. Install a build for the exact running KWin version. Use Glass
+in place of the built-in Blur effect. In Glass, use a class allowlist with
+`org.kde.dolphin`, `org.kde.konsole`, and `plasmashell` so the panel and launcher
+can also receive blur. Use a decoration allowlist containing only
+`org.kde.dolphin` and `org.kde.konsole`, keep **Ignore content blur region** off,
+and use the declared corner radius. Set active and inactive opacity to 90%
+with application-specific KWin rules for Dolphin and Konsole. This makes their
+whole windows translucent, including text and icons.
+
+The third-party Rounded Corners shader can create artifacts on Aurorae
+decorations. If using it, exclude Dolphin, Konsole, and any other decorated
+applications that show doubled corners. The theme installer leaves KWin
+effects and opacity rules to the user.
 
 ## Wallpaper and lock screen
 

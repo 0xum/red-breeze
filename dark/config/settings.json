@@ -21,7 +21,7 @@
   "kwinrc": {
     "org.kde.kdecoration2": {
       "library": "org.kde.kwin.aurorae.v2",
-      "theme": "__aurorae__svg__Amy-Papirus-Dark",
+      "theme": "__aurorae__svg__MoeDark",
       "NoPlugin": "false",
       "BorderSizeAuto": "true",
       "ButtonsOnLeft": "M",
@@ -43,7 +43,7 @@
     }
   },
   "auroraerc": {
-    "Amy-Papirus-Dark": {
+    "MoeDark": {
       "ButtonSize": "0"
     }
   },

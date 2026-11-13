@@ -15,7 +15,7 @@ frameContrast=0.2
 
 [kwinrc][org.kde.kdecoration2]
 library=org.kde.kwin.aurorae.v2
-theme=__aurorae__svg__Amy-Light-Aurorae-6
+theme=__aurorae__svg__Moe
 NoPlugin=false
 BorderSizeAuto=true
 ButtonsOnLeft=M
@@ -31,7 +31,7 @@ name=PapirusBreezeRed
 cursorTheme=breeze_cursors
 cursorSize=18
 
-[auroraerc][Amy-Light-Aurorae-6]
+[auroraerc][Moe]
 ButtonSize=0
 
 [ksplashrc][KSplash]

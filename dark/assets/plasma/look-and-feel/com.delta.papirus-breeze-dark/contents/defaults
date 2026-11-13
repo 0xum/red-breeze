@@ -16,7 +16,7 @@ DefaultDarkLookAndFeel=com.delta.papirus-breeze-dark
 
 [kwinrc][org.kde.kdecoration2]
 library=org.kde.kwin.aurorae.v2
-theme=__aurorae__svg__Amy-Papirus-Dark
+theme=__aurorae__svg__MoeDark
 NoPlugin=false
 BorderSizeAuto=true
 ButtonsOnLeft=M
@@ -32,7 +32,7 @@ name=PapirusBreezeRed
 cursorTheme=Breeze_Light
 cursorSize=18
 
-[auroraerc][Amy-Papirus-Dark]
+[auroraerc][MoeDark]
 ButtonSize=0
 
 [ksplashrc][KSplash]
