@@ -86,22 +86,44 @@ horizontal minimum and preferred widths when temperature text is visible.
 Remove the temperature label's fill-width and width-dependent maximum to let
 the row size to its contents. Reload Plasma Shell after editing QML.
 
-## Optional window blur
+## Optional window effects
 
-[KWin Effects Glass](https://github.com/4v3ngR/kwin-effects-glass#usage) is a
-separate effect. Install a build for the exact running KWin version. Use Glass
-in place of the built-in Blur effect. In Glass, use a class allowlist with
-`org.kde.dolphin`, `org.kde.konsole`, and `plasmashell` so the panel and launcher
-can also receive blur. Use a decoration allowlist containing only
-`org.kde.dolphin` and `org.kde.konsole`, keep **Ignore content blur region** off,
-and use the declared corner radius. Set active and inactive opacity to 90%
-with application-specific KWin rules for Dolphin and Konsole. This makes their
-whole windows translucent, including text and icons.
+The complete package includes a reversible profile for Plasma Wayland.
 
-The third-party Rounded Corners shader can create artifacts on Aurorae
-decorations. If using it, exclude Dolphin, Konsole, and any other decorated
-applications that show doubled corners. The theme installer leaves KWin
-effects and opacity rules to the user.
+```sh
+python3 tools/window-effects.py apply
+python3 tools/window-effects.py restore
+```
+
+Install both plugins before applying the profile. KWin requires plugins built
+against the exact running version. The reference setup used KWin 6.8.2 with
+[KWin Effects Glass](https://github.com/4v3ngR/kwin-effects-glass) at
+`5e2845fffbe893177c091fe18d603b9095cc2729` and
+[KDE Rounded Corners 0.11.0](https://github.com/matinlotfali/KDE-Rounded-Corners/tree/v0.11.0).
+Follow each upstream project's build and installation instructions for Wayland.
+From the Rounded Corners source checkout, apply the bundled
+[compatibility patch](../tools/rounded-corners-aurorae.patch) before building.
+
+```sh
+git apply --unidiff-zero /path/to/red-breeze/tools/rounded-corners-aurorae.patch
+```
+
+The profile uses Glass in place of the built-in Blur effect. It enables blur
+for Dolphin, Konsole, and Plasma Shell, including the panel and launcher.
+Dolphin and Konsole receive 90% active and inactive window opacity, which
+also affects their text and icons.
+
+Rounded Corners uses an 11 px radius and native shadows, with extra outlines
+disabled. The compatibility patch bypasses the shader on windows with
+KWin-drawn decorations to avoid doubled corners on Moe and MoeDark. Dolphin
+and Konsole are also excluded explicitly. Maximized and fullscreen windows
+are excluded from rounding.
+
+The helper snapshots the affected keys and loaded effects under
+`$XDG_STATE_HOME/papirus-breeze/window-effects.json` (default
+`~/.local/state/papirus-breeze/window-effects.json`). Restore the profile before
+uninstalling either effect. Theme installation and theme removal are separate
+from effect management.
 
 ## Wallpaper and lock screen
 

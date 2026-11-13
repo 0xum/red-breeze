@@ -6,7 +6,8 @@ This file records known changes. An entry does not imply a published release or 
 
 - Use jomada’s Moe and MoeDark 1.9 Aurorae decorations by default and retain Amy as an alternative.
 - Use a compact clipboard icon and the grid icon for Peek at Desktop in both variants.
-- Document the optional compact panel widgets and the KWin Glass setup.
+- Add a reversible Wayland profile for Glass blur and Rounded Corners, including the Aurorae compatibility patch.
+- Document the optional compact panel widgets.
 
 - Configure administrative Light/Dark login following from the unified installer by default; add `--no-login`.
 - Set an adaptive wallpaper on the native lock screen while preserving lock/security preferences.

@@ -61,6 +61,8 @@ painéis. A remoção recupera o par anterior do Quick Settings quando disponív
 preserva recursos personalizados e backups e troca um tema Papirus ativo pelo
 Breeze correspondente antes de remover os arquivos.
 
+O pacote completo inclui um [perfil opcional de blur e cantos arredondados](docs/CUSTOMIZATION.md#optional-window-effects) para Wayland.
+
 ## Login e backups
 
 A sincronização do login é configurada pelo instalador unificado. O comando

@@ -25,6 +25,9 @@ The optional layout creates one floating **32 px panel per connected monitor**,
 with no pinned applications and a grid icon for Peek at Desktop. Fish includes
 a compact system greeting.
 
+The complete package also includes an optional
+[Wayland blur and rounded-corners profile](docs/CUSTOMIZATION.md#optional-window-effects).
+
 ## Screenshots
 
 | Papirus Breeze Light | Papirus Breeze Dark |

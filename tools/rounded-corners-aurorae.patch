@@ -1,0 +1,82 @@
+diff --git a/src/Effect.cpp b/src/Effect.cpp
+index 0578b98..afdf371 100644
+--- a/src/Effect.cpp
++++ b/src/Effect.cpp
+@@ -42,46 +41,0 @@
+-void ShapeCorners::Effect::WriteBreezeConfig(bool set_disabled)
+-{
+-    // Ignore if the last change was less than 10 seconds ago.
+-    // This is a workaround to prevent infinite loops in X11
+-    const auto now  = std::chrono::system_clock::now();
+-    const auto diff = std::chrono::duration_cast<std::chrono::seconds>(now - lastConfigReloadTime).count();
+-    if (std::abs(diff) < 10) {
+-        qWarning() << "ShapeCorners: Skipped writing Breeze config"
+-                   << "because the last change was" << diff << "seconds ago.";
+-        return;
+-    }
+-
+-    const auto cfg      = KSharedConfig::openConfig(QStringLiteral("breezerc"), KConfig::NoGlobals);
+-    auto       cfgGroup = cfg->group(QStringLiteral("Common"));
+-
+-    const static auto keyOutlineIntensity     = QStringLiteral("OutlineIntensity");
+-    const static auto keyRoundedCorners       = QStringLiteral("RoundedCorners");
+-    const static auto keyOutlineEnabled       = QStringLiteral("OutlineEnabled");
+-    const static auto defaultOutlineIntensity = QStringLiteral("OutlineMedium");
+-    const static auto defaultRoundedCorners   = QStringLiteral("true");
+-    const static auto defaultOutlineEnabled   = QStringLiteral("true");
+-    const auto        valueOutlineIntensity   = set_disabled ? QStringLiteral("OutlineOff") : defaultOutlineIntensity;
+-    const auto        valueRoundedCorners     = set_disabled ? QStringLiteral("false") : defaultRoundedCorners;
+-    const auto        valueOutlineEnabled     = set_disabled ? QStringLiteral("false") : defaultOutlineEnabled;
+-    const auto        entryOutlineIntensity   = cfgGroup.readEntry(keyOutlineIntensity, defaultOutlineIntensity);
+-    const auto        entryRoundedCorners     = cfgGroup.readEntry(keyRoundedCorners, defaultRoundedCorners);
+-    const auto        entryOutlineEnabled     = cfgGroup.readEntry(keyOutlineEnabled, defaultOutlineIntensity);
+-
+-    if (entryOutlineIntensity == valueOutlineIntensity && entryRoundedCorners == valueRoundedCorners &&
+-        entryOutlineEnabled == valueOutlineEnabled) {
+-        qWarning() << "ShapeCorners: Skipped writing Breeze config"
+-                   << "because it is already set.";
+-        return;
+-    }
+-
+-    qInfo() << "ShapeCorners: Writing Breeze config";
+-    cfgGroup.writeEntry(keyOutlineIntensity, valueOutlineIntensity);
+-    cfgGroup.writeEntry(keyRoundedCorners, valueRoundedCorners);
+-    cfgGroup.writeEntry(keyOutlineEnabled, valueOutlineEnabled);
+-    cfg->sync();
+-
+-    QDBusConnection::sessionBus().send(QDBusMessage::createSignal(
+-            QStringLiteral("/KWin"), QStringLiteral("org.kde.KWin"), QStringLiteral("reloadConfig")));
+-    lastConfigReloadTime = now;
+-}
+-
+@@ -95,2 +48,0 @@ ShapeCorners::Effect::Effect()
+-        // Disable Breeze window outline when this effect loads:
+-        WriteBreezeConfig(true);
+@@ -104,8 +56 @@ ShapeCorners::Effect::Effect()
+-ShapeCorners::Effect::~Effect()
+-{
+-    // If the shader manager is valid, then the effect has been active, so some cleanup is needed.
+-    if (m_shaderManager.IsValid()) {
+-        // Restore Breeze outline setting when effect is unloaded:
+-        WriteBreezeConfig(false);
+-    }
+-};
++ShapeCorners::Effect::~Effect() = default;
+@@ -142 +87 @@ void ShapeCorners::Effect::prePaintWindow(KWin::EffectWindow *kwindow, KWin::Win
+-    if (!m_shaderManager.IsValid() || window == nullptr || !window->hasEffect()) {
++    if (!m_shaderManager.IsValid() || window == nullptr || kwindow->hasDecoration() || !window->hasEffect()) {
+@@ -246 +191 @@ void ShapeCorners::Effect::drawWindow(KWin::EffectWindow *kwindow, int mask, con
+-    if (!m_shaderManager.IsValid() || window == nullptr || !window->hasEffect()) {
++    if (!m_shaderManager.IsValid() || window == nullptr || kwindow->hasDecoration() || !window->hasEffect()) {
+@@ -296 +241 @@ void ShapeCorners::Effect::windowAdded(KWin::EffectWindow *kwindow)
+-    if (m_windowManager->addWindow(kwindow)) {
++    if (m_windowManager->addWindow(kwindow) && !kwindow->hasDecoration()) {
+diff --git a/src/Effect.h b/src/Effect.h
+index 4262351..444ccf2 100644
+--- a/src/Effect.h
++++ b/src/Effect.h
+@@ -179,2 +178,0 @@ namespace ShapeCorners
+-        /// Timestamp of the last config reload.
+-        std::chrono::system_clock::time_point lastConfigReloadTime = std::chrono::system_clock::time_point::min();
+@@ -188 +185,0 @@ namespace ShapeCorners
+-        void WriteBreezeConfig(bool set_disabled);
