@@ -199,6 +199,12 @@ Standalone packages can use their own `install-login.py --follow-user username`;
 install both variants with that option. SDDM uses dedicated Breeze-derived themes
 and `/etc/sddm.conf`; Plasma Login Manager uses appearance keys in `/etc/plasmalogin.conf`.
 
+The greeter palette uses the Papirus accent `#E93D58` for normal text in both
+variants. Error and selection colors retain their semantic roles. The installer
+disables the Breeze clock and date drop shadow in its own SDDM theme copy when
+it recognizes the QML. Plasma Login Manager 6.8.2 embeds the clock shadow in
+its greeter executable and has no configuration setting to remove it.
+
 If following is already enabled, disable it before returning to static selection
 or restoring administrative snapshots:
 

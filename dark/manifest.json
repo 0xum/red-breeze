@@ -22698,10 +22698,10 @@
     "restore.py": "f609615ee143915b4cb17c483708af964ed19cc541f59bf32ab0409b32c68fb1",
     "scripts/launcher.js": "07e8a63b970d1929ec7bf5a0ca9b1bbbb9d0a3ad34135162ba0a5bbf86934ae4",
     "scripts/layout.js": "1ae6419b0069dee298c95441a3102f528e1db4d27b720fff9447fedbfdbb3beb",
-    "scripts/login.py": "dc32d04f0ea5179dcf9bb58085deaad183467cd8db946955be01e8055dd81b3f",
+    "scripts/login.py": "cec7617350914cc2ba808f52ad3d0a2fa0373b8070a3dfc176767cbbc33f6df6",
     "scripts/red_icons.py": "01cd045e5f8e29f93fd3ce0ebae2c3936edd46388dabb7163aed720456f00390",
     "scripts/wallpaper.js": "9f714defe49f2cf66eca0974d0fe1896f3a58ee695d5b44f7ff5ab0775fce9e7",
-    "tests/test_login.py": "9536ada0e9530ba7b3a93623422362fbc0071c71b46abc0158aaf068d0228571",
+    "tests/test_login.py": "c01e7bbc7c9f2aded0bab17f9c52e75df06bf83d563c546b0de9f584bb7feacd",
     "tests/test_package.py": "9ed06ccd16746d4f924ba8784c2a4fcbd7be10c055b6126965d89dd66f4662fb",
     "tests/test_terminals.py": "8c716aaa64ab030b8239adf55d1e01900231533a1ee952056dfe50c152ef2e40"
   }

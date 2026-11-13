@@ -91,7 +91,10 @@ def login_palette(package, variant):
     palette['Colors:Complementary'] = dict(palette['Colors:Window'])
     palette['General']['ColorScheme'] = 'PapirusBreezeLogin' + variant.title()
     palette['General']['Name'] = 'Papirus Breeze Login ' + variant.title()
-    palette['General']['AccentColor'] = '233,61,88'
+    accent = '233,61,88'
+    palette['General']['AccentColor'] = accent
+    for group in ('Window', 'View', 'Button', 'Complementary', 'Tooltip'):
+        palette['Colors:' + group]['ForegroundNormal'] = accent
     palette['General']['font'] = 'Noto Sans,10,-1,5,50,0,0,0,0,0'
     palette['KDE'] = {'widgetStyle': 'Breeze', 'LookAndFeelPackage': 'org.kde.breeze.desktop'}
     palette['Icons'] = {'Theme': 'PapirusBreeze' + variant.title()}
@@ -103,6 +106,27 @@ def readable_tree(path):
     for item in [path, *path.rglob('*')]:
         if not item.is_symlink():
             item.chmod(0o755 if item.is_dir() else 0o644)
+
+
+def configure_sddm_clock(theme):
+    main = theme / 'Main.qml'
+    source = main.read_text()
+    shadow_id = 'id: clockShadow'
+    if source.count(shadow_id) != 1:
+        print('SDDM Breeze clock shadow layout was not recognized; leaving its QML unchanged.',
+              file=sys.stderr)
+        return
+    before, shadow = source.split(shadow_id, 1)
+    lines = shadow.splitlines(keepends=True)
+    for index, line in enumerate(lines):
+        if line.lstrip().startswith('visible:'):
+            lines[index] = line[:len(line) - len(line.lstrip())] + 'visible: false\n'
+            main.write_text(before + shadow_id + ''.join(lines))
+            return
+        if line.strip() == '}':
+            break
+    print('SDDM Breeze clock shadow visibility was not found; leaving its QML unchanged.',
+          file=sys.stderr)
 
 
 def provision(package, variant, manager, backup, account):
@@ -140,6 +164,7 @@ def provision(package, variant, manager, backup, account):
     if manager == 'sddm':
         theme = Path('/usr/share/sddm/themes') / ('papirus-breeze-' + variant)
         copy_asset(Path('/usr/share/sddm/themes/breeze'), theme, backup)
+        configure_sddm_clock(theme)
         set_values(theme / 'theme.conf.user', {'General': {'background': str(image), 'type': 'image', 'showlogo': 'hidden', 'showClock': 'true'}})
         readable_tree(theme)
     # Intermediate data/config directories may be newly created under a private home.

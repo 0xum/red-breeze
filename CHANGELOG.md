@@ -4,6 +4,8 @@ This file records known changes. An entry does not imply a published release or 
 
 ## Unreleased
 
+- Use the Papirus accent for normal greeter text and disable the clock shadow in the installed SDDM theme copy.
+
 - Use jomada’s Moe and MoeDark 1.9 Aurorae decorations by default and retain Amy as an alternative.
 - Use a compact clipboard icon and the grid icon for Peek at Desktop in both variants.
 - Add a reversible Wayland profile for Glass blur and Rounded Corners, including the Aurorae compatibility patch.

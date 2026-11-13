@@ -134,6 +134,17 @@ Reference the package directory to retain adaptive desktop/lock-screen behavior.
 The login helper selects a specific image in `scripts/login.py`; update its
 filename references if image names or dimensions change.
 
+To disable the clock and date shadow on the Plasma 6.8.2 lock screen:
+
+```sh
+sudo python3 tools/lockscreen-clock.py apply
+sudo python3 tools/lockscreen-clock.py restore
+```
+
+The helper changes only the clock shadow visibility in the installed
+`LockScreenUi.qml`. The next lock uses the new appearance. Plasma updates may
+replace this file. The helper checks for the known QML before changing it.
+
 ## Konsole and Fish
 
 Each variant ships both `.profile` and `.colorscheme` files under `assets/konsole/`.

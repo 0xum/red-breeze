@@ -21,6 +21,8 @@ class LoginTests(unittest.TestCase):
         palette = login.login_palette(ROOT, variant)
         self.assertEqual(dict(palette['Colors:Complementary']), dict(palette['Colors:Window']))
         self.assertEqual(palette['General']['AccentColor'], '233,61,88')
+        for group in ('Window', 'View', 'Button', 'Complementary', 'Tooltip'):
+            self.assertEqual(palette['Colors:' + group]['ForegroundNormal'], '233,61,88')
         self.assertEqual(palette['Icons']['Theme'], 'PapirusBreeze' + variant.title())
         self.assertEqual(palette['KDE']['LookAndFeelPackage'], 'org.kde.breeze.desktop')
 
