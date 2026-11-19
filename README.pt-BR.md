@@ -69,6 +69,10 @@ nativas e sem contornos extras. É necessário instalar separadamente o plugin
 KDE Rounded Corners compatível com o KWin e com o patch para Aurorae.
 O pacote completo também inclui um [perfil opcional de blur e cantos arredondados](docs/CUSTOMIZATION.md#optional-window-effects) para Wayland.
 
+As decorações padrão usam círculos sem símbolos, crescimento no hover, bounce ao
+maximizar/restaurar e fade-out ao minimizar/fechar. Veja o
+[guia das decorações](docs/WINDOW_DECORATIONS.md) (em inglês).
+
 ## Login e backups
 
 A sincronização do login é configurada pelo instalador unificado. O comando

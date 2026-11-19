@@ -121,6 +121,11 @@ This removes the extra space around the weather reading and brings it closer
 to the clock. Reload Plasma Shell after editing QML. A widget update may
 overwrite the local change.
 
+## Window decoration buttons
+
+See [default window decorations](WINDOW_DECORATIONS.md) for the symbol-free SVG
+states, hover sizes, click animations, shared QML runtime, and maintenance checks.
+
 ## Optional window effects
 
 Both official themes include the Rounded Corners settings described below in

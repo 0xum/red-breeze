@@ -10,7 +10,7 @@ TextShadowOffsetX=0
 TextShadowOffsetY=1
 LeftButtons=XIA
 Shadow=true
-Animation=1
+Animation=120
 
 [Layout]
 BorderLeft=2

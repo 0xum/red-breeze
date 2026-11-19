@@ -49,6 +49,22 @@ plugin with the Aurorae compatibility patch before using this feature; see the
 The plugin is not bundled. Without it, Moe still supplies its native decoration
 corners. Glass blur and window opacity remain separately opt-in.
 
+## Window decoration buttons
+
+The default Moe decoration uses colored circles without symbols. Hover grows the
+circle by roughly 18%; maximize/restore bounces over 355 ms; minimize and close
+fade the button out for 140 ms before requesting the action. Colors and button
+spacing stay unchanged. `assets/kwin/aurorae/` is a bundled per-user QML override
+shared with the other variant; custom animations only apply to Moe and MoeDark.
+The runtime derives from KDE Aurorae 6.8.3; review compatibility after KDE updates.
+
+Installation copies the runtime and backs up an existing user override. `--apply`
+reloads the decoration plugin; after install-only or restoration, log out and
+back in if Aurorae was already loaded. See the
+[decoration guide](https://github.com/0xum/red-breeze/blob/main/docs/WINDOW_DECORATIONS.md)
+for source locations, timings, and recovery. This affects window buttons, not the
+whole-window effects.
+
 ## Install and apply
 
 Run as your normal user in an accessible Plasma session:

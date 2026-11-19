@@ -11,6 +11,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import time
 
 ROOT = Path(__file__).resolve().parent
 THEME_ID = "com.delta.papirus-breeze-dark"
@@ -176,11 +177,23 @@ def apply_profile(data, config, backup, layout=False):
         evaluate(script)
     appearance_script = (ROOT / "scripts/wallpaper.js").read_text().replace("__WALLPAPER_URI__", json.dumps(wallpaper))
     evaluate(appearance_script + "\n" + (ROOT / "scripts/launcher.js").read_text())
-    subprocess.run(["qdbus6", "org.kde.KWin", "/KWin", "org.kde.KWin.reconfigure"], check=True)
+    reload_decoration(config)
+
+
+def reload_decoration(config):
+    """Invalidate cached QML while restoring the intended library on failures."""
+    write_setting(config, "kwinrc", "org.kde.kdecoration2", "library", "org.kde.breeze")
+    try:
+        subprocess.run(["qdbus6", "org.kde.KWin", "/KWin", "org.kde.KWin.reconfigure"], check=True)
+        # KWin coalesces reconfiguration requests on a short timer.
+        time.sleep(0.5)
+    finally:
+        write_setting(config, "kwinrc", "org.kde.kdecoration2", "library", "org.kde.kwin.aurorae.v2")
+        subprocess.run(["qdbus6", "org.kde.KWin", "/KWin", "org.kde.KWin.reconfigure"], check=True)
 
 
 def asset_paths():
-    assets = [Path("plasma/desktoptheme/PapirusBreezeRed"), Path("wallpapers/MoeDark"), Path("aurorae/themes/MoeDark"),
+    assets = [Path("kwin/aurorae"), Path("plasma/desktoptheme/PapirusBreezeRed"), Path("wallpapers/MoeDark"), Path("aurorae/themes/MoeDark"),
               Path("aurorae/themes/Amy-Papirus-Dark"),
               Path("icons/PapirusBreezeDark"), Path("color-schemes/PapirusBreezeDark.colors"),
               Path("plasma/look-and-feel") / THEME_ID]

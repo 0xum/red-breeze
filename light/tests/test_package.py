@@ -57,12 +57,17 @@ class PackageTests(unittest.TestCase):
             old = data / "wallpapers/Moe/custom.txt"
             old.parent.mkdir(parents=True)
             old.write_text("original")
+            old_runtime = data / "kwin/aurorae/DecorationButton.qml"
+            old_runtime.parent.mkdir(parents=True)
+            old_runtime.write_text("previous user runtime")
             other_profile = data / "konsole/Existing.profile"
             other_profile.parent.mkdir(parents=True)
             other_profile.write_text("[General]\nName=Existing\n")
             self.assertEqual(install.main(["--data-dir", str(data), "--config-dir", str(config),
                                            "--state-dir", str(state)]), 0)
             self.assertTrue((data / "wallpapers/Moe/contents/images/3073x1420.png").exists())
+            self.assertTrue((data / "kwin/aurorae/AuroraeMaximizeButton.qml").exists())
+            self.assertNotEqual(old_runtime.read_text(), "previous user runtime")
             self.assertFalse(config.exists())
             self.assertEqual(other_profile.read_text(), "[General]\nName=Existing\n")
             self.assertTrue((data / "konsole/PapirusBreezeLight.profile").exists())
@@ -70,6 +75,8 @@ class PackageTests(unittest.TestCase):
             backup = next((state / "papirus-breeze-light/backups").iterdir())
             restore.restore(backup)
             self.assertEqual(old.read_text(), "original")
+            self.assertEqual(old_runtime.read_text(), "previous user runtime")
+            self.assertFalse((data / "kwin/aurorae/AuroraeMaximizeButton.qml").exists())
             self.assertFalse((data / "icons/PapirusBreezeLight").exists())
 
     def test_palette_and_overlay_match_export(self):
@@ -185,6 +192,19 @@ class PackageTests(unittest.TestCase):
             self.assertIn("gtk-cursor-blink=false", gtk.read_text())
             restore.restore(backup.path)
             self.assertEqual(original.read_text(), "[General]\nBrowserApplication=keep.desktop\n")
+
+    def test_decoration_reload_restores_aurorae_when_reconfigure_fails(self):
+        with tempfile.TemporaryDirectory() as temp:
+            config = Path(temp)
+            with patch.object(install, "write_setting") as write, \
+                    patch.object(install.subprocess, "run", side_effect=[
+                        subprocess.CalledProcessError(1, "qdbus6"), None]), \
+                    patch.object(install.time, "sleep"):
+                with self.assertRaises(subprocess.CalledProcessError):
+                    install.reload_decoration(config)
+            self.assertEqual(write.call_args_list[-1].args,
+                             (config, "kwinrc", "org.kde.kdecoration2", "library",
+                              "org.kde.kwin.aurorae.v2"))
 
     @unittest.skipUnless(shutil.which("node"), "Node is optional for JavaScript validation")
     def test_layout_with_one_and_two_monitors(self):

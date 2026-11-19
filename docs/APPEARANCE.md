@@ -35,7 +35,10 @@ uses factor `0.25`. The window switcher and splash use Breeze.
 
 Window decorations use small buttons: menu on the left; minimize, maximize, and
 close on the right. Moe and MoeDark are Aurorae decorations by jomada. The
-previous Amy decorations remain available as alternatives.
+previous Amy decorations remain available as alternatives. The default Moe buttons
+are symbol-free circles with hover growth, a maximize/restore bounce, and a
+minimize/close fade-out. See [window decorations](WINDOW_DECORATIONS.md) for
+timings, sources, installation, and recovery.
 
 Both official global themes also enable the 11 px Rounded Corners profile, with
 native shadows and no extra outlines. Their native defaults and installer settings

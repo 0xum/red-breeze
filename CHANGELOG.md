@@ -4,6 +4,8 @@ This file records known changes. An entry does not imply a published release or 
 
 ## Unreleased
 
+- Make symbol-free Moe/MoeDark circles, hover growth, maximize/restore bounce, and minimize/close fade-out the default; bundle the shared per-user Aurorae QML runtime with installer backup/recovery.
+
 - Include the 11 px Rounded Corners profile in both official global themes and installer settings; retain Glass blur and opacity as opt-in.
 
 - Use the Papirus accent for normal greeter text and disable the clock shadow in the installed SDDM theme copy.

@@ -10,7 +10,8 @@ if every file shared a single license.
 | Breeze palettes and sprites | KDE | Original LGPL and authorship notices retained in packages |
 | Moe Light | jomada, version 1.1 | CC-BY-SA-4.0; original metadata included |
 | Moe Dark | Delta adaptation using ImageGen | CC-BY-SA-4.0 derivative with adaptation/generation records |
-| Moe / MoeDark Aurorae | jomada, version 1.9 | GPLv3 according to original metadata |
+| Moe / MoeDark Aurorae | jomada, version 1.9; Delta button adaptations | GPLv3 according to original metadata |
+| Aurorae QML runtime | KDE, captured from Aurorae 6.8.3; Delta click animations | GPL-2.0-or-later; retained file notices and license texts in both packages |
 | Amy Light Aurorae | l4k1, version 1.2 | GPLv3 according to original metadata |
 | Amy Papirus Dark | Delta adaptation of Amy | Geometry retained, dark surfaces adapted, original license retained |
 | Launcher SVG, installers, profiles, composition | Delta | GPL-3.0-only |

@@ -19,6 +19,9 @@ An optional [Brazilian Portuguese guide](README.pt-BR.md) is available.
 | Mouse pointer | Breeze Dark, 18 px | Breeze Light, 18 px |
 | Konsole | White background | Dark background |
 
+Both variants use symbol-free decoration buttons with hover growth, a maximize/restore
+bounce, and a minimize/close fade-out. See [window decorations](docs/WINDOW_DECORATIONS.md).
+
 Both variants include red folders, system icons and Dolphin icons, a vector
 launcher with a transparent center, and a red animated terminal cursor.
 The optional layout creates one floating **32 px panel per connected monitor**,

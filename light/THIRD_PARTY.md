@@ -6,7 +6,7 @@ are included in `LICENSES/`. Original authorship remains in asset metadata.
 | Component | Source / author | License | Adaptation in this package |
 | --- | --- | --- | --- |
 | Moe Light | jomada, version 1.1; original metadata included | CC-BY-SA-4.0 | Original light image and metadata retained; image also used as a preview |
-| Moe Aurorae | jomada, version 1.9 | GPLv3 (metadata: GPL_V3) | Original decoration and metadata retained |
+| Moe Aurorae | jomada, version 1.9 | GPLv3 (metadata: GPL_V3) | Original metadata retained; Delta adapts symbol-free hover and click states |
 | Amy-Light-Aurorae-6 | l4k1, version 1.2; original metadata included | GPL-3.0 (metadata: GPLv3) | Original decoration files retained |
 | Papirus Breeze Light palette | Based on KDE Breeze Light; authors in the `.colors` header | LGPL-2.0-or-later | Exported/adapted palette, red `#E93D58` accent, distinct scheme name |
 | Papirus / Catppuccin folders | [Papirus Development Team](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme), [Catppuccin papirus-folders](https://github.com/catppuccin/papirus-folders) | GPL-3.0 and retained Catppuccin MIT notice | 835 red folder aliases; remaining icons inherit the installed base theme |
@@ -40,3 +40,11 @@ library are external dependencies and are not redistributed in full.
 
 English documentation does not replace original legal notices or upstream
 localized metadata. Preserve attribution and license files in distributions.
+
+## Aurorae button runtime
+
+`assets/kwin/aurorae/` derives from KDE Aurorae as shipped with version 6.8.3
+(`https://invent.kde.org/plasma/aurorae`, GPL-2.0-or-later). Copyright and
+SPDX notices remain in each QML file. Delta adds a maximize/restore bounce
+and minimize/close fade-out, scoped to Moe and MoeDark. This code retains
+GPL-2.0-or-later; the package's GPL-3.0-only composition does not replace it.
