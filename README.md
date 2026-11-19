@@ -21,7 +21,8 @@ An optional [Brazilian Portuguese guide](README.pt-BR.md) is available.
 
 Both variants use symbol-free decoration buttons with hover growth, a maximize/restore
 bounce, and a minimize/close fade-out. Application content has four 8 px internal
-corners filled with the decoration border color, preserving backdrop blur. See [window decorations](docs/WINDOW_DECORATIONS.md).
+corners filled with the decoration border color and a 1 px rounded outline in
+the Breeze separator color, preserving backdrop blur. See [window decorations](docs/WINDOW_DECORATIONS.md).
 
 Both variants include red folders, system icons and Dolphin icons, a vector
 launcher with a transparent center, and a red animated terminal cursor.

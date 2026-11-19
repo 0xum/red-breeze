@@ -40,7 +40,9 @@ are symbol-free circles with hover growth, a maximize/restore bounce, and a
 minimize/close fade-out. See [window decorations](WINDOW_DECORATIONS.md) for
 timings, sources, installation, and recovery. Both themes also round all four
 internal content corners at 8 px, filled with the decoration border color,
-through the bundled native effect. Existing backdrop blur is preserved.
+through the bundled native effect. A 1 px outline follows that rounded perimeter
+using the Breeze separator color, adapting to the current palette. Existing
+backdrop blur is preserved.
 
 Both official global themes also enable the 11 px Rounded Corners profile, with
 native shadows and no extra outlines. Their native defaults and installer settings

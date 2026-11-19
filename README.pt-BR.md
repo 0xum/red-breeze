@@ -71,7 +71,8 @@ O pacote completo também inclui um [perfil opcional de blur e cantos arredondad
 
 As decorações padrão usam círculos sem símbolos, crescimento no hover, bounce ao
 maximizar/restaurar e fade-out ao minimizar/fechar. Os quatro cantos internos do
-conteúdo têm raio de 8 px e preenchimento com a cor da borda, preservando o blur.
+conteúdo têm raio de 8 px, preenchimento com a cor da borda e um contorno
+arredondado de 1 px na mesma cor dos separadores do Dolphin, preservando o blur.
 A instalação normal também compila o efeito nativo para KWin 6.8.3, com
 autenticação pelo Polkit e requisitos de desenvolvimento descritos no guia. Veja o
 [guia das decorações](docs/WINDOW_DECORATIONS.md) (em inglês).

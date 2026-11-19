@@ -10,6 +10,8 @@ uniform vec2 expandedSize;
 uniform vec2 frameOffset;
 uniform vec4 clientRect;
 uniform float innerRadius;
+uniform float outlineWidth;
+uniform vec4 outlineColor;
 void main()
 {
     bool inverted = dot(vec2(dFdx(texcoord0.y), dFdy(texcoord0.y)),
@@ -33,6 +35,15 @@ void main()
             vec2 borderTex = (borderPixel + frameOffset) / expandedSize;
             if (!inverted) borderTex.y = 1.0 - borderTex.y;
             color = mix(texture(sampler, borderTex), color, coverage);
+        }
+        if (outlineWidth > 0.0) {
+            // A one-pixel inset stroke around the same rounded rectangle.
+            vec2 halfSize = clientRect.zw * 0.5;
+            vec2 d = abs(q - halfSize) - (halfSize - vec2(r));
+            float distanceToEdge = length(max(d, vec2(0.0))) + min(max(d.x, d.y), 0.0) - r;
+            float outerCoverage = 1.0 - smoothstep(-0.5, 0.5, distanceToEdge);
+            float stroke = smoothstep(-outlineWidth - 0.5, -outlineWidth + 0.5, distanceToEdge) * outerCoverage;
+            color = mix(color, outlineColor, stroke);
         }
     }
     color = sourceEncodingToNitsInDestinationColorspace(color);

@@ -2,7 +2,9 @@
 
 Native KWin 6.8.3 effect for decorated normal windows and dialogs using Moe or
 MoeDark. All four content corners use an 8 logical-pixel radius and are filled
-with the adjacent decoration border color. Maximized, fullscreen, undecorated,
+with the adjacent decoration border color. A 1 logical-pixel inset outline follows
+the same rounded rectangle, with Breeze separator color (Window/WindowText mixed
+at the KDE frameContrast setting). Maximized, fullscreen, undecorated,
 and other-theme windows are excluded. The effect runs after Glass/Breeze blur
 (chain position 99), so offscreen rendering does not swallow backdrop blur.
 

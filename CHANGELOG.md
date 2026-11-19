@@ -4,6 +4,8 @@ This file records known changes. An entry does not imply a published release or 
 
 ## Unreleased
 
+- Add a 1 px inset outline to the full internal rounded perimeter for every Moe/MoeDark decorated application. Match Breeze/Dolphin separator colors using the active palette and frame contrast; retain 8 px corners and backdrop blur.
+
 - Default both themes to four 8 px internal content corners filled with the decoration border; support every Moe/MoeDark decorated application and preserve backdrop blur by drawing after Glass. Bundle native source and a version-specific build/install/recovery helper.
 
 - Make symbol-free Moe/MoeDark circles, hover growth, maximize/restore bounce, and minimize/close fade-out the default; bundle the shared per-user Aurorae QML runtime with installer backup/recovery.

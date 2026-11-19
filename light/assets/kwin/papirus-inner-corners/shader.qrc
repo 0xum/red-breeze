@@ -1,1 +1,1 @@
-<RCC><qresource prefix="/papirus-inner-corners-standard"><file>shader.frag</file></qresource></RCC>
+<RCC><qresource prefix="/papirus-inner-corners-outline-v2"><file>shader.frag</file></qresource></RCC>

@@ -75,8 +75,16 @@ Both official themes enable `papirus_inner_corners` in their global-theme defaul
 and installer profile. It rounds all four corners of the application content,
 inside the decoration, with an 8 logical-pixel radius. The removed content is
 replaced by the adjacent side-border color, including the inactive color; the
-corners do not become holes showing the desktop. Button hover and click
+corners do not become holes showing the desktop. A **1 px inset outline** follows
+the complete rounded perimeter, including the four curves. Button hover and click
 animations remain the same.
+
+The outline uses the same formula as Breeze's Dolphin separators: mix the current
+`Colors:Window` background and foreground at `[KDE] frameContrast` (0.2 in the
+official profiles). This gives `#4c4e51` for the Dark palette and automatically
+adapts to the Light palette. The stroke width is one logical pixel, scaled with
+the output; the content inset and the 8 px radius remain unchanged. See
+[Breeze separatorColor](https://invent.kde.org/plasma/breeze/-/blob/master/kstyle/breezehelper.cpp).
 
 The native effect applies to all decorated normal windows and dialogs while the
 active Aurorae theme is Moe or MoeDark, regardless of application class. It
@@ -135,3 +143,10 @@ User-theme removal retains this shared administrative dependency, like login
 integration. After rebuilding a previously loaded binary, log out and back in
 because KDE can cache the old library. Disable the effect before upgrading KWin
 and rebuild it for the new version before enabling it again.
+
+For live validation only, `-DPAPIRUS_PLUGIN_ID=<unique_id>` builds an otherwise
+identical plugin under a separate name. This allows the current session to run
+the new shader while KDE still caches a previous factory for the standard ID.
+A session bridge has no enable key and does not replace the persistent standard
+ID. At the next login, the updated `papirus_inner_corners` binary loads normally.
+Never leave the standard effect and a validation bridge enabled together.

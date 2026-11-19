@@ -125,7 +125,8 @@ overwrite the local change.
 
 See [default window decorations](WINDOW_DECORATIONS.md) for the symbol-free SVG
 states, hover sizes, click animations, shared QML runtime, the native four-corner
-content effect, and maintenance/recovery checks. The native effect runs after
+content effect with a 1 px Breeze-colored rounded outline, and
+maintenance/recovery checks. The native effect runs after
 backdrop blur and is enabled by both official themes.
 
 ## Optional window effects

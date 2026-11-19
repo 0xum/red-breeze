@@ -66,7 +66,9 @@ for source locations, timings, and recovery. This affects window buttons, not th
 whole-window effects.
 
 The four internal content corners are rounded at 8 px and filled with the
-adjacent decoration border color, for every normal window and dialog using Moe
+adjacent decoration border color. A 1 px inset outline follows the four curves
+and straight edges in the Breeze/Dolphin separator color, adapting to the active
+palette and frame contrast, for every normal window and dialog using Moe
 or MoeDark. Maximized/fullscreen and undecorated windows are excluded. The native
 effect draws after backdrop blur, preserving existing Glass/Breeze blur settings.
 
