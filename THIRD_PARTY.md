@@ -14,6 +14,7 @@ if every file shared a single license.
 | Aurorae QML runtime | KDE, captured from Aurorae 6.8.3; Delta click animations | GPL-2.0-or-later; retained file notices and license texts in both packages |
 | Amy Light Aurorae | l4k1, version 1.2 | GPLv3 according to original metadata |
 | Amy Papirus Dark | Delta adaptation of Amy | Geometry retained, dark surfaces adapted, original license retained |
+| Native internal-corner effect and build/recovery helper | Delta | GPL-3.0-only; KWin, Qt, and KDecoration3 remain external dependencies |
 | Launcher SVG, installers, profiles, composition | Delta | GPL-3.0-only |
 
 See detailed [Light credits](light/THIRD_PARTY.md), [Dark credits](dark/THIRD_PARTY.md),

@@ -8,7 +8,7 @@ runtime configuration or a replacement for user instructions.
 | Unified installation, Quick Settings, lock screen, removal | [Installation](../docs/INSTALLATION.md), [architecture](../docs/ARCHITECTURE.md) | `install.py`, `tests/test_installer.py` |
 | Variant installation/application and backup | [Architecture](../docs/ARCHITECTURE.md), [recovery](../docs/RESTORE_AND_TROUBLESHOOTING.md) | `light/install.py`, `dark/install.py`, both `restore.py` files |
 | Palette, mouse, GTK, decorations | [Appearance](../docs/APPEARANCE.md), [customization](../docs/CUSTOMIZATION.md) | Variant `config/settings.json`, global-theme defaults, installers, Aurorae assets |
-| Window button states and click animations | [Window decorations](../docs/WINDOW_DECORATIONS.md) | Both `assets/aurorae/themes/`, identical `assets/kwin/aurorae/`, variant installers |
+| Window button states and click animations | [Window decorations](../docs/WINDOW_DECORATIONS.md) | Both `assets/aurorae/themes/`, identical `assets/kwin/aurorae/` and `assets/kwin/papirus-inner-corners/`, `scripts/inner_corners.py`, variant installers |
 | Panels, launcher, wallpaper | [Customization](../docs/CUSTOMIZATION.md) | Variant layout/launcher/wallpaper scripts and corresponding native layouts/assets |
 | Optional Wayland window effects | [Customization](../docs/CUSTOMIZATION.md#optional-window-effects) | `tools/window-effects.py` (`apply`, `restore`, `prepare-upgrade`), `tools/rounded-corners-aurorae.patch` |
 | Konsole and Fish | [Appearance](../docs/APPEARANCE.md#konsole) | Both `assets/konsole/`, `assets/fish/`, installer application helpers, terminal tests |

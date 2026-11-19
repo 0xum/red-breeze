@@ -48,3 +48,11 @@ localized metadata. Preserve attribution and license files in distributions.
 SPDX notices remain in each QML file. Delta adds a maximize/restore bounce
 and minimize/close fade-out, scoped to Moe and MoeDark. This code retains
 GPL-2.0-or-later; the package's GPL-3.0-only composition does not replace it.
+
+## Native internal-corner effect
+
+`assets/kwin/papirus-inner-corners/` and `scripts/inner_corners.py` are Delta's
+GPL-3.0-only native effect and integration source. They use the external KWin,
+Qt, and KDecoration3 APIs; those dependencies keep their respective licenses.
+The native plugin is compiled on the destination for the exact supported KWin
+version; a workstation binary is not included in this source package.

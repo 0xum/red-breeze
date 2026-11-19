@@ -65,6 +65,26 @@ back in if Aurorae was already loaded. See the
 for source locations, timings, and recovery. This affects window buttons, not the
 whole-window effects.
 
+The four internal content corners are rounded at 8 px and filled with the
+adjacent decoration border color, for every normal window and dialog using Moe
+or MoeDark. Maximized/fullscreen and undecorated windows are excluded. The native
+effect draws after backdrop blur, preserving existing Glass/Breeze blur settings.
+
+Normal installation builds/installs this shared native dependency using Polkit.
+The first build requires CMake 3.25+, Ninja, a C++23 compiler, ECM, KDecoration3,
+KWin 6.8.3 development files, and matching Qt 6 private headers. Set `CMAKE` for
+an alternate CMake executable. The native source pins KWin 6.8.3 and must be
+reviewed/rebuilt after upgrades. Dry runs and alternate destinations skip native
+builds and authentication. Recover/remove the shared native plugin separately:
+
+```sh
+python3 scripts/inner_corners.py remove
+```
+
+The helper preserves a modified plugin and backs up an existing binary. Normal
+user-theme removal retains this shared dependency. See the linked decoration
+guide for enable/disable commands and toolchain options.
+
 ## Install and apply
 
 Run as your normal user in an accessible Plasma session:

@@ -22,6 +22,7 @@ ButtonsOnLeft=M
 ButtonsOnRight=IAX
 
 [kwinrc][Plugins]
+papirus_inner_cornersEnabled=true
 kwin4_effect_shapecornersEnabled=true
 
 [kwinrc][Round-Corners]

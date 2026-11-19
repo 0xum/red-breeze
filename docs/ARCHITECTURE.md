@@ -28,6 +28,7 @@ Within each variant:
 | `assets/plasma/desktoptheme/PapirusBreezeRed/` | Red sprites with Breeze surface inheritance |
 | `assets/icons/PapirusBreezeLight/` or `PapirusBreezeDark/` | Folder/system/Dolphin/launcher overlay |
 | `assets/color-schemes/` | Variant palette |
+| `assets/kwin/papirus-inner-corners/`, `scripts/inner_corners.py` | Shared native content-corner effect and version-specific build/install/recovery |
 | `assets/aurorae/themes/` | Moe window decoration and legacy Amy alternative |
 | `assets/wallpapers/` | Adaptive wallpaper, metadata, provenance |
 | `assets/konsole/`, `assets/fish/` | Both terminal profiles/palettes and Fish helper |
@@ -107,7 +108,8 @@ processes to avoid collisions between modules named `install`/`restore`.
 The package does not import accounts, authentication, activities, monitor IDs,
 resolutions, personal favorites, general shortcuts, default applications, Night
 Color, scaling, or tiling settings. User installation does not change the login
-shell or install dependencies. The splash uses native Breeze.
+shell. Normal installation builds/installs the shared native internal-corner
+dependency through Polkit; it does not install development packages. The splash uses native Breeze.
 
 ## Administrative login integration
 

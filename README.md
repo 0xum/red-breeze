@@ -20,7 +20,8 @@ An optional [Brazilian Portuguese guide](README.pt-BR.md) is available.
 | Konsole | White background | Dark background |
 
 Both variants use symbol-free decoration buttons with hover growth, a maximize/restore
-bounce, and a minimize/close fade-out. See [window decorations](docs/WINDOW_DECORATIONS.md).
+bounce, and a minimize/close fade-out. Application content has four 8 px internal
+corners filled with the decoration border color, preserving backdrop blur. See [window decorations](docs/WINDOW_DECORATIONS.md).
 
 Both variants include red folders, system icons and Dolphin icons, a vector
 launcher with a transparent center, and a red animated terminal cursor.
@@ -42,7 +43,10 @@ The screenshots show the previous Amy decorations. See the [appearance guide](do
 ## Install or remove
 
 Requirements: Linux, KDE Plasma 6, Python 3.9+, Breeze/Aurorae, Papirus/Papirus-Dark,
-and the KDE configuration tools. Fish and JetBrainsMono Nerd Font are required
+and the KDE configuration tools. The native internal-corner effect additionally needs the matching KWin 6.8.3/Qt
+development toolchain on its first build; normal installation uses Polkit to
+install it. See [native requirements](docs/INSTALLATION.md#native-internal-corner-dependency).
+Fish and JetBrainsMono Nerd Font are required
 for the supplied terminal profiles. See the full [installation guide](docs/INSTALLATION.md).
 
 From the repository root or the extracted complete package, run as your normal user:

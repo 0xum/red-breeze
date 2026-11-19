@@ -92,6 +92,7 @@ class PackageTests(unittest.TestCase):
                                            "--state-dir", str(state)]), 0)
             self.assertTrue((data / "wallpapers/MoeDark/contents/images_dark/1844x853.png").exists())
             self.assertTrue((data / "kwin/aurorae/AuroraeMaximizeButton.qml").exists())
+            self.assertTrue((data / "kwin/papirus-inner-corners/effect.cpp").exists())
             self.assertNotEqual(old_runtime.read_text(), "previous user runtime")
             self.assertFalse(config.exists())
             self.assertEqual(other_profile.read_text(), "[General]\nName=Existing\n")

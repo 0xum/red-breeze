@@ -83,6 +83,15 @@ class InstallerTests(unittest.TestCase):
         self.assertEqual(unrelated.read_text(), 'keep')
         self.assertFalse((self.data / 'konsole/PapirusBreezeLight.profile').exists())
 
+    def test_removal_clears_native_enablement_and_preserves_other_effect_choices(self):
+        self.install()
+        installer.write_key(self.config, 'kwinrc', 'Plugins', 'papirus_inner_cornersEnabled', 'true')
+        installer.write_key(self.config, 'kwinrc', 'Plugins', 'glassEnabled', 'true')
+        self.remove()
+        self.assertEqual(installer.read_key(self.config, 'kwinrc', 'Plugins',
+                                            'papirus_inner_cornersEnabled'), '')
+        self.assertEqual(installer.read_key(self.config, 'kwinrc', 'Plugins', 'glassEnabled'), 'true')
+
     def test_remove_does_not_overwrite_later_quick_settings_choices(self):
         self.install()
         installer.write_key(self.config, 'kdeglobals', 'KDE', 'DefaultLightLookAndFeel', 'new.user.theme')
@@ -190,15 +199,20 @@ class InstallerTests(unittest.TestCase):
         self.assertEqual(read('Daemon', 'RequirePassword'), 'true')
 
     def test_cli_installs_login_by_default_but_skips_it_for_isolated_or_opt_out_runs(self):
-        with patch.object(installer, 'install'), patch.object(installer, 'configure_login') as login:
+        with patch.object(installer, 'install'), patch.object(installer, 'configure_inner_corners') as native, \
+                patch.object(installer, 'configure_login') as login:
             self.assertEqual(installer.main(['install', '--dry-run']), 0)
             self.assertTrue(login.call_args.args[1])
+            native.assert_not_called()
             login.reset_mock()
             self.assertEqual(installer.main(['install', '--no-login']), 0)
             login.assert_not_called()
+            native.assert_called_once()
+            native.reset_mock()
             self.assertEqual(installer.main(['install', '--data-dir', str(self.data),
                                              '--config-dir', str(self.config), '--state-dir', str(self.state)]), 0)
             login.assert_not_called()
+            native.assert_not_called()
 
     def test_login_privilege_request_passes_selected_user_and_config_and_reports_failure(self):
         account = types.SimpleNamespace(pw_name='example')

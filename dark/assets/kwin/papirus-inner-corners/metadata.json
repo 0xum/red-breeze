@@ -1,0 +1,10 @@
+{
+  "KPlugin": {
+    "Name": "Papirus Breeze internal corners",
+    "Description": "Four 8 px content corners filled with the Moe/MoeDark decoration border, after backdrop blur",
+    "License": "GPL-3.0-only",
+    "EnabledByDefault": false,
+    "Version": "1"
+  },
+  "X-KDE-Ordering": 99
+}

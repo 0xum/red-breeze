@@ -180,6 +180,12 @@ def apply_profile(data, config, backup, layout=False):
     reload_decoration(config)
 
 
+def ensure_inner_corners(state):
+    """Install the shared native dependency before changing appearance."""
+    subprocess.run([sys.executable, str(ROOT / "scripts/inner_corners.py"), "install",
+                    "--state-dir", str(state)], check=True)
+
+
 def reload_decoration(config):
     """Invalidate cached QML while restoring the intended library on failures."""
     write_setting(config, "kwinrc", "org.kde.kdecoration2", "library", "org.kde.breeze")
@@ -193,7 +199,7 @@ def reload_decoration(config):
 
 
 def asset_paths():
-    assets = [Path("kwin/aurorae"), Path("plasma/desktoptheme/PapirusBreezeRed"), Path("wallpapers/Moe"), Path("aurorae/themes/Moe"),
+    assets = [Path("kwin/papirus-inner-corners"), Path("kwin/aurorae"), Path("plasma/desktoptheme/PapirusBreezeRed"), Path("wallpapers/Moe"), Path("aurorae/themes/Moe"),
               Path("aurorae/themes/Amy-Light-Aurorae-6"),
               Path("icons/PapirusBreezeLight"), Path("color-schemes/PapirusBreezeLight.colors"),
               Path("plasma/look-and-feel") / THEME_ID]
@@ -237,6 +243,8 @@ def main(argv=None):
         return 0
     if os.geteuid() == 0:
         raise RuntimeError("Run install.py as your normal user; use install-login.py for login appearance.")
+    if not any(arg.split("=", 1)[0] in ("--data-dir", "--config-dir", "--state-dir") for arg in raw_args):
+        ensure_inner_corners(state)
     backup = Backup(state)
     try:
         for relative in assets:

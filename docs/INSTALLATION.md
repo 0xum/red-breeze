@@ -214,3 +214,17 @@ sudo systemctl disable --now papirus-breeze-login.path papirus-breeze-login.serv
 
 Do not log out just to run installation. For administrative removal/recovery,
 follow the [restoration procedure](RESTORE_AND_TROUBLESHOOTING.md#restore-a-snapshot).
+
+## Native internal-corner dependency
+
+Normal installation (including `--no-login`) builds/installs the shared native
+8 px internal-corner effect used by both themes. The first build needs CMake,
+Ninja, ECM, a C++23 compiler, matching Qt private and KDecoration3 development
+files, and KWin 6.8.3 headers/libraries. Polkit authenticates the binary copy.
+Already matching installations are reused. Dry runs and alternate destinations
+only handle/check portable assets and never build or authenticate.
+
+See [window decorations](WINDOW_DECORATIONS.md#four-internal-corners-and-backdrop-blur)
+for toolchain overrides, per-user enablement, and separate native removal/recovery.
+User-theme removal retains this administrative dependency. Preserve its recovery
+record and rebuild after KWin upgrades; the native ABI is version-specific.

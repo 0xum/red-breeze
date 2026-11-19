@@ -124,7 +124,9 @@ overwrite the local change.
 ## Window decoration buttons
 
 See [default window decorations](WINDOW_DECORATIONS.md) for the symbol-free SVG
-states, hover sizes, click animations, shared QML runtime, and maintenance checks.
+states, hover sizes, click animations, shared QML runtime, the native four-corner
+content effect, and maintenance/recovery checks. The native effect runs after
+backdrop blur and is enabled by both official themes.
 
 ## Optional window effects
 

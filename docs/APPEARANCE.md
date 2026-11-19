@@ -38,7 +38,9 @@ close on the right. Moe and MoeDark are Aurorae decorations by jomada. The
 previous Amy decorations remain available as alternatives. The default Moe buttons
 are symbol-free circles with hover growth, a maximize/restore bounce, and a
 minimize/close fade-out. See [window decorations](WINDOW_DECORATIONS.md) for
-timings, sources, installation, and recovery.
+timings, sources, installation, and recovery. Both themes also round all four
+internal content corners at 8 px, filled with the decoration border color,
+through the bundled native effect. Existing backdrop blur is preserved.
 
 Both official global themes also enable the 11 px Rounded Corners profile, with
 native shadows and no extra outlines. Their native defaults and installer settings

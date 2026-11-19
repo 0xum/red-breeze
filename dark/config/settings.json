@@ -31,7 +31,8 @@
       "LayoutName": "org.kde.breeze.desktop"
     },
     "Plugins": {
-      "kwin4_effect_shapecornersEnabled": "true"
+      "kwin4_effect_shapecornersEnabled": "true",
+      "papirus_inner_cornersEnabled": "true"
     },
     "Round-Corners": {
       "Size": "11",

@@ -127,6 +127,12 @@ def configure_lockscreen(data, config, backup):
         write_key(config, 'kscreenlockerrc', 'Greeter][Wallpaper][org.kde.image][General', key, wallpaper)
 
 
+def configure_inner_corners(state):
+    module = load_variant('light')
+    module.verify_assets()
+    module.ensure_inner_corners(state)
+
+
 def configure_login(config, dry_run=False):
     """Install fixed administrative profiles; let Polkit handle authentication."""
     username = pwd.getpwuid(os.getuid()).pw_name
@@ -226,6 +232,7 @@ def cleanup_config(data, config, backup, live):
         replace(filename, 'General', 'ColorScheme', lambda v: v in ('PapirusBreezeLight', 'PapirusBreezeDark'), 'BreezeDark' if dark else 'BreezeLight')
         replace(filename, 'Icons', 'Theme', lambda v: v in ('PapirusBreezeLight', 'PapirusBreezeDark'), 'breeze-dark' if dark else 'breeze')
     replace('plasmarc', 'Theme', 'name', lambda v: v == 'PapirusBreezeRed', 'default')
+    replace('kwinrc', 'Plugins', 'papirus_inner_cornersEnabled', lambda v: v == 'true', None)
     decorations = ('__aurorae__svg__Moe', '__aurorae__svg__MoeDark',
                    '__aurorae__svg__Amy-Light-Aurorae-6', '__aurorae__svg__Amy-Papirus-Dark')
     replace('kwinrc', 'org.kde.kdecoration2', 'library',
@@ -401,6 +408,8 @@ def main(argv=None):
             print('Login sync: not configured. Run install to enable it.')
         return 0
     if args.action == 'install':
+        if not alternate and not args.dry_run:
+            configure_inner_corners(state)
         install(data, config, state, args.apply, args.layout, args.dry_run)
         if not alternate and not args.no_login:
             configure_login(config, args.dry_run)
