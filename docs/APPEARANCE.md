@@ -37,6 +37,13 @@ Window decorations use small buttons: menu on the left; minimize, maximize, and
 close on the right. Moe and MoeDark are Aurorae decorations by jomada. The
 previous Amy decorations remain available as alternatives.
 
+Both official global themes also enable the 11 px Rounded Corners profile, with
+native shadows and no extra outlines. Their native defaults and installer settings
+use the same profile. The compatible, Aurorae-patched KWin plugin must be installed
+separately; without it, Moe retains its native decoration corners. See the
+[window effects guide](CUSTOMIZATION.md#optional-window-effects). Glass blur and
+window opacity remain separately opt-in.
+
 ## Quick Settings
 
 The unified installer registers the pair in `[KDE]` of `kdeglobals` using

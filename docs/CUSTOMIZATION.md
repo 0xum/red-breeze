@@ -123,12 +123,40 @@ overwrite the local change.
 
 ## Optional window effects
 
-The complete package includes a reversible profile for Plasma Wayland.
+Both official themes include the Rounded Corners settings described below in
+their global-theme defaults and installer profiles. The effect plugin and its
+Aurorae compatibility patch are still external prerequisites. Theme selection
+requests the effect; it does not install the plugin.
+
+The complete package also includes a reversible Glass blur and window-opacity
+profile for Plasma Wayland that reapplies the same rounding settings. Restore
+returns to the settings captured when the helper was applied, which may already
+include the official theme's rounding profile.
 
 ```sh
 python3 tools/window-effects.py apply
 python3 tools/window-effects.py restore
 ```
+
+Before a system upgrade blocked by these local plugins' exact KWin dependencies:
+
+```sh
+python3 tools/window-effects.py prepare-upgrade
+sudo pacman -Syu
+```
+
+Run the helper as your normal user in Plasma Wayland. It requests sudo through
+its terminal, backs up KWin configuration and package versions under
+`$XDG_STATE_HOME/papirus-breeze/kwin-upgrade-*`, disables the custom effects,
+enables built-in blur, and removes only the two local effect packages using
+pacman's normal dependency checks and confirmation. If removal fails or is
+cancelled, the effects stay disabled and the backup remains; rerun to retry.
+The helper does not perform the system upgrade. Log out and back in after the
+upgrade. Existing patch files and cached package archives are preserved, but
+old binaries must not be reinstalled against a different KWin version.
+Rebuild compatible plugins with the desired patches before enabling them.
+If a managed profile still exists, restore it after rebuilding, then apply again.
+Do not loosen the dependency pin or use `--nodeps` to bypass compatibility.
 
 Install both plugins before applying the profile. KWin requires plugins built
 against the exact running version. The reference setup used KWin 6.8.2 with
@@ -157,8 +185,8 @@ are excluded from rounding.
 The helper snapshots the affected keys and loaded effects under
 `$XDG_STATE_HOME/papirus-breeze/window-effects.json` (default
 `~/.local/state/papirus-breeze/window-effects.json`). Restore the profile before
-uninstalling either effect. Theme installation and theme removal are separate
-from effect management.
+uninstalling either effect. The helper's snapshot is separate from theme
+installation and removal; theme selection can update the rounding settings while the helper is active.
 
 ## Wallpaper and lock screen
 

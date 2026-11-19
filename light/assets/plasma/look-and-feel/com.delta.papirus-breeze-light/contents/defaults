@@ -21,6 +21,26 @@ BorderSizeAuto=true
 ButtonsOnLeft=M
 ButtonsOnRight=IAX
 
+[kwinrc][Plugins]
+kwin4_effect_shapecornersEnabled=true
+
+[kwinrc][Round-Corners]
+Size=11
+InactiveCornerRadius=11
+UseSquircleShape=true
+Squircleness=0.55
+UseNativeDecorationShadows=true
+DisableRoundMaximize=true
+DisableRoundFullScreen=true
+DisableRoundTile=false
+Exclusions=dolphin,konsole
+OutlineThickness=0
+InactiveOutlineThickness=0
+SecondOutlineThickness=0
+InactiveSecondOutlineThickness=0
+OuterOutlineThickness=0
+InactiveOuterOutlineThickness=0
+
 [kwinrc][TabBox]
 LayoutName=org.kde.breeze.desktop
 

@@ -19,6 +19,7 @@ unified installer with a menu, Quick Settings registration, and removal.
 | Colors / icons | `PapirusBreezeDark`, red `#E93D58` accent |
 | Qt / Plasma | Breeze / `PapirusBreezeRed` |
 | GTK | Breeze-Dark |
+| Rounded corners | 11 px, native shadows; requires the compatible KWin effect |
 | Window decoration | MoeDark 1.9, small buttons |
 | Mouse pointer | Breeze Light (`Breeze_Light`), white, 18 px |
 | General / GTK font | Noto Sans, 10 pt |
@@ -40,6 +41,13 @@ your distribution. Fish and JetBrainsMono Nerd Font are required for the termina
 Live application needs `kwriteconfig6`, `qdbus6`, `plasma-apply-lookandfeel`,
 `plasma-apply-colorscheme`, `plasma-apply-desktoptheme`, and `plasma-apply-cursortheme`.
 Checks cover base icon/cursor themes and application tools, not every optional feature.
+
+The theme enables the `kwin4_effect_shapecorners` effect with an 11 px radius,
+native shadows, and no extra outlines. Install a compatible KDE Rounded Corners
+plugin with the Aurorae compatibility patch before using this feature; see the
+[window effects guide](https://github.com/0xum/red-breeze/blob/main/docs/CUSTOMIZATION.md#optional-window-effects).
+The plugin is not bundled. Without it, Moe still supplies its native decoration
+corners. Glass blur and window opacity remain separately opt-in.
 
 ## Install and apply
 

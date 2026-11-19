@@ -9,7 +9,7 @@ runtime configuration or a replacement for user instructions.
 | Variant installation/application and backup | [Architecture](../docs/ARCHITECTURE.md), [recovery](../docs/RESTORE_AND_TROUBLESHOOTING.md) | `light/install.py`, `dark/install.py`, both `restore.py` files |
 | Palette, mouse, GTK, decorations | [Appearance](../docs/APPEARANCE.md), [customization](../docs/CUSTOMIZATION.md) | Variant `config/settings.json`, global-theme defaults, installers, Aurorae assets |
 | Panels, launcher, wallpaper | [Customization](../docs/CUSTOMIZATION.md) | Variant layout/launcher/wallpaper scripts and corresponding native layouts/assets |
-| Optional Wayland window effects | [Customization](../docs/CUSTOMIZATION.md#optional-window-effects) | `tools/window-effects.py`, `tools/rounded-corners-aurorae.patch` |
+| Optional Wayland window effects | [Customization](../docs/CUSTOMIZATION.md#optional-window-effects) | `tools/window-effects.py` (`apply`, `restore`, `prepare-upgrade`), `tools/rounded-corners-aurorae.patch` |
 | Konsole and Fish | [Appearance](../docs/APPEARANCE.md#konsole) | Both `assets/konsole/`, `assets/fish/`, installer application helpers, terminal tests |
 | Administrative login appearance | [Login installation](../docs/INSTALLATION.md#login-appearance), [architecture](../docs/ARCHITECTURE.md#administrative-login-integration) | Root `install.py` (`--no-login` opt-out), `tools/install-login.py`, both `install-login.py` and `scripts/login.py` files |
 | Tests, hashes, archives, versions | [Development](../docs/DEVELOPMENT.md), [workflows](WORKFLOWS.md) | `tools/project.py`, both manifests/builders/test suites, root tests |

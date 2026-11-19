@@ -64,7 +64,10 @@ Breeze correspondente antes de remover os arquivos.
 O [guia do painel](docs/CUSTOMIZATION.md#panels) detalha os widgets opcionais de
 clima, CPU e RAM com espaçamento de 3 px e a troca do ícone da área de transferência.
 
-O pacote completo inclui um [perfil opcional de blur e cantos arredondados](docs/CUSTOMIZATION.md#optional-window-effects) para Wayland.
+Os dois temas oficiais incluem o perfil de cantos arredondados de 11 px, com sombras
+nativas e sem contornos extras. É necessário instalar separadamente o plugin
+KDE Rounded Corners compatível com o KWin e com o patch para Aurorae.
+O pacote completo também inclui um [perfil opcional de blur e cantos arredondados](docs/CUSTOMIZATION.md#optional-window-effects) para Wayland.
 
 ## Login e backups
 

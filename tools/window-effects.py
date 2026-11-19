@@ -7,6 +7,8 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+import shutil
+import tempfile
 
 GLASS = 'glass'
 CORNERS = 'kwin4_effect_shapecorners'
@@ -78,13 +80,51 @@ def profile():
     yield order_key, ','.join(dict.fromkeys(ids + [item for item in order.split(',') if item]))
 
 
+def prepare_upgrade(state):
+    """Disable and remove local plugins before upgrading KWin, keeping recovery data."""
+    installed = set(command('pacman', '-Qq').splitlines())
+    packages = [name for name in ('kwin-effect-rounded-corners', 'kwin-effects-glass-local')
+                if name in installed]
+    if not packages:
+        print('No local KWin effect packages to remove. Run sudo pacman -Syu.')
+        return
+    # Authenticate before changing the session. Never collect passwords in Python.
+    subprocess.run(['sudo', '-v'], check=True)
+    directory = state / 'papirus-breeze'
+    directory.mkdir(parents=True, exist_ok=True)
+    backup = Path(tempfile.mkdtemp(prefix='kwin-upgrade-', dir=directory))
+    config = Path(os.environ.get('XDG_CONFIG_HOME', str(Path.home() / '.config')))
+    for name in ('kwinrc', 'kwinrulesrc'):
+        if (config / name).exists():
+            shutil.copy2(config / name, backup / name)
+    managed = directory / 'window-effects.json'
+    if managed.exists():
+        shutil.copy2(managed, backup / managed.name)
+    (backup / 'packages.txt').write_text(command('pacman', '-Q', *packages) + '\n')
+    print(f'Recovery data: {backup}', flush=True)
+    for name in (GLASS, CORNERS):
+        setting('kwriteconfig6', ('kwinrc', 'Plugins', name + 'Enabled'), 'false')
+        effect('unloadEffect', name)
+    setting('kwriteconfig6', ('kwinrc', 'Plugins', 'blurEnabled'), 'true')
+    command('qdbus6', 'org.kde.KWin', '/KWin', 'reconfigure')
+    if effect('isEffectLoaded', 'blur') != 'true' and effect('loadEffect', 'blur') != 'true':
+        raise RuntimeError('Could not enable the built-in blur; packages were not removed.')
+    # Keep dependency checks and pacman's own confirmation. Do not remove dependencies.
+    subprocess.run(['sudo', 'pacman', '-R', *packages], check=True)
+    print('Local effects removed. Run sudo pacman -Syu, then log out and back in. '
+          'Rebuild both plugins for the installed KWin before enabling them again.')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=('apply', 'restore'))
+    parser.add_argument('action', choices=('apply', 'restore', 'prepare-upgrade'))
     args = parser.parse_args()
     if os.geteuid() == 0 or os.environ.get('XDG_SESSION_TYPE') != 'wayland':
         raise RuntimeError('Run as your normal user in the Plasma Wayland session.')
     state = Path(os.environ.get('XDG_STATE_HOME', str(Path.home() / '.local/state')))
+    if args.action == 'prepare-upgrade':
+        prepare_upgrade(state)
+        return
     backup = state / 'papirus-breeze/window-effects.json'
     if args.action == 'restore':
         saved = json.loads(backup.read_text())

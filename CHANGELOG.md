@@ -4,6 +4,8 @@ This file records known changes. An entry does not imply a published release or 
 
 ## Unreleased
 
+- Include the 11 px Rounded Corners profile in both official global themes and installer settings; retain Glass blur and opacity as opt-in.
+
 - Use the Papirus accent for normal greeter text and disable the clock shadow in the installed SDDM theme copy.
 
 - Use jomada’s Moe and MoeDark 1.9 Aurorae decorations by default and retain Amy as an alternative.
