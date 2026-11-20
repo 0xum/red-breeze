@@ -82,7 +82,9 @@ animations remain the same.
 The outline uses the same formula as Breeze's Dolphin separators: mix the current
 `Colors:Window` background and foreground at `[KDE] frameContrast` (0.2 in the
 official profiles). This gives `#4c4e51` for the Dark palette and automatically
-adapts to the Light palette. The stroke width is one logical pixel, scaled with
+adapts to the Light palette. Palette/configuration notifications refresh the
+color automatically, including already-open windows, so a cached Dark color
+cannot remain after switching to Light. The stroke width is one logical pixel, scaled with
 the output; the content inset and the 8 px radius remain unchanged. See
 [Breeze separatorColor](https://invent.kde.org/plasma/breeze/-/blob/master/kstyle/breezehelper.cpp).
 

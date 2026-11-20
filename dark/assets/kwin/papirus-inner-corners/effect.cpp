@@ -8,6 +8,10 @@
 #include <window.h>
 #include <QVector4D>
 #include <QColor>
+#include <QGuiApplication>
+#include <QEvent>
+#include <QTimer>
+#include <KConfigWatcher>
 #include <KSharedConfig>
 #include <KConfigGroup>
 #include <KDecoration3/Decoration>
@@ -21,7 +25,14 @@ public:
     {
         shader = KWin::ShaderManager::instance()->generateShaderFromFile(
             KWin::ShaderTrait::MapTexture | KWin::ShaderTrait::RoundedCorners,
-            QString(), QStringLiteral(":/papirus-inner-corners-outline-v2/shader.frag"));
+            QString(), QStringLiteral(":/papirus-inner-corners-outline-v3/shader.frag"));
+        refreshTimer.setSingleShot(true);
+        connect(&refreshTimer, &QTimer::timeout, this, [this] { reconfigure(ReconfigureAll); });
+        qGuiApp->installEventFilter(this);
+        paletteWatcher = KConfigWatcher::create(KSharedConfig::openConfig(QStringLiteral("kdeglobals")));
+        decorationWatcher = KConfigWatcher::create(KSharedConfig::openConfig(QStringLiteral("kwinrc")));
+        connect(paletteWatcher.data(), &KConfigWatcher::configChanged, this, [this] { refreshTimer.start(); });
+        connect(decorationWatcher.data(), &KConfigWatcher::configChanged, this, [this] { refreshTimer.start(); });
         reconfigure(ReconfigureAll);
         qInfo() << "Papirus internal corners: 8 px corners, 1 px outline, all decorated apps, blur preserved";
         KWin::effects->addRepaintFull();
@@ -50,6 +61,11 @@ public:
                                        background.greenF() * (1.0 - contrast) + foreground.greenF() * contrast,
                                        background.blueF() * (1.0 - contrast) + foreground.blueF() * contrast);
         KWin::effects->addRepaintFull();
+    }
+    bool eventFilter(QObject *object, QEvent *event) override
+    {
+        if (event->type() == QEvent::ApplicationPaletteChange) refreshTimer.start();
+        return QObject::eventFilter(object, event);
     }
     bool applies(KWin::EffectWindow *w) const
     {
@@ -84,6 +100,9 @@ public:
         return result;
     }
 private:
+    QTimer refreshTimer;
+    KConfigWatcher::Ptr paletteWatcher;
+    KConfigWatcher::Ptr decorationWatcher;
     bool themeEnabled = false;
     QColor outlineColor;
     std::unique_ptr<KWin::GLShader> shader;

@@ -4,7 +4,7 @@
     "Description": "Four 8 px content corners with a 1 px Breeze-colored outline, preserving backdrop blur",
     "License": "GPL-3.0-only",
     "EnabledByDefault": false,
-    "Version": "2"
+    "Version": "3"
   },
   "X-KDE-Ordering": 99
 }
