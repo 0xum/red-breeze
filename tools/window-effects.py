@@ -14,6 +14,7 @@ GLASS = 'glass'
 CORNERS = 'kwin4_effect_shapecorners'
 EFFECTS = ('blur', GLASS, CORNERS)
 CLASSES = ('org.kde.dolphin', 'org.kde.konsole')
+CHATGPT_CLASS = 'Chatgpt'
 MISSING = '__papirus_breeze_missing__'
 
 
@@ -44,12 +45,14 @@ def restore(values, loaded):
             raise RuntimeError(f'Could not restore {name}.')
 
 
-def profile():
+def profile(include_chatgpt=False):
+    classes = (*CLASSES, CHATGPT_CLASS) if include_chatgpt else CLASSES
+    exclusions = 'dolphin,konsole' if include_chatgpt else 'dolphin,konsole,chatgpt'
     groups = {
         'Plugins': {'blurEnabled': 'false', 'glassEnabled': 'true', CORNERS + 'Enabled': 'true'},
         'Effect-blurplus': {
-            'WindowClasses': '\n'.join((*CLASSES, 'plasmashell', 'org.kde.plasmashell')),
-            'DecorWindowClasses': '\n'.join(CLASSES),
+            'WindowClasses': '\n'.join((*classes, 'plasmashell', 'org.kde.plasmashell')),
+            'DecorWindowClasses': '\n'.join(classes),
             'BlurMatching': 'true', 'BlurNonMatching': 'false', 'BlurDecorations': 'false',
             'IgnoreContentBlurRegion': 'false', 'UseDeclaredCornerRadius': 'true',
         },
@@ -57,7 +60,7 @@ def profile():
             'Size': '11', 'InactiveCornerRadius': '11', 'UseSquircleShape': 'true',
             'Squircleness': '0.55', 'UseNativeDecorationShadows': 'true',
             'DisableRoundMaximize': 'true', 'DisableRoundFullScreen': 'true',
-            'DisableRoundTile': 'false', 'Exclusions': 'dolphin,konsole',
+            'DisableRoundTile': 'false', 'Exclusions': exclusions,
             **{prefix + 'OutlineThickness': '0' for prefix in
                ('', 'Inactive', 'Second', 'InactiveSecond', 'Outer', 'InactiveOuter')},
         },
@@ -67,8 +70,10 @@ def profile():
             yield ('kwinrc', group, name), value
     order_key = ('kwinrulesrc', 'General', 'Order')
     order = setting('kreadconfig6', order_key)
-    for window_class in CLASSES:
-        group = 'papirus-breeze-' + window_class
+    ids = []
+    for window_class in classes:
+        group = 'papirus-breeze-' + window_class.lower()
+        ids.append(group)
         for name, value in {
             'Description': f'Papirus Breeze opacity ({window_class})',
             'wmclass': window_class, 'wmclassmatch': '1',
@@ -76,7 +81,6 @@ def profile():
             'opacityinactive': '90', 'opacityinactiverule': '2',
         }.items():
             yield ('kwinrulesrc', group, name), value
-    ids = ['papirus-breeze-' + name for name in CLASSES]
     yield order_key, ','.join(dict.fromkeys(ids + [item for item in order.split(',') if item]))
 
 
@@ -118,7 +122,11 @@ def prepare_upgrade(state):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('action', choices=('apply', 'restore', 'prepare-upgrade'))
+    parser.add_argument('--chatgpt', action='store_true',
+                        help='include the ChatGPT desktop window in the effects profile (apply only)')
     args = parser.parse_args()
+    if args.chatgpt and args.action != 'apply':
+        parser.error('--chatgpt requires apply')
     if os.geteuid() == 0 or os.environ.get('XDG_SESSION_TYPE') != 'wayland':
         raise RuntimeError('Run as your normal user in the Plasma Wayland session.')
     state = Path(os.environ.get('XDG_STATE_HOME', str(Path.home() / '.local/state')))
@@ -137,7 +145,7 @@ def main():
     for name in (GLASS, CORNERS):
         if effect('isEffectSupported', name) != 'true':
             raise RuntimeError(f'Install a compatible {name} plugin first.')
-    values = list(profile())
+    values = list(profile(include_chatgpt=args.chatgpt))
     saved = {
         'values': [(key, setting('kreadconfig6', key, '--default', MISSING)) for key, _ in values],
         'loaded': [name for name in EFFECTS if effect('isEffectLoaded', name) == 'true'],

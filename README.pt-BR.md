@@ -68,6 +68,8 @@ Os dois temas oficiais incluem o perfil de cantos arredondados de 11 px, com som
 nativas e sem contornos extras. É necessário instalar separadamente o plugin
 KDE Rounded Corners compatível com o KWin e com o patch para Aurorae.
 O pacote completo também inclui um [perfil opcional de blur e cantos arredondados](docs/CUSTOMIZATION.md#optional-window-effects) para Wayland.
+Para ativar esses efeitos no ChatGPT, use `python3 tools/window-effects.py apply --chatgpt`.
+Se o perfil estiver ativo, restaure-o com `python3 tools/window-effects.py restore` antes de aplicar a opção.
 
 As decorações padrão usam círculos sem símbolos, crescimento no hover, bounce ao
 maximizar/restaurar e fade-out ao minimizar/fechar. Os quatro cantos internos do

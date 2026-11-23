@@ -42,7 +42,7 @@
       "DisableRoundMaximize": "true",
       "DisableRoundFullScreen": "true",
       "DisableRoundTile": "false",
-      "Exclusions": "dolphin,konsole",
+      "Exclusions": "dolphin,konsole,chatgpt",
       "OutlineThickness": "0",
       "InactiveOutlineThickness": "0",
       "SecondOutlineThickness": "0",

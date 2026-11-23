@@ -187,14 +187,29 @@ also affects their text and icons.
 Rounded Corners uses an 11 px radius and native shadows, with extra outlines
 disabled. The compatibility patch bypasses the shader on windows with
 KWin-drawn decorations to avoid doubled corners on Moe and MoeDark. Dolphin
-and Konsole are also excluded explicitly. Maximized and fullscreen windows
-are excluded from rounding.
+and Konsole are also excluded explicitly. The default Light, Dark, and optional
+effects profiles exclude ChatGPT from Rounded Corners. Maximized and fullscreen
+windows are excluded from rounding.
+
+### ChatGPT desktop app
+
+Use `--chatgpt` to opt in for the ChatGPT desktop window with the class `Chatgpt`.
+
+```sh
+python3 tools/window-effects.py apply --chatgpt
+```
+
+This adds Glass backdrop blur and 90% active and inactive window opacity, and
+enables the 11 px Rounded Corners effect for the app's own window frame. If the
+effects profile is already active, run `restore` before applying this option.
+To return to the default effects profile, run `restore` followed by `apply`.
 
 The helper snapshots the affected keys and loaded effects under
 `$XDG_STATE_HOME/papirus-breeze/window-effects.json` (default
 `~/.local/state/papirus-breeze/window-effects.json`). Restore the profile before
 uninstalling either effect. The helper's snapshot is separate from theme
-installation and removal; theme selection can update the rounding settings while the helper is active.
+installation and removal. Reapplying a global theme can reset the ChatGPT
+rounding exclusion. Apply the opt-in profile after choosing your theme.
 
 ## Wallpaper and lock screen
 

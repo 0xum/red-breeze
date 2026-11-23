@@ -10,7 +10,7 @@ runtime configuration or a replacement for user instructions.
 | Palette, mouse, GTK, decorations | [Appearance](../docs/APPEARANCE.md), [customization](../docs/CUSTOMIZATION.md) | Variant `config/settings.json`, global-theme defaults, installers, Aurorae assets |
 | Window button states and click animations | [Window decorations](../docs/WINDOW_DECORATIONS.md) | Both `assets/aurorae/themes/`, identical `assets/kwin/aurorae/` and `assets/kwin/papirus-inner-corners/`, `scripts/inner_corners.py`, variant installers |
 | Panels, launcher, wallpaper | [Customization](../docs/CUSTOMIZATION.md) | Variant layout/launcher/wallpaper scripts and corresponding native layouts/assets |
-| Optional Wayland window effects | [Customization](../docs/CUSTOMIZATION.md#optional-window-effects) | `tools/window-effects.py` (`apply`, `restore`, `prepare-upgrade`), `tools/rounded-corners-aurorae.patch` |
+| Optional Wayland window effects | [Customization](../docs/CUSTOMIZATION.md#optional-window-effects) | `tools/window-effects.py` (`apply [--chatgpt]`, `restore`, `prepare-upgrade`), `tests/test_window_effects.py`, `tools/rounded-corners-aurorae.patch` |
 | Konsole and Fish | [Appearance](../docs/APPEARANCE.md#konsole) | Both `assets/konsole/`, `assets/fish/`, installer application helpers, terminal tests |
 | Administrative login appearance | [Login installation](../docs/INSTALLATION.md#login-appearance), [architecture](../docs/ARCHITECTURE.md#administrative-login-integration) | Root `install.py` (`--no-login` opt-out), `tools/install-login.py`, both `install-login.py` and `scripts/login.py` files |
 | Tests, hashes, archives, versions | [Development](../docs/DEVELOPMENT.md), [workflows](WORKFLOWS.md) | `tools/project.py`, both manifests/builders/test suites, root tests |
