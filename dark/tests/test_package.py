@@ -111,7 +111,7 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(config["General"]["AccentColor"], "233,61,88")
         self.assertEqual(config["Colors:Window"]["BackgroundNormal"], "32,35,38")
         overlay = ROOT / "assets/icons/PapirusBreezeDark"
-        self.assertEqual(len(list(overlay.rglob("*.svg"))), 22565)
+        self.assertEqual(len(list(overlay.rglob("*.svg"))), 22592)
         config.read(overlay / "index.theme")
         self.assertEqual(config["Icon Theme"]["Inherits"], "Papirus-Dark,breeze-dark,hicolor")
         self.assertFalse(any(p.is_symlink() for p in (ROOT / "assets").rglob("*")))
