@@ -93,6 +93,14 @@ Empty/full trash icons use explicit `user-trash`/`user-trash-full` and symbolic
 aliases at every included size. This prevents KDE's name fallback from selecting
 the generic `user` avatar.
 
+### CachyUpdate
+
+Both Red Breeze icon themes map CachyUpdate's tray icon names to red Papirus
+update icons. The tray uses the dimmed `update-none` icon when the system is up
+to date and `software-update-available`, with a dot badge, when updates are
+pending. The themes include aliases at 16, 22, and 24 px for the app's blue,
+dark, and light icon styles, including their colorblind update indicators.
+
 ## Launcher SVG
 
 `papirus-breeze-launcher.svg` is a rounded red hexagon with a **transparent circular
